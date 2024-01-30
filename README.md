@@ -7,4 +7,4 @@ A *bulleted* list:
 - item 2
 - item 3
 
-An example of text with **bold** and *italic* fonts.  
+An example of text with **bold** and *italic* fonts. 

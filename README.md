@@ -4,7 +4,9 @@
 
 My personal project will be a mineral database that allows users to view minerals, their
 important properties and will allow them to search and filter minerals based on these
-properties. The program should also provide suggested similar minerals and should provide a way to 
+properties. 
+
+The program should also provide suggested similar minerals and should provide a way to 
 navigate through mineral families. For example the **feldspar** mineral group should refer to entries
 of common minerals in the feldspar family. *Finally*, I plan on allowing users to upload images of 
 these minerals to these individual entries. 

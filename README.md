@@ -27,5 +27,5 @@ like this very useful for learning about new minerals.
 - *As a user*, I would like to view a sortable table of all minerals and their respective properties
 - *As a user*, I would like to add minerals that are not included in the database
 - *As a user*, I would like to be able to search and view minerals by name, chemical composition and other important properties
-- *As a user*, I would like to view images of these minerals and upload my own
 - *As a user*, I would like for the ability to add short entries on a mineral's page
+<!--- *As a user*, I would like to view images of these minerals and upload my own --->

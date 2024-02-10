@@ -1,15 +1,23 @@
 package ui;
 
+import chemicalstructure.Formula;
+import model.Mineral;
+import model.MineralTable;
+import model.exceptions.MineralDuplicateException;
+import model.exceptions.UnknownCrystalStructure;
+
 import java.util.Scanner;
 
 public class MineralWikiApp {
     Boolean running;
     Scanner scanner;
     String input;
+    MineralTable table;
 
     public MineralWikiApp() {
         this.running = true;
         this.scanner = new Scanner(System.in);
+        this.table = new MineralTable();
         this.runApp();
     }
 
@@ -25,22 +33,24 @@ public class MineralWikiApp {
 
     public void handleCommands(String input) {
         if (input.length() == 1) {
-            switch (input.toUpperCase().charAt(0)) {
-                case 'A':
-                    this.addMineral();
+            switch (input.toLowerCase().charAt(0)) {
+                case 'a':
+                    this.addItem();
                     break;
-                case 'V':
-                    this.viewMineral();
+                case 'v':
+                    this.viewItem();
                     break;
-                case 'D':
-                    this.deleteMineral();
+                case 'd':
+                    this.deleteItem();
                     break;
-                case 'Q':
+                case 'q':
                     this.quit();
                     break;
                 default:
-                    System.out.println("Command not understood");
+                    break;
             }
+        } else {
+            System.out.println("Command not understood");
         }
     }
 
@@ -49,16 +59,43 @@ public class MineralWikiApp {
         this.running = false;
     }
 
-    private void deleteMineral() {
+    private void deleteItem() {
         System.out.println("Deleting Mineral");
     }
 
-    private void viewMineral() {
+    private void viewItem() {
         System.out.println("Viewing Mineral");
     }
 
-    private void addMineral() {
-        System.out.println("Adding Mineral");
+    @SuppressWarnings({"checkstyle:methodlength", "checkstyle:SuppressWarnings"})
+    private void addItem() {
+        String currentFormulaUnit;
+        Formula formula = new Formula();
+        boolean finishedEnteringFormula = false;
+        System.out.println("What is the name of your mineral");
+        String name = scanner.nextLine();
+        System.out.println("What is the crystalline Structure");
+        String crystalStructureName = scanner.nextLine();
+        while (!finishedEnteringFormula) {
+            System.out.println("What makes up the formula (type q to stop)");
+            currentFormulaUnit = scanner.nextLine();
+            if (currentFormulaUnit.equals("q")) {
+                finishedEnteringFormula = true;
+            } else {
+                formula.addConstituent(currentFormulaUnit);
+            }
+        }
+        try {
+            Mineral mineral = new Mineral(name);
+            mineral.setGeneralFormula(formula);
+            mineral.setCrystalStructure(crystalStructureName);
+            this.table.addMineral(mineral);
+        } catch (MineralDuplicateException e) {
+            System.out.println("Identical Mineral Already Present");
+        } catch (UnknownCrystalStructure e) {
+            System.out.println("Could not Resolve Crystal Structure");
+        }
+
     }
 
 }

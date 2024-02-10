@@ -28,4 +28,12 @@ public abstract class WikiEntry {
     public void addSubs(WikiEntry wikiEntry) {
         this.related.add(wikiEntry);
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Formula getGeneralFormula() {
+        return this.generalFormula;
+    }
 }

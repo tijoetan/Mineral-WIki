@@ -1,8 +1,9 @@
-package model;
+package model.entries;
 
 // Abstract class for Mineral and Family Classes
 
-import chemicalstructure.Formula;
+import model.chemicalstructure.Formula;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public abstract class WikiEntry {
     protected WikiEntry(String name) {
         this.related = new ArrayList<>();
         this.name = name;
+        this.description = "No description provided";
     }
 
     public void setDescription(String description) {
@@ -36,4 +38,6 @@ public abstract class WikiEntry {
     public Formula getGeneralFormula() {
         return this.generalFormula;
     }
+
+    public abstract void printAllAttributes();
 }

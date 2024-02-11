@@ -1,4 +1,4 @@
-package chemicalstructure;
+package model.chemicalstructure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,5 +22,4 @@ public class Formula {
         }
         return toReturn.toString();
     }
-
 }

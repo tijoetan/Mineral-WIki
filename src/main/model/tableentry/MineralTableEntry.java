@@ -1,14 +1,23 @@
 package model.tableentry;
 
-import chemicalstructure.Formula;
-import model.CrystalStructure;
-import model.WikiEntry;
+import model.chemicalstructure.Formula;
+import model.enums.CrystalStructure;
+import model.entries.WikiEntry;
 
 public class MineralTableEntry extends TableEntry {
     CrystalStructure crystalStructure;
+    float indexOfRefraction;
+    float density;
+    float hardness;
 
-    public MineralTableEntry(WikiEntry entry, Formula chemicalFormula, CrystalStructure crystalStructure) {
-        super(entry, chemicalFormula);
+    public MineralTableEntry(WikiEntry entry, Formula chemicalFormula, CrystalStructure crystalStructure,
+                             float indexOfRefraction, float hardness, float density) {
+        super(entry);
         this.crystalStructure = crystalStructure;
+        this.indexOfRefraction = indexOfRefraction;
+        this.hardness = hardness;
+        this.density = density;
     }
+
+
 }

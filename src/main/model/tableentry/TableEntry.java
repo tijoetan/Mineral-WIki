@@ -1,15 +1,16 @@
 package model.tableentry;
 
-import chemicalstructure.Formula;
-import model.WikiEntry;
+import model.chemicalstructure.Formula;
+import model.entries.WikiEntry;
 
 public class TableEntry {
     protected WikiEntry entry;
     protected Formula chemicalFormula;
 
-    public TableEntry(WikiEntry entry, Formula chemicalFormula) {
+    public TableEntry(WikiEntry entry) {
         this.entry = entry;
-        this.chemicalFormula = chemicalFormula;
+        this.chemicalFormula = entry.getGeneralFormula();
+
     }
 
     public Formula getChemicalFormula() {

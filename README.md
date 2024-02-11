@@ -6,6 +6,7 @@ My personal project will be a mineral database that allows users to view mineral
 important properties and will allow them to search and filter minerals based on these
 properties. 
 
+
 The program should also provide suggested similar minerals and should provide a way to 
 navigate through mineral families. For example the **feldspar** mineral group should refer to entries
 of common minerals in the feldspar family. *Finally*, I plan on allowing users to upload images of 
@@ -29,3 +30,4 @@ like this very useful for learning about new minerals.
 - *As a user*, I would like to be able to search and view minerals by name, chemical composition and other important properties
 - *As a user*, I would like for the ability to add short entries on a mineral's page
 <!--- *As a user*, I would like to view images of these minerals and upload my own --->
+

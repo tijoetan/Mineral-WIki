@@ -1,28 +1,29 @@
-package model;
+package model.tableentry;
 
-import model.enums.Attributes;
-import model.entries.Family;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
-import model.enums.EntryType;
+import model.enums.Attributes;
+import model.exceptions.EmptyTableException;
 import model.exceptions.ItemNotFoundException;
 import model.exceptions.MineralDuplicateException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
-public class EntryTable {
+public class MineralTable implements WikiEntryTable {
+
     private final HashMap<String, Mineral> mineralNameTable;
-    private final HashMap<String, Family> familyNameTable;
 
-
-    public EntryTable() {
+    public MineralTable() {
         this.mineralNameTable = new HashMap<>();
-        this.familyNameTable = new HashMap<>();
-
     }
 
-
-    public List<Mineral> getMineralTableSortedBy(Attributes attribute) {
+    public List<Mineral> getTableSortedBy(Attributes attribute) throws EmptyTableException {
+        if (this.mineralNameTable.isEmpty()) {
+            throw new EmptyTableException();
+        }
         List<Mineral> returnList = new ArrayList<>(this.mineralNameTable.values());
         switch (attribute) {
             case IOR:
@@ -41,52 +42,37 @@ public class EntryTable {
                 returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCleavage().getValue()));
                 break;
         }
-
         return returnList;
-
     }
 
     public HashMap<String, Mineral> getMineralNameTable() {
         return mineralNameTable;
     }
 
-    public HashMap<String, Family> getFamilyNameTable() {
-        return familyNameTable;
-    }
-
-
+    @Override
     public WikiEntry getRequestedEntry(String name) throws ItemNotFoundException {
         Mineral requestedMineral = mineralNameTable.get(name);
-        Family requestedFamily = familyNameTable.get(name);
         if (requestedMineral != null) {
             return requestedMineral;
-        }
-
-        if (requestedFamily != null) {
-            return requestedFamily;
         }
 
         throw new ItemNotFoundException();
     }
 
-
-    public void addEntry(WikiEntry entry, EntryType type) throws MineralDuplicateException {
-        if (type.equals(EntryType.MINERAL) && mineralNameTable.get(entry.getName()) == null) {
+    @Override
+    public void addEntry(WikiEntry entry) throws MineralDuplicateException {
+        if (mineralNameTable.get(entry.getName()) == null) {
             mineralNameTable.put(entry.getName(), (Mineral) entry);
             System.out.println("Finished Adding");
-        } else if (familyNameTable.get(entry.getName()) == null) {
-            familyNameTable.put(entry.getName(), (Family) entry);
-
         } else {
             throw new MineralDuplicateException();
         }
     }
 
+    @Override
+    public void removeEntry(String name) throws ItemNotFoundException {
 
-    public void removeEntry(String name, EntryType type) throws ItemNotFoundException {
-        if (type.equals(EntryType.FAMILY) && familyNameTable.get(name) != null) {
-            familyNameTable.remove(name);
-        } else if (mineralNameTable.get(name) != null) {
+        if (mineralNameTable.get(name) != null) {
             mineralNameTable.remove(name);
         } else {
             throw new ItemNotFoundException();

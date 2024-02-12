@@ -49,14 +49,15 @@ public class Mineral extends WikiEntry {
     @Override
     public void printAllAttributes() {
         String attributeRow =
-                String.format("Name: %s | Crystal Structure: %s | General Formula: %s "
-                                + "| Hardness: %s | Density: %s | IOR: %s",
+                String.format("Name: %s | Crystal Structure: %s | Formula: %s "
+                                + "| Hardness: %s | Density: %s | IOR: %s | Cleavage %s",
                         this.name,
                         this.crystalStructure,
-                        this.generalFormula,
+                        this.generalFormula.getFormulaAsString(),
                         this.hardness,
                         this.density,
-                        this.indexOfRefraction);
+                        this.indexOfRefraction,
+                        this.cleavage);
         System.out.println(attributeRow);
     }
 

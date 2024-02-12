@@ -8,6 +8,6 @@ public class Family extends WikiEntry {
     @Override
     public void printAllAttributes() {
         System.out.println(name);
-        System.out.println(generalFormula);
+        System.out.println(generalFormula.getFormulaAsString());
     }
 }

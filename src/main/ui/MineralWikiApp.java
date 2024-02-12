@@ -1,29 +1,35 @@
 package ui;
 
-import model.EntryTable;
+import model.entries.Family;
 import model.enums.Attributes;
 import model.chemicalstructure.Formula;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
 import model.enums.CrystalStructure;
 import model.enums.EntryType;
+import model.exceptions.EmptyTableException;
 import model.exceptions.ItemNotFoundException;
 import model.exceptions.MineralDuplicateException;
+import model.tableentry.FamilyTable;
+import model.tableentry.MineralTable;
 
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class MineralWikiApp {
+    final Scanner scanner;
+    final MineralTable mineralTable;
+    final FamilyTable familyTable;
     Boolean running;
-    Scanner scanner;
     String input;
-    EntryTable mainTable;
+
 
     public MineralWikiApp() {
         this.running = true;
         this.scanner = new Scanner(System.in);
-        this.mainTable = new EntryTable();
+        this.mineralTable = new MineralTable();
+        this.familyTable = new FamilyTable();
         this.runApp();
     }
 
@@ -68,12 +74,14 @@ public class MineralWikiApp {
         try {
             Attributes groupAttributes = Attributes.valueOf(
                     queryString("What would you like the table to be grouped on").toUpperCase());
-            List<Mineral> sortedMineralList = this.mainTable.getMineralTableSortedBy(groupAttributes);
-            for (Mineral mineral : sortedMineralList) {
+            List<Mineral> sortedMineralList = this.mineralTable.getTableSortedBy(groupAttributes);
+            for (WikiEntry mineral : sortedMineralList) {
                 mineral.printAllAttributes();
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Unknown Table to sort by");
+        } catch (EmptyTableException e) {
+            System.out.println("Your mineral table is empty!");
         }
     }
 
@@ -87,7 +95,7 @@ public class MineralWikiApp {
         String removeQuestion = "What is the name of the item you would like to remove?";
         try {
             EntryType type = EntryType.valueOf(removeType);
-            this.mainTable.removeEntry(queryString(removeQuestion), type);
+            this.mineralTable.removeEntry(queryString(removeQuestion));
             System.out.println("Item removed");
         } catch (ItemNotFoundException e) {
             System.out.println("Could not delete item");
@@ -100,7 +108,7 @@ public class MineralWikiApp {
     private void viewItem() {
         String request = queryString("What entry would you like to view");
         try {
-            WikiEntry item = this.mainTable.getRequestedEntry(request);
+            WikiEntry item = this.mineralTable.getRequestedEntry(request);
             item.printAllAttributes();
         } catch (ItemNotFoundException e) {
             System.out.println("Could not find entry");
@@ -143,7 +151,7 @@ public class MineralWikiApp {
             mineral.setHardness(hardness);
             mineral.setDensity(density);
             mineral.setIndexOfRefraction(indexOfRefraction);
-            this.mainTable.addEntry(mineral, EntryType.MINERAL);
+            this.mineralTable.addEntry(mineral);
         } catch (IllegalArgumentException e) {
             System.out.println("Could not Resolve Crystal Structure");
         } catch (MineralDuplicateException e) {

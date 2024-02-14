@@ -2,7 +2,6 @@ package model.entries;
 
 import model.enums.Cleavage;
 import model.enums.CrystalStructure;
-import model.exceptions.UnknownCrystalStructure;
 
 public class Mineral extends WikiEntry {
     private CrystalStructure crystalStructure;
@@ -77,4 +76,7 @@ public class Mineral extends WikiEntry {
     public void setCleavage(Cleavage cleavage) {
         this.cleavage = cleavage;
     }
+
 }
+
+

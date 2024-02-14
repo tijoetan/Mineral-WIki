@@ -1,18 +1,12 @@
 package model.tableentry;
 
+import exceptions.DuplicationException;
+import exceptions.FamilyDuplicationException;
 import model.entries.Family;
-import model.entries.Mineral;
 import model.entries.WikiEntry;
-import model.enums.Attributes;
-import model.enums.EntryType;
-import model.exceptions.EmptyTableException;
-import model.exceptions.ItemNotFoundException;
-import model.exceptions.MineralDuplicateException;
+import exceptions.ItemNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 
 public class FamilyTable implements WikiEntryTable {
 
@@ -34,11 +28,11 @@ public class FamilyTable implements WikiEntryTable {
     }
 
     @Override
-    public void addEntry(WikiEntry entry) throws MineralDuplicateException {
+    public void addEntry(WikiEntry entry) throws DuplicationException {
         if (this.familyNameTable.get(entry.getName()) != null) {
             this.familyNameTable.put(entry.getName(), (Family) entry);
         } else {
-            throw new MineralDuplicateException();
+            throw new FamilyDuplicationException();
         }
 
     }

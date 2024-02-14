@@ -1,11 +1,12 @@
 package model.tableentry;
 
+import exceptions.DuplicationException;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
 import model.enums.Attributes;
-import model.exceptions.EmptyTableException;
-import model.exceptions.ItemNotFoundException;
-import model.exceptions.MineralDuplicateException;
+import exceptions.EmptyTableException;
+import exceptions.ItemNotFoundException;
+import exceptions.MineralDuplicateException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -60,7 +61,7 @@ public class MineralTable implements WikiEntryTable {
     }
 
     @Override
-    public void addEntry(WikiEntry entry) throws MineralDuplicateException {
+    public void addEntry(WikiEntry entry) throws DuplicationException {
         if (mineralNameTable.get(entry.getName()) == null) {
             mineralNameTable.put(entry.getName(), (Mineral) entry);
             System.out.println("Finished Adding");

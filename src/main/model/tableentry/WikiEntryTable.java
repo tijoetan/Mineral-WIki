@@ -1,7 +1,7 @@
 package model.tableentry;
 
-import exceptions.DuplicationException;
-import exceptions.ItemNotFoundException;
+import model.exceptions.DuplicationException;
+import model.exceptions.ItemNotFoundException;
 import model.entries.WikiEntry;
 
 public interface WikiEntryTable {
@@ -10,5 +10,6 @@ public interface WikiEntryTable {
     void addEntry(WikiEntry entry) throws DuplicationException;
 
     void removeEntry(String name) throws ItemNotFoundException;
+
 
 }

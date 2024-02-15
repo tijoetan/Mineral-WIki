@@ -11,16 +11,14 @@ public class Mineral extends WikiEntry {
     private Float density;
 
 
-    public void setIndexOfRefraction(float indexOfRefraction) {
-        this.indexOfRefraction = indexOfRefraction;
-    }
+    public Mineral(String name) {
+        super(name);
+        this.cleavage = Cleavage.NA;
+        this.crystalStructure = CrystalStructure.NA;
 
-    public void setHardness(float hardness) {
-        this.hardness = hardness;
-    }
-
-    public void setDensity(float density) {
-        this.density = density;
+        this.hardness = 0.0f;
+        this.density = 0.0f;
+        this.indexOfRefraction = 0.0f;
     }
 
     public float getIndexOfRefraction() {
@@ -35,14 +33,43 @@ public class Mineral extends WikiEntry {
         return density;
     }
 
-    public Mineral(String name) {
-        super(name);
-        this.cleavage = Cleavage.NA;
-        this.crystalStructure = CrystalStructure.NA;
+    public CrystalStructure getCrystalStructure() {
+        return this.crystalStructure;
+    }
 
-        this.hardness = null;
-        this.density = null;
-        this.indexOfRefraction = null;
+
+    public Cleavage getCleavage() {
+        return this.cleavage;
+    }
+
+    public void setIndexOfRefraction(Float indexOfRefraction) {
+        if (indexOfRefraction > 0) {
+            this.indexOfRefraction = indexOfRefraction;
+        }
+    }
+
+    public void setHardness(Float hardness) {
+        if (hardness > 0) {
+            this.hardness = hardness;
+        }
+    }
+
+    public void setDensity(Float density) {
+        if (density > 0) {
+            this.density = density;
+        }
+    }
+
+    public void setCrystalStructure(CrystalStructure crystalStructure) {
+        if (crystalStructure != CrystalStructure.NA) {
+            this.crystalStructure = crystalStructure;
+        }
+    }
+
+    public void setCleavage(Cleavage cleavage) {
+        if (cleavage != Cleavage.NA) {
+            this.cleavage = cleavage;
+        }
     }
 
     @Override
@@ -58,23 +85,6 @@ public class Mineral extends WikiEntry {
                         this.indexOfRefraction,
                         this.cleavage);
         System.out.println(attributeRow);
-    }
-
-    public void setCrystalStructure(CrystalStructure crystalStructure) {
-        this.crystalStructure = crystalStructure;
-    }
-
-    public CrystalStructure getCrystalStructure() {
-        return this.crystalStructure;
-    }
-
-
-    public Cleavage getCleavage() {
-        return this.cleavage;
-    }
-
-    public void setCleavage(Cleavage cleavage) {
-        this.cleavage = cleavage;
     }
 
 }

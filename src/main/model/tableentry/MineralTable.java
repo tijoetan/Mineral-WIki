@@ -1,12 +1,12 @@
 package model.tableentry;
 
-import exceptions.DuplicationException;
+import model.exceptions.DuplicationException;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
 import model.enums.Attributes;
-import exceptions.EmptyTableException;
-import exceptions.ItemNotFoundException;
-import exceptions.MineralDuplicateException;
+import model.exceptions.EmptyTableException;
+import model.exceptions.ItemNotFoundException;
+import model.exceptions.MineralDuplicateException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,17 +37,13 @@ public class MineralTable implements WikiEntryTable {
             case DENSITY:
                 returnList.sort((Mineral m1, Mineral m2) -> Float.compare(m1.getDensity(), m2.getDensity()));
                 break;
-            case CRYSTAL_STRUCTURE:
+            case CRYSTAL:
                 returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCrystalStructure().getValue()));
             case CLEAVAGE:
                 returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCleavage().getValue()));
                 break;
         }
         return returnList;
-    }
-
-    public HashMap<String, Mineral> getMineralNameTable() {
-        return mineralNameTable;
     }
 
     @Override
@@ -64,7 +60,6 @@ public class MineralTable implements WikiEntryTable {
     public void addEntry(WikiEntry entry) throws DuplicationException {
         if (mineralNameTable.get(entry.getName()) == null) {
             mineralNameTable.put(entry.getName(), (Mineral) entry);
-            System.out.println("Finished Adding");
         } else {
             throw new MineralDuplicateException();
         }

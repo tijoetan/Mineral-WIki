@@ -9,6 +9,7 @@ public enum CrystalStructure {
         this.value = i;
     }
 
+
     public int getValue() {
         return this.value;
     }

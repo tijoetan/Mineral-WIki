@@ -1,16 +1,17 @@
 package model.tableentry;
 
-import exceptions.DuplicationException;
-import exceptions.FamilyDuplicationException;
-import model.entries.Family;
+import model.exceptions.DuplicationException;
+import model.exceptions.FamilyDuplicationException;
 import model.entries.WikiEntry;
-import exceptions.ItemNotFoundException;
+import model.exceptions.ItemNotFoundException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class FamilyTable implements WikiEntryTable {
 
-    private final HashMap<String, Family> familyNameTable;
+    private final HashMap<String, WikiEntry> familyNameTable;
 
     public FamilyTable() {
         this.familyNameTable = new HashMap<>();
@@ -19,7 +20,7 @@ public class FamilyTable implements WikiEntryTable {
 
     @Override
     public WikiEntry getRequestedEntry(String name) throws ItemNotFoundException {
-        Family requestedFamily = this.familyNameTable.get(name);
+        WikiEntry requestedFamily = this.familyNameTable.get(name);
         if (requestedFamily != null) {
             return requestedFamily;
         } else {
@@ -29,8 +30,8 @@ public class FamilyTable implements WikiEntryTable {
 
     @Override
     public void addEntry(WikiEntry entry) throws DuplicationException {
-        if (this.familyNameTable.get(entry.getName()) != null) {
-            this.familyNameTable.put(entry.getName(), (Family) entry);
+        if (this.familyNameTable.get(entry.getName()) == null) {
+            this.familyNameTable.put(entry.getName(), entry);
         } else {
             throw new FamilyDuplicationException();
         }
@@ -44,6 +45,10 @@ public class FamilyTable implements WikiEntryTable {
         } else {
             throw new ItemNotFoundException();
         }
+    }
+
+    public List<WikiEntry> getFamilies() {
+        return new ArrayList<>(familyNameTable.values());
     }
 }
 

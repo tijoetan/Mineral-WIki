@@ -3,9 +3,10 @@ package model.chemicalstructure;
 import java.util.List;
 
 public class MoleculeGroup {
-    private  int amount;
-    private  List<FormulaElement> elements;
+    private final int amount;
+    private final List<FormulaElement> elements;
 
+    //EFFECTS: Initializes MoleculeGroup with amount and elements
     public MoleculeGroup(int amount, List<FormulaElement> elements) {
         this.amount = amount;
         this.elements = elements;
@@ -15,15 +16,8 @@ public class MoleculeGroup {
         return amount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
     public List<FormulaElement> getElements() {
         return elements;
     }
 
-    public void setElements(List<FormulaElement> elements) {
-        this.elements = elements;
-    }
 }

@@ -22,7 +22,15 @@ public class Family extends WikiEntry {
 
     @Override
     public void printAllAttributes() {
-        System.out.println(name);
-        System.out.println(generalFormula.getFormulaAsString());
+        StringBuilder relatedEntries;
+        relatedEntries = new StringBuilder();
+        for (WikiEntry sub : mineralsWithFamily) {
+            relatedEntries.append(sub.getName());
+        }
+        String row = String.format("Name: %s | General Formula: %s | Subs: %s",
+                name,
+                generalFormula.getFormulaAsString(),
+                relatedEntries);
+        System.out.println(row);
     }
 }

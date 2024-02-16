@@ -75,7 +75,7 @@ public class Formula {
     // MODIFIES: targetList
     // EFFECTS: Takes a String containing elements and their quantities, turns it to a FormulaElement and adds it to
     //          targetList
-    private void packageElements(String elements, List<FormulaElement> targetList) throws UnknownElementException {
+    public void packageElements(String elements, List<FormulaElement> targetList) throws UnknownElementException {
         Matcher elementMatches = elementMatch.matcher(elements);
         while (elementMatches.find()) {
             String found = elementMatches.group();
@@ -90,7 +90,7 @@ public class Formula {
     }
 
     // EFFECTS: returns the first section of a string not containing any numbers
-    private String getStringComponent(String found) {
+    public String getStringComponent(String found) {
         Matcher m = Pattern.compile("[^\\d]+").matcher(found);
         if (m.find()) {
             return m.group();
@@ -100,7 +100,7 @@ public class Formula {
     }
 
     // EFFECTS: returns the first part of a string containing digits converted to an Integer
-    private Integer getNumericalComponent(String found) {
+    public Integer getNumericalComponent(String found) {
         Matcher m = generalDigit.matcher(found);
         if (m.find()) {
             return Integer.parseInt(m.group());
@@ -111,7 +111,7 @@ public class Formula {
 
     // EFFECTS: Takes a string identified as a covalent group/subgroup and returns a new MoleculeGroup containing
     //          the elements and their quantities along with the quantity of the covalent group/subgroup
-    private MoleculeGroup processSubGroup(String group) throws UnknownElementException {
+    public MoleculeGroup processSubGroup(String group) throws UnknownElementException {
         int amount;
         List<FormulaElement> processedSubgroups = new ArrayList<>();
         Matcher amountChecker = bracketDigit.matcher(group);

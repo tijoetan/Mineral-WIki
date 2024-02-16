@@ -27,7 +27,7 @@ public class Family extends WikiEntry {
 
     // EFFECTS: prints out family name, formula and minerals with this family
     @Override
-    public void printAllAttributes() {
+    public String giveAllAttributes() {
         StringBuilder relatedEntries;
         relatedEntries = new StringBuilder();
         for (WikiEntry sub : mineralsWithFamily) {
@@ -37,6 +37,6 @@ public class Family extends WikiEntry {
                 name,
                 generalFormula.getFormulaAsString(),
                 relatedEntries);
-        System.out.println(row);
+        return row;
     }
 }

@@ -16,7 +16,7 @@ public abstract class WikiEntry {
         try {
             this.generalFormula = new Formula("NA");
         } catch (UnknownElementException ignored) {
-            System.out.println("?");
+            // Cannot happen
         }
     }
 
@@ -40,10 +40,10 @@ public abstract class WikiEntry {
         return this.generalFormula;
     }
 
-    public abstract void printAllAttributes();
+    public abstract String giveAllAttributes();
 
-    public void printDescription() {
-        System.out.println(this.description);
+    public String getDescription() {
+        return (this.description);
     }
 
 }

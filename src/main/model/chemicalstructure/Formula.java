@@ -10,10 +10,24 @@ import java.util.regex.Pattern;
 
 // Data representation for chemical formulas
 public class Formula {
+    public List<FormulaElement> getMoleculeList() {
+        return moleculeList;
+    }
+
+    public List<MoleculeGroup> getSubstitutableGroups() {
+        return substitutableGroups;
+    }
+
+    public List<MoleculeGroup> getCovalentGroups() {
+        return covalentGroups;
+    }
+
     private final List<FormulaElement> moleculeList;
     private final List<MoleculeGroup> substitutableGroups;
     private final List<MoleculeGroup> covalentGroups;
     private final String unparsedFormula;
+
+    private String parsedFormulaString;
 
     private boolean isValidFormula = true;
 
@@ -35,7 +49,13 @@ public class Formula {
             isValidFormula = false;
         } else {
             parseFormula(unparsedFormula);
+            parsedFormulaString = convertFormulaToString();
         }
+    }
+
+    // EFFECTS: converts all the element groups to a proper string format.
+    private String convertFormulaToString() {
+        return "";
     }
 
     // getters
@@ -65,7 +85,6 @@ public class Formula {
         String groupParsedFormula = subGroupParsedFormula.replaceAll(covalentIon.toString(), "");
         try {
             packageElements(groupParsedFormula, this.moleculeList);
-            System.out.println("Done!");
         } catch (UnknownElementException e) {
             throw new UnknownElementException();
         }

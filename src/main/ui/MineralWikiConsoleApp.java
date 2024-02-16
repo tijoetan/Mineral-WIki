@@ -116,7 +116,7 @@ public class MineralWikiConsoleApp {
     // EFFECTS: prints out family table
     public void viewFamilyTable() {
         for (WikiEntry family : this.familyTable.getFamilies()) {
-            family.printAllAttributes();
+            System.out.println(family.giveAllAttributes());
         }
     }
 
@@ -132,7 +132,7 @@ public class MineralWikiConsoleApp {
                             + "5. Index of refraction").toUpperCase());
             List<Mineral> sortedMineralList = this.mineralTable.getTableSortedBy(groupAttributes);
             for (WikiEntry mineral : sortedMineralList) {
-                mineral.printAllAttributes();
+                System.out.println(mineral.giveAllAttributes());
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Unknown attribute");
@@ -186,8 +186,8 @@ public class MineralWikiConsoleApp {
         String desiredItem = queryString("What would you like to view");
         try {
             WikiEntry item = table.getRequestedEntry(desiredItem);
-            item.printAllAttributes();
-            item.printDescription();
+            System.out.println(item.giveAllAttributes());
+            System.out.println(item.getDescription());
         } catch (ItemNotFoundException e) {
             System.out.println("Could not find entry");
         }
@@ -239,9 +239,9 @@ public class MineralWikiConsoleApp {
     // MODIFIES: family
     // EFFECTS: calls appropriate setter commands on family for its attributes
     public static void fillFamily(Family family,
-                                   Formula familyFormula,
-                                   List<WikiEntry> familyMinerals,
-                                   String description) {
+                                  Formula familyFormula,
+                                  List<WikiEntry> familyMinerals,
+                                  String description) {
 
         family.setGeneralFormula(familyFormula);
         family.addMineralsWithFamily(familyMinerals);
@@ -308,12 +308,12 @@ public class MineralWikiConsoleApp {
     // MODIFIES: mineral
     // EFFECTS: calls appropriate mineral setter methods with the given parameters
     public static void fillMineral(Mineral mineral,
-                                    Formula formula,
-                                    CrystalStructure crystalStructure,
-                                    Float hardness,
-                                    Float density,
-                                    Float indexOfRefraction,
-                                    String description) {
+                                   Formula formula,
+                                   CrystalStructure crystalStructure,
+                                   Float hardness,
+                                   Float density,
+                                   Float indexOfRefraction,
+                                   String description) {
         mineral.setGeneralFormula(formula);
         mineral.setCrystalStructure(crystalStructure);
         mineral.setHardness(hardness);

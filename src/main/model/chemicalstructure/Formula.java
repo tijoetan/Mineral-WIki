@@ -49,14 +49,14 @@ public class Formula {
             isValidFormula = false;
         } else {
             parseFormula(unparsedFormula);
-            parsedFormulaString = convertFormulaToString();
+//            parsedFormulaString = convertFormulaToString();
         }
     }
 
     // EFFECTS: converts all the element groups to a proper string format.
-    private String convertFormulaToString() {
-        return "";
-    }
+//    private String convertFormulaToString() {
+//        return "";
+//    }
 
     // getters
     public String getFormulaAsString() {

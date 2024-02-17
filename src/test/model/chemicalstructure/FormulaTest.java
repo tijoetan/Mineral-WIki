@@ -4,6 +4,8 @@ import model.enums.AtomicSymbols;
 import model.exceptions.UnknownElementException;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FormulaTest {
@@ -13,7 +15,6 @@ class FormulaTest {
     Formula f3;
     Formula f4;
     Formula f5;
-    Formula f6;
 
     @Test
     void testConstructionWithValidUnparsedFormula() {
@@ -83,11 +84,6 @@ class FormulaTest {
     void testParseFormulaSingleElementSingleQuantity() {
         try {
             f1 = new Formula("Al"); // Single Element
-            f2 = new Formula("Mg2"); // Single Element multiple quantity
-            f3 = new Formula("Mg2AlO3"); // Multiple Elements
-            f4 = new Formula("(Li, Na, K, Rb)O3(F, Cl)2"); // Substitutable Groups
-            f5 = new Formula("(NH4)4(OH)(CO3)Cl"); // Covalent Ion Groups
-            f6 = new Formula("(Mg, Ba)2BeAl2(CO3)2(H2O)5"); // All
         } catch (UnknownElementException e) {
             fail();
         }
@@ -104,10 +100,6 @@ class FormulaTest {
     void testParseFormulaSingleElementManyItems() {
         try {
             f2 = new Formula("Mg2"); // Single Element multiple quantity
-            f3 = new Formula("Mg2AlO3"); // Multiple Elements
-            f4 = new Formula("(Li, Na, K, Rb)O3(F, Cl)2"); // Substitutable Groups
-            f5 = new Formula("(NH4)4(OH)(CO3)Cl"); // Covalent Ion Groups
-            f6 = new Formula("(Mg, Ba)2BeAl2(CO3)2(H2O)5"); // All
         } catch (UnknownElementException e) {
             fail();
         }
@@ -123,9 +115,6 @@ class FormulaTest {
     void testParseFormulaMultipleElements() {
         try {
             f3 = new Formula("Mg2AlO3"); // Multiple Elements
-            f4 = new Formula("(Li, Na, K, Rb)O3(F, Cl)2"); // Substitutable Groups
-            f5 = new Formula("(NH4)4(OH)(CO3)Cl"); // Covalent Ion Groups
-            f6 = new Formula("(Mg, Ba)2BeAl2(CO3)2(H2O)5"); // All
         } catch (UnknownElementException e) {
             fail();
         }
@@ -148,29 +137,96 @@ class FormulaTest {
     @Test
     void testParseFormulaSubstitutableStrings() {
         try {
-            f3 = new Formula("Mg2AlO3"); // Multiple Elements
-            f4 = new Formula("(Li, Na, K, Rb)O3(F, Cl)2"); // Substitutable Groups
-            f5 = new Formula("(NH4)4(OH)(CO3)Cl"); // Covalent Ion Groups
-            f6 = new Formula("(Mg, Ba)2BeAl2(CO3)2(H2O)5"); // All
+            f4 = new Formula("(Li, Na, K, Rb)O3(O, Cl2)2"); // Substitutable Groups
         } catch (UnknownElementException e) {
             fail();
         }
 
-        assertEquals(3, f3.getMoleculeList().size());
+        assertEquals(1, f4.getMoleculeList().size());
 
-        assertEquals(AtomicSymbols.MG, f3.getMoleculeList().get(0).getSymbol());
-        assertEquals(2 , f3.getMoleculeList().get(0).getCount());
+        assertEquals(AtomicSymbols.O, f4.getMoleculeList().get(0).getSymbol());
+        assertEquals(3 , f4.getMoleculeList().get(0).getCount());
 
-        assertEquals(AtomicSymbols.AL, f3.getMoleculeList().get(1).getSymbol());
-        assertEquals(1 , f3.getMoleculeList().get(1).getCount());
+        List<MoleculeGroup> f4Subgroups = f4.getSubstitutableGroups();
+        assertEquals(2, f4Subgroups.size());
 
-        assertEquals(AtomicSymbols.O, f3.getMoleculeList().get(2).getSymbol());
-        assertEquals(3 , f3.getMoleculeList().get(2).getCount());
+        MoleculeGroup firstSubgroup = f4Subgroups.get(0);
+        assertEquals(1, firstSubgroup.getAmount());
+        assertEquals(4, firstSubgroup.getElements().size());
 
-        assertTrue(f3.getCovalentGroups().isEmpty());
-        assertTrue(f3.getSubstitutableGroups().isEmpty());
+        assertEquals(AtomicSymbols.LI , firstSubgroup.getElements().get(0).getSymbol());
+        assertEquals(1 , firstSubgroup.getElements().get(0).getCount());
+
+        assertEquals(AtomicSymbols.NA , firstSubgroup.getElements().get(1).getSymbol());
+        assertEquals(1 , firstSubgroup.getElements().get(1).getCount());
+
+        assertEquals(AtomicSymbols.K , firstSubgroup.getElements().get(2).getSymbol());
+        assertEquals(1 , firstSubgroup.getElements().get(2).getCount());
+
+        assertEquals(AtomicSymbols.RB , firstSubgroup.getElements().get(3).getSymbol());
+        assertEquals(1 , firstSubgroup.getElements().get(3).getCount());
+
+        MoleculeGroup secondGroup = f4Subgroups.get(1);
+        assertEquals(2, secondGroup.getAmount());
+        assertEquals(2, secondGroup.getElements().size());
+
+        assertEquals(AtomicSymbols.O ,secondGroup.getElements().get(0).getSymbol());
+        assertEquals(1, secondGroup.getElements().get(0).getCount());
+
+        assertEquals(AtomicSymbols.CL, secondGroup.getElements().get(1).getSymbol());
+        assertEquals(2, secondGroup.getElements().get(1).getCount());
+
+        assertTrue(f4.getCovalentGroups().isEmpty());
+
     }
 
+    @Test
+    void testParseFormulaCovalentGroup() {
+        try {
+            f5 = new Formula("(NH4)4(OH)(CO3)Cl"); // Covalent Ion Groups
+        } catch (UnknownElementException e) {
+            fail();
+        }
+
+        assertEquals(1 ,f5.getMoleculeList().size());
+        assertEquals(AtomicSymbols.CL, f5.getMoleculeList().get(0).getSymbol());
+        assertEquals(1, f5.getMoleculeList().get(0).getCount());
+
+        List<MoleculeGroup> f5CovalentGroups = f5.getCovalentGroups();
+        assertEquals(3, f5CovalentGroups.size());
+
+        MoleculeGroup firstCovalentGroup = f5CovalentGroups.get(0);
+        assertEquals(4, firstCovalentGroup.getAmount());
+        assertEquals(2, firstCovalentGroup.getElements().size());
+
+        assertEquals(AtomicSymbols.N, firstCovalentGroup.getElements().get(0).getSymbol());
+        assertEquals(1, firstCovalentGroup.getElements().get(0).getCount());
+
+        assertEquals(AtomicSymbols.H, firstCovalentGroup.getElements().get(1).getSymbol());
+        assertEquals(4, firstCovalentGroup.getElements().get(1).getCount());
+
+        MoleculeGroup secondCovalentGroup = f5CovalentGroups.get(1);
+        assertEquals(1, secondCovalentGroup.getAmount());
+        assertEquals(2, secondCovalentGroup.getElements().size());
+
+        assertEquals(AtomicSymbols.O, secondCovalentGroup.getElements().get(0).getSymbol());
+        assertEquals(1, secondCovalentGroup.getElements().get(0).getCount());
+
+        assertEquals(AtomicSymbols.H, secondCovalentGroup.getElements().get(1).getSymbol());
+        assertEquals(1, secondCovalentGroup.getElements().get(1).getCount());
+
+        MoleculeGroup thirdCovalentGroup = f5CovalentGroups.get(2);
+        assertEquals(1, thirdCovalentGroup.getAmount());
+        assertEquals(2, thirdCovalentGroup.getElements().size());
+
+        assertEquals(AtomicSymbols.C, thirdCovalentGroup.getElements().get(0).getSymbol());
+        assertEquals(1, thirdCovalentGroup.getElements().get(0).getCount());
+
+        assertEquals(AtomicSymbols.O, thirdCovalentGroup.getElements().get(1).getSymbol());
+        assertEquals(3, thirdCovalentGroup.getElements().get(1).getCount());
+
+        assertTrue(f5.getSubstitutableGroups().isEmpty());
+    }
 
 
     @Test
@@ -178,14 +234,33 @@ class FormulaTest {
     }
 
     @Test
-    void getStringComponent() {
+    void testGetStringComponent() {
+       try  {
+           f1 = new Formula("NA");
+       } catch (UnknownElementException e) {
+           fail();
+       }
+
+       assertEquals("Misha", f1.getStringComponent("1Misha"));
+       assertEquals("A", f1.getStringComponent("1A7bcd"));
+       assertEquals("", f1.getStringComponent(""));
+       assertEquals("", f1.getStringComponent("123"));
     }
 
     @Test
-    void getNumericalComponent() {
+    void testGetNumericalComponent() {
+        try {
+            f1 = new Formula("NA");
+        } catch (UnknownElementException e) {
+           fail();
+        }
+        assertEquals(1, f1.getNumericalComponent("A1"));
+        assertEquals(24, f1.getNumericalComponent("24O8"));
+        assertEquals(1, f1.getNumericalComponent(""));
+        assertEquals(1, f1.getNumericalComponent("ABCDE"));
     }
 
     @Test
-    void processSubGroup() {
+    void testProcessSubGroup() {
     }
 }

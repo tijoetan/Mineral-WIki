@@ -1,7 +1,7 @@
 package model.entries;
 
-import model.enums.Cleavage;
-import model.enums.CrystalStructure;
+import enums.Cleavage;
+import enums.CrystalStructure;
 
 // Mineral Data abstraction
 

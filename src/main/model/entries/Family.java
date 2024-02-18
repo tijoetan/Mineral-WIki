@@ -14,6 +14,11 @@ public class Family extends WikiEntry {
         this.mineralsWithFamily = new ArrayList<>();
     }
 
+    // getters
+    public List<WikiEntry> getMineralsWithFamily() {
+        return this.mineralsWithFamily;
+    }
+
     // MODIFIES: this
     // EFFECTS: adds mineral to mineralsWithFamily if it is not already there
     public void addMineralsWithFamily(List<WikiEntry> minerals) {
@@ -32,6 +37,7 @@ public class Family extends WikiEntry {
         relatedEntries = new StringBuilder();
         for (WikiEntry sub : mineralsWithFamily) {
             relatedEntries.append(sub.getName());
+            relatedEntries.append(" ");
         }
         String row = String.format("Name: %s | General Formula: %s | Subs: %s",
                 name,

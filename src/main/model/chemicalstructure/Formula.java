@@ -1,7 +1,7 @@
 package model.chemicalstructure;
 
-import model.enums.AtomicSymbols;
-import model.exceptions.UnknownElementException;
+import enums.AtomicSymbols;
+import exceptions.UnknownElementException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +38,7 @@ public class Formula {
     private static final Pattern bracketDigit = Pattern.compile("\\)(\\d)+");
 
     // EFFECTS: Constructs new formula object and populates the lists with interpreted elements from unparsed formula
-    //          throws UnknownElementException if unparsedFormula is not a valid formula. If unparsedFormula is "NA"
-    //          serves as blank formula
+    //          throws UnknownElementException if unparsedFormula is not a valid formula.
     public Formula(String unparsedFormula) throws UnknownElementException {
         this.moleculeList = new ArrayList<>();
         this.substitutableGroups = new ArrayList<>();
@@ -51,6 +50,15 @@ public class Formula {
             parseFormula(unparsedFormula);
 //            parsedFormulaString = convertFormulaToString();
         }
+    }
+
+    // EFFECTS: constructor for dummy formula
+    public Formula() {
+        this.moleculeList = new ArrayList<>();
+        this.substitutableGroups = new ArrayList<>();
+        this.covalentGroups = new ArrayList<>();
+        this.unparsedFormula = "";
+        this.isValidFormula = false;
     }
 
     // EFFECTS: converts all the element groups to a proper string format.

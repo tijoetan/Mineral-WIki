@@ -1,6 +1,6 @@
 package model.chemicalstructure;
 
-import model.enums.AtomicSymbols;
+import enums.AtomicSymbols;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

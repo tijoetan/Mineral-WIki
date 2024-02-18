@@ -1,4 +1,4 @@
-package model.exceptions;
+package exceptions;
 
 public class UnknownCrystalStructure extends Exception {
 }

@@ -2,7 +2,6 @@ package model.entries;
 
 // Abstract class for Mineral and Family Classes
 
-import model.exceptions.UnknownElementException;
 import model.chemicalstructure.Formula;
 
 public abstract class WikiEntry {
@@ -13,11 +12,7 @@ public abstract class WikiEntry {
     protected WikiEntry(String name) {
         this.name = name;
         this.description = "No description provided";
-        try {
-            this.generalFormula = new Formula("NA");
-        } catch (UnknownElementException ignored) {
-            // Cannot happen
-        }
+        this.generalFormula = new Formula();
     }
 
     public void setDescription(String description) {

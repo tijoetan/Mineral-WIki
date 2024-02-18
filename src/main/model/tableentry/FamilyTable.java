@@ -1,9 +1,9 @@
 package model.tableentry;
 
-import model.exceptions.DuplicationException;
-import model.exceptions.FamilyDuplicationException;
+import exceptions.DuplicationException;
+import exceptions.FamilyDuplicationException;
 import model.entries.WikiEntry;
-import model.exceptions.ItemNotFoundException;
+import exceptions.ItemNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

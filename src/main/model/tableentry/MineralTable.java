@@ -1,12 +1,12 @@
 package model.tableentry;
 
-import model.exceptions.DuplicationException;
+import exceptions.DuplicationException;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
-import model.enums.Attributes;
-import model.exceptions.EmptyTableException;
-import model.exceptions.ItemNotFoundException;
-import model.exceptions.MineralDuplicateException;
+import enums.Attributes;
+import exceptions.EmptyTableException;
+import exceptions.ItemNotFoundException;
+import exceptions.MineralDuplicateException;
 
 import java.util.ArrayList;
 import java.util.Comparator;

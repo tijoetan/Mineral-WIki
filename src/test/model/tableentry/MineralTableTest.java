@@ -8,17 +8,21 @@ class MineralTableTest {
 
     @Test
     void getTableSortedBy() {
+
     }
 
     @Test
     void getRequestedEntry() {
+
     }
 
     @Test
     void addEntry() {
+
     }
 
     @Test
     void removeEntry() {
+
     }
 }

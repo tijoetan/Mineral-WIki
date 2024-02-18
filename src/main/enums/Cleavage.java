@@ -1,4 +1,4 @@
-package model.enums;
+package enums;
 
 public enum Cleavage {
     CUBIC(0), RHOMBOHEDRAL(1), PRISMATIC(2), OCTAHEDRAL(3), BASAL(4), NONE(5), NA(6);

@@ -1,12 +1,12 @@
 package ui;
 
+import exceptions.*;
 import model.chemicalstructure.Formula;
 import model.entries.Family;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
-import model.enums.Attributes;
-import model.enums.CrystalStructure;
-import model.exceptions.*;
+import enums.Attributes;
+import enums.CrystalStructure;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import model.tableentry.WikiEntryTable;

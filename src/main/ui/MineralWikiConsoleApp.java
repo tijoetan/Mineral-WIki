@@ -28,6 +28,7 @@ public class MineralWikiConsoleApp {
     private final FamilyTable familyTable;
     private Boolean running;
 
+    // EFFECTS: Constructor for MineralWikiConsoleApp
     public MineralWikiConsoleApp() {
         this.running = true;
         this.scanner = new Scanner(System.in);
@@ -35,6 +36,8 @@ public class MineralWikiConsoleApp {
         this.familyTable = new FamilyTable();
     }
 
+    // MODIFIES: this
+    // EFFECTS: main loop that takes user inputs and updates and queries the tables
     public void runApp() {
         while (this.running) {
             String question = "What would you like to do\n"
@@ -53,23 +56,17 @@ public class MineralWikiConsoleApp {
     // EFFECTS: performs operation based on input given
     public void handleCommands(String input) {
         switch (input.toLowerCase()) {
-            case "a":
-                addItem();
+            case "a": addItem();
                 break;
-            case "d":
-                deleteItem();
+            case "d": deleteItem();
                 break;
-            case "e":
-                editItem();
+            case "e": editItem();
                 break;
-            case "g":
-                viewTable();
+            case "g": viewTable();
                 break;
-            case "q":
-                quit();
+            case "q": quit();
                 break;
-            case "v":
-                viewItem();
+            case "v": viewItem();
                 break;
             default:
                 System.out.println("Command not understood");

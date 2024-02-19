@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // Data representation for chemical formulas
+
 public class Formula {
     public List<FormulaElement> getMoleculeList() {
         return moleculeList;
@@ -48,7 +49,7 @@ public class Formula {
             isValidFormula = false;
         } else {
             parseFormula(unparsedFormula);
-//            parsedFormulaString = convertFormulaToString();
+//          parsedFormulaString = convertFormulaToString();
         }
     }
 

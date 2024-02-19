@@ -43,6 +43,7 @@ public class MineralTable implements WikiEntryTable {
                 break;
             case CRYSTAL:
                 returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCrystalStructure().ordinal()));
+                break;
             case CLEAVAGE:
                 returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCleavage().ordinal()));
                 break;

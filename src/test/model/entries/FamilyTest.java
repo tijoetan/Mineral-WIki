@@ -40,7 +40,7 @@ class FamilyTest {
     @Test
     void addMineralsWithFamily() {
         f1.addMineralsWithFamily(new ArrayList<>(Arrays.asList(m1, m2)));
-        f2.addMineralsWithFamily(new ArrayList<>(Arrays.asList(m3, m4)));
+        f2.addMineralsWithFamily(new ArrayList<>(Arrays.asList(m3, m4, m4)));
 
         assertEquals(2, f1.getMineralsWithFamily().size());
         assertEquals(m1, f1.getMineralsWithFamily().get(0));
@@ -49,6 +49,7 @@ class FamilyTest {
         assertEquals(2, f2.getMineralsWithFamily().size());
         assertEquals(m3, f2.getMineralsWithFamily().get(0));
         assertEquals(m4, f2.getMineralsWithFamily().get(1));
+
     }
 
     @Test

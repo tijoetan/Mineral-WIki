@@ -76,6 +76,14 @@ class MineralTest {
         assertEquals(CrystalStructure.CUBIC, m1.getCrystalStructure());
         assertEquals(CrystalStructure.HEXAGONAL, m2.getCrystalStructure());
         assertEquals(CrystalStructure.ORTHORHOMBIC, m3.getCrystalStructure());
+
+        m1.setCrystalStructure(CrystalStructure.NA);
+        m2.setCrystalStructure(CrystalStructure.NA);
+        m3.setCrystalStructure(CrystalStructure.NA);
+
+        assertEquals(CrystalStructure.CUBIC, m1.getCrystalStructure());
+        assertEquals(CrystalStructure.HEXAGONAL, m2.getCrystalStructure());
+        assertEquals(CrystalStructure.ORTHORHOMBIC, m3.getCrystalStructure());
     }
 
     @Test
@@ -83,6 +91,14 @@ class MineralTest {
         m1.setCleavage(Cleavage.CUBIC);
         m2.setCleavage(Cleavage.BASAL);
         m3.setCleavage(Cleavage.PRISMATIC);
+
+        assertEquals(Cleavage.CUBIC, m1.getCleavage());
+        assertEquals(Cleavage.BASAL, m2.getCleavage());
+        assertEquals(Cleavage.PRISMATIC, m3.getCleavage());
+
+        m1.setCleavage(Cleavage.NA);
+        m3.setCleavage(Cleavage.NA);
+        m3.setCleavage(Cleavage.NA);
 
         assertEquals(Cleavage.CUBIC, m1.getCleavage());
         assertEquals(Cleavage.BASAL, m2.getCleavage());

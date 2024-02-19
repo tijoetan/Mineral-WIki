@@ -21,6 +21,10 @@ public class MineralTable implements WikiEntryTable {
         this.mineralNameTable = new HashMap<>();
     }
 
+    public HashMap<String, Mineral> getMineralNameTable() {
+        return this.mineralNameTable;
+    }
+
     public List<Mineral> getTableSortedBy(Attributes attribute) throws EmptyTableException {
         if (this.mineralNameTable.isEmpty()) {
             throw new EmptyTableException();

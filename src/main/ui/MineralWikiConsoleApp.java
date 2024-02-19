@@ -20,6 +20,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+// Console application that interprets user commands to instructions on model classes
+
 public class MineralWikiConsoleApp {
     private final Scanner scanner;
     private final MineralTable mineralTable;

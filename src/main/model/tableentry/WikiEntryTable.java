@@ -4,6 +4,8 @@ import model.modelexceptions.DuplicationException;
 import model.modelexceptions.ItemNotFoundException;
 import model.entries.WikiEntry;
 
+// Interface for the table structure
+
 public interface WikiEntryTable {
     WikiEntry getRequestedEntry(String name) throws ItemNotFoundException;
 

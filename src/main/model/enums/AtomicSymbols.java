@@ -1,5 +1,7 @@
 package model.enums;
 
+// Stores elements and their atomic number (along with the Vacancy (X))
+
 public enum AtomicSymbols {
     X(0),H(1), HE(2), LI(3), BE(4),
     B(5), C(6), N(7), O(8), F(9),

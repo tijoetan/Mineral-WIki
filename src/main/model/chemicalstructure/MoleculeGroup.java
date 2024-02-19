@@ -2,6 +2,7 @@ package model.chemicalstructure;
 
 import java.util.List;
 
+// Data representation for covalent ions or substitutable groups
 public class MoleculeGroup {
     private final int amount;
     private final List<FormulaElement> elements;

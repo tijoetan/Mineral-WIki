@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+// Implementation of WikiEntryTable for storing a collection of mineral families
+
 public class FamilyTable implements WikiEntryTable {
 
     private final HashMap<String, WikiEntry> familyNameTable;

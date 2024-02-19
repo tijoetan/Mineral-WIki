@@ -13,6 +13,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+// Implementation of WikiEntryTable for storing a collection of minreals
+
 public class MineralTable implements WikiEntryTable {
 
     private final HashMap<String, Mineral> mineralNameTable;

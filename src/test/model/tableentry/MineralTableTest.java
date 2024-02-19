@@ -198,7 +198,7 @@ class MineralTableTest {
         List<WikiEntry> expectedDensityGroup = new ArrayList<>(Arrays.asList(m4, m1, m2, m3, m5));
         List<WikiEntry> expectedHardnessGroup = new ArrayList<>(Arrays.asList(m5, m4, m1, m3, m2));
         List<WikiEntry> expectedIORGroup = new ArrayList<>(Arrays.asList(m5, m4, m1, m3, m2));
-        List<WikiEntry> expectedCrystalGroup = new ArrayList<>(Arrays.asList(m2, m4, m5, m1, m3));
+        List<WikiEntry> expectedCrystalGroup = new ArrayList<>(Arrays.asList(m2, m1, m4, m5, m3));
         List<WikiEntry> expectedCleavageGroup = new ArrayList<>(Arrays.asList(m2, m4, m5, m3, m1));
 
         try {

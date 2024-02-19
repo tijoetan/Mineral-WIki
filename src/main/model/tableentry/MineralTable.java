@@ -46,7 +46,6 @@ public class MineralTable implements WikiEntryTable {
                 break;
             case CLEAVAGE:
                 returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCleavage().ordinal()));
-                break;
         }
         return returnList;
     }

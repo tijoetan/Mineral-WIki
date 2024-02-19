@@ -186,6 +186,7 @@ class MineralTableTest {
         List<Mineral> actualIORGroup = null;
         List<Mineral> actualCrystalGroup = null;
         List<Mineral> actualCleavageGroup = null;
+        List<Mineral> actualDefaultGroup = null;
         try {
             testTable.addEntry(m1);
             testTable.addEntry(m2);
@@ -200,6 +201,7 @@ class MineralTableTest {
         List<WikiEntry> expectedIORGroup = new ArrayList<>(Arrays.asList(m5, m4, m1, m3, m2));
         List<WikiEntry> expectedCrystalGroup = new ArrayList<>(Arrays.asList(m2, m1, m4, m5, m3));
         List<WikiEntry> expectedCleavageGroup = new ArrayList<>(Arrays.asList(m2, m4, m5, m3, m1));
+        List<WikiEntry> expectedDefaultGroup = new ArrayList<>(Arrays.asList(m1, m2, m3, m4, m5));
 
         try {
             actualDensityGroup = testTable.getTableSortedBy(Attributes.DENSITY);
@@ -207,6 +209,7 @@ class MineralTableTest {
             actualIORGroup = testTable.getTableSortedBy(Attributes.IOR);
             actualCrystalGroup = testTable.getTableSortedBy(Attributes.CRYSTAL);
             actualCleavageGroup = testTable.getTableSortedBy(Attributes.CLEAVAGE);
+            actualDefaultGroup = testTable.getTableSortedBy(Attributes.DEFAULT);
         } catch (EmptyTableException e) {
             fail();
         }
@@ -217,6 +220,7 @@ class MineralTableTest {
             assertEquals(expectedIORGroup.get(i), actualIORGroup.get(i));
             assertEquals(expectedCrystalGroup.get(i), actualCrystalGroup.get(i));
             assertEquals(expectedCleavageGroup.get(i), actualCleavageGroup.get(i));
+            assertTrue(actualDefaultGroup.contains(expectedDefaultGroup.get(i)));
         }
     }
 

@@ -31,21 +31,20 @@ public class MineralTable implements WikiEntryTable {
         }
         List<Mineral> returnList = new ArrayList<>(this.mineralNameTable.values());
         switch (attribute) {
-            case IOR:
-                returnList.sort((Mineral m1, Mineral m2) ->
+            case IOR: returnList.sort((Mineral m1, Mineral m2) ->
                         Float.compare(m1.getIndexOfRefraction(), m2.getIndexOfRefraction()));
                 break;
-            case HARDNESS:
-                returnList.sort((Mineral m1, Mineral m2) -> Float.compare(m1.getHardness(), m2.getHardness()));
+            case HARDNESS: returnList.sort((Mineral m1, Mineral m2) -> Float.compare(m1.getHardness(),
+                    m2.getHardness()));
                 break;
-            case DENSITY:
-                returnList.sort((Mineral m1, Mineral m2) -> Float.compare(m1.getDensity(), m2.getDensity()));
+            case DENSITY: returnList.sort((Mineral m1, Mineral m2) -> Float.compare(m1.getDensity(), m2.getDensity()));
                 break;
-            case CRYSTAL:
-                returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCrystalStructure().ordinal()));
+            case CRYSTAL: returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCrystalStructure().ordinal()));
                 break;
-            case CLEAVAGE:
-                returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCleavage().ordinal()));
+            case CLEAVAGE: returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCleavage().ordinal()));
+                break;
+            default:
+                break;
         }
         return returnList;
     }

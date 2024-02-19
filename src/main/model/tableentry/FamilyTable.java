@@ -1,9 +1,9 @@
 package model.tableentry;
 
-import exceptions.DuplicationException;
-import exceptions.FamilyDuplicationException;
+import model.modelexceptions.DuplicationException;
+import model.modelexceptions.FamilyDuplicationException;
 import model.entries.WikiEntry;
-import exceptions.ItemNotFoundException;
+import model.modelexceptions.ItemNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +17,10 @@ public class FamilyTable implements WikiEntryTable {
         this.familyNameTable = new HashMap<>();
     }
 
+    // getters
+    public HashMap<String, WikiEntry> getFamilyNameTable() {
+        return this.familyNameTable;
+    }
 
     @Override
     public WikiEntry getRequestedEntry(String name) throws ItemNotFoundException {

@@ -1,6 +1,6 @@
 package model.chemicalstructure;
 
-import enums.AtomicSymbols;
+import model.enums.AtomicSymbols;
 
 // Contains an Element and its amount
 

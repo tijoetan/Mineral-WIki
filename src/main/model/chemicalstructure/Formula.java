@@ -1,7 +1,7 @@
 package model.chemicalstructure;
 
-import enums.AtomicSymbols;
-import exceptions.UnknownElementException;
+import model.enums.AtomicSymbols;
+import model.modelexceptions.UnknownElementException;
 
 import java.util.ArrayList;
 import java.util.List;

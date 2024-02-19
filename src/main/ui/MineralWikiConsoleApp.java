@@ -1,15 +1,19 @@
 package ui;
 
-import exceptions.*;
 import model.chemicalstructure.Formula;
 import model.entries.Family;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
-import enums.Attributes;
-import enums.CrystalStructure;
+import model.enums.Attributes;
+import model.enums.CrystalStructure;
+import model.modelexceptions.DuplicationException;
+import model.modelexceptions.EmptyTableException;
+import model.modelexceptions.ItemNotFoundException;
+import model.modelexceptions.UnknownElementException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import model.tableentry.WikiEntryTable;
+import ui.uiexceptions.NonNumericValueGiven;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;

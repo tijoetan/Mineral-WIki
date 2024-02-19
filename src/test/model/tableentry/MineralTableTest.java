@@ -6,10 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MineralTableTest {
 
-    @Test
-    void getTableSortedBy() {
-
-    }
 
     @Test
     void getRequestedEntry() {
@@ -24,5 +20,9 @@ class MineralTableTest {
     @Test
     void removeEntry() {
 
+    }
+
+    @Test
+    void getTableSortedBy() {
     }
 }

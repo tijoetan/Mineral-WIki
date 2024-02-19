@@ -1,7 +1,7 @@
 package model.entries;
 
 import model.chemicalstructure.Formula;
-import exceptions.UnknownElementException;
+import model.modelexceptions.UnknownElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

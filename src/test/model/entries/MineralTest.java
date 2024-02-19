@@ -1,9 +1,9 @@
 package model.entries;
 
 import model.chemicalstructure.Formula;
-import enums.Cleavage;
-import enums.CrystalStructure;
-import exceptions.UnknownElementException;
+import model.enums.Cleavage;
+import model.enums.CrystalStructure;
+import model.modelexceptions.UnknownElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

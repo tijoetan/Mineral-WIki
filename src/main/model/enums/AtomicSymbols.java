@@ -1,4 +1,4 @@
-package enums;
+package model.enums;
 
 public enum AtomicSymbols {
     X(0),H(1), HE(2), LI(3), BE(4),

@@ -1,12 +1,12 @@
 package model.tableentry;
 
-import exceptions.DuplicationException;
+import model.modelexceptions.DuplicationException;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
-import enums.Attributes;
-import exceptions.EmptyTableException;
-import exceptions.ItemNotFoundException;
-import exceptions.MineralDuplicateException;
+import model.enums.Attributes;
+import model.modelexceptions.EmptyTableException;
+import model.modelexceptions.ItemNotFoundException;
+import model.modelexceptions.MineralDuplicateException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -38,9 +38,9 @@ public class MineralTable implements WikiEntryTable {
                 returnList.sort((Mineral m1, Mineral m2) -> Float.compare(m1.getDensity(), m2.getDensity()));
                 break;
             case CRYSTAL:
-                returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCrystalStructure().getValue()));
+                returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCrystalStructure().ordinal()));
             case CLEAVAGE:
-                returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCleavage().getValue()));
+                returnList.sort(Comparator.comparingInt((Mineral m) -> m.getCleavage().ordinal()));
                 break;
         }
         return returnList;

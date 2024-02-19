@@ -1,7 +1,7 @@
 package model.chemicalstructure;
 
-import enums.AtomicSymbols;
-import exceptions.UnknownElementException;
+import model.enums.AtomicSymbols;
+import model.modelexceptions.UnknownElementException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

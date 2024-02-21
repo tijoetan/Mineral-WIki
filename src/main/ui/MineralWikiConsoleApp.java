@@ -16,9 +16,11 @@ import model.tableentry.WikiEntryTable;
 import ui.uiexceptions.NonNumericValueGiven;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
+import static ui.UserQuery.queryFloat;
+import static ui.UserQuery.queryString;
 
 // Console application that interprets user commands to instructions on model classes
 
@@ -28,12 +30,13 @@ public class MineralWikiConsoleApp {
     private final FamilyTable familyTable;
     private Boolean running;
 
-    // EFFECTS: Constructor for MineralWikiConsoleApp
+    // EFFECTS: Constructor for MineralWikiConsoleApp and runs the application
     public MineralWikiConsoleApp() {
         this.running = true;
         this.scanner = new Scanner(System.in);
         this.mineralTable = new MineralTable();
         this.familyTable = new FamilyTable();
+        runApp();
     }
 
     // MODIFIES: this
@@ -82,7 +85,7 @@ public class MineralWikiConsoleApp {
         }
 
         try {
-            String requested = queryString("What would you like to edit?");
+            String requested = queryString("What would you like to edit?", this.scanner);
             WikiEntry target = table.getRequestedEntry(requested);
             if (table.equals(this.mineralTable)) {
                 System.out.println("Leave entry blank to keep the same");
@@ -105,7 +108,8 @@ public class MineralWikiConsoleApp {
 
     // EFFECTS: prints out the requested table with mineral attributes being sortable
     public void viewTable() {
-        String tableType = queryString("Would you like to view the \"mineral\" or \"family\" table");
+        String tableType = queryString("Would you like to view the \"mineral\" or \"family\" table",
+                this.scanner);
         if (tableType.equalsIgnoreCase("mineral")) {
             viewMineralTable();
         } else if (tableType.equalsIgnoreCase("family")) {
@@ -113,7 +117,7 @@ public class MineralWikiConsoleApp {
         } else {
             System.out.println("Unknown statement");
         }
-        queryString("Type anything to continue");
+        queryString("Type anything to continue", this.scanner);
     }
 
     // EFFECTS: prints out family table
@@ -132,7 +136,7 @@ public class MineralWikiConsoleApp {
                             + "2. Cleavage\n"
                             + "3. Hardness\n"
                             + "4. Density\n"
-                            + "5. Index of refraction").toUpperCase());
+                            + "5. Index of refraction", this.scanner).toUpperCase());
             List<Mineral> sortedMineralList = this.mineralTable.getTableSortedBy(groupAttributes);
             for (WikiEntry mineral : sortedMineralList) {
                 System.out.println(mineral.giveAllAttributes());
@@ -160,7 +164,7 @@ public class MineralWikiConsoleApp {
         }
         String removeQuestion = "What is the name of the item you would like to remove?";
         try {
-            table.removeEntry(queryString(removeQuestion));
+            table.removeEntry(queryString(removeQuestion, this.scanner));
             System.out.println("Item removed");
         } catch (ItemNotFoundException e) {
             System.out.println("Could not delete item");
@@ -170,7 +174,8 @@ public class MineralWikiConsoleApp {
 
     // EFFECTS: returns either family or mineral table based on the user input
     public WikiEntryTable getCorrectTable() {
-        String request = queryString("Would you like to perform the task on a \"mineral\" or \"family\"");
+        String request = queryString("Would you like to perform the task on a \"mineral\" or \"family\"",
+                this.scanner);
         if (request.equalsIgnoreCase("mineral")) {
             return this.mineralTable;
         } else if (request.equalsIgnoreCase("family")) {
@@ -186,7 +191,7 @@ public class MineralWikiConsoleApp {
         if (table == null) {
             return;
         }
-        String desiredItem = queryString("What would you like to view");
+        String desiredItem = queryString("What would you like to view", this.scanner);
         try {
             WikiEntry item = table.getRequestedEntry(desiredItem);
             System.out.println(item.giveAllAttributes());
@@ -194,7 +199,7 @@ public class MineralWikiConsoleApp {
         } catch (ItemNotFoundException e) {
             System.out.println("Could not find entry");
         }
-        queryString("Type anything to continue");
+        queryString("Type anything to continue", this.scanner);
 
     }
 
@@ -202,7 +207,7 @@ public class MineralWikiConsoleApp {
     // MODIFIES: this
     // EFFECTS: creates and adds new mineral or family to mainTable
     public void addItem() {
-        String whatToAdd = queryString("Would you like to add a \"mineral\" or \"family\"");
+        String whatToAdd = queryString("Would you like to add a \"mineral\" or \"family\"", this.scanner);
         if (whatToAdd.equalsIgnoreCase("mineral")) {
             enterMineral();
         } else if (whatToAdd.equalsIgnoreCase("family")) {
@@ -212,11 +217,11 @@ public class MineralWikiConsoleApp {
         }
 
     }
-
     // MODIFIES: this
+
     // EFFECTS: creates a new family with attributes specified by the user and adds it to familyTable
     public void enterFamily() {
-        String name = queryString("What is the name of your mineral family");
+        String name = queryString("What is the name of your mineral family", this.scanner);
         try {
             Family newFamily = setupUserFamily(new Family(name));
             familyTable.addEntry(newFamily);
@@ -233,8 +238,8 @@ public class MineralWikiConsoleApp {
     //          throws UnknownElementExceptions if given formula is not valid
     public Family setupUserFamily(Family startFamily) throws UnknownElementException {
         List<WikiEntry> familyMinerals = queryFamilyMinerals();
-        String description = queryString("Please enter a quick description");
-        Formula familyFormula = new Formula(queryString("What is the chemical formula"));
+        String description = queryString("Please enter a quick description", this.scanner);
+        Formula familyFormula = new Formula(queryString("What is the chemical formula", this.scanner));
         fillFamily(startFamily, familyFormula, familyMinerals, description);
         return startFamily;
     }
@@ -246,9 +251,13 @@ public class MineralWikiConsoleApp {
                                   List<WikiEntry> familyMinerals,
                                   String description) {
 
-        family.setGeneralFormula(familyFormula);
-        family.addMineralsWithFamily(familyMinerals);
-        family.setDescription(description);
+        try {
+            family.setGeneralFormula(familyFormula);
+            family.addMineralsWithFamily(familyMinerals);
+            family.setDescription(description);
+        } catch (NullPointerException e) {
+            //
+        }
     }
 
     // EFFECTS: returns a list containing user specified mineral names that are part of a family
@@ -257,7 +266,7 @@ public class MineralWikiConsoleApp {
         boolean doneEntering = false;
         while (!doneEntering) {
             try {
-                String request = queryString("What mineral would you like to link to this? (q to stop)");
+                String request = queryString("What mineral would you like to link to this? (q to stop)", this.scanner);
                 if (request.equalsIgnoreCase("q")) {
                     doneEntering = true;
                     continue;
@@ -274,7 +283,7 @@ public class MineralWikiConsoleApp {
     // EFFECTS: creates user specified mineral and adds it to mineralTable
     public void enterMineral() {
         try {
-            String name = queryString("What is the name of your mineral?: ");
+            String name = queryString("What is the name of your mineral?: ", this.scanner);
             Mineral unconfiguredMineral = setupUserMineral(new Mineral(name));
             this.mineralTable.addEntry(unconfiguredMineral);
             System.out.println("Finished Adding");
@@ -297,13 +306,13 @@ public class MineralWikiConsoleApp {
     //          throws IllegalArgumentException if provided CrystalStructure is not in the Enum
     public Mineral setupUserMineral(Mineral startMineral)
             throws UnknownElementException, NonNumericValueGiven, IllegalArgumentException {
-        String description = queryString("Please enter a quick description about your mineral:");
-        Formula formula = new Formula(queryString("What is the chemical formula?: "));
+        String description = queryString("Please enter a quick description about your mineral:", this.scanner);
+        Formula formula = new Formula(queryString("What is the chemical formula?: ", this.scanner));
         CrystalStructure crystalStructure = CrystalStructure.valueOf(queryString(
-                "What is the crystalline Structure?: ").toUpperCase());
-        Float indexOfRefraction = queryFloat("What is the mineral index of refraction?: ");
-        Float density = queryFloat("What is the mineral density?: ");
-        Float hardness = queryFloat("What is the Mohs hardness of the mineral?: ");
+                "What is the crystalline Structure?: ", this.scanner).toUpperCase());
+        Float indexOfRefraction = queryFloat("What is the mineral index of refraction?: ", this.scanner);
+        Float density = queryFloat("What is the mineral density?: ", this.scanner);
+        Float hardness = queryFloat("What is the Mohs hardness of the mineral?: ", this.scanner);
         fillMineral(startMineral, formula, crystalStructure, hardness, density, indexOfRefraction, description);
         return startMineral;
     }
@@ -317,36 +326,17 @@ public class MineralWikiConsoleApp {
                                    Float density,
                                    Float indexOfRefraction,
                                    String description) {
-        mineral.setGeneralFormula(formula);
-        mineral.setCrystalStructure(crystalStructure);
-        mineral.setHardness(hardness);
-        mineral.setDensity(density);
-        mineral.setIndexOfRefraction(indexOfRefraction);
-        mineral.setDescription(description);
-    }
 
-    // EFFECTS: returns user input for a specified query returns "NA" if entry is blank
-    public String queryString(String userQuestion) {
-        System.out.println(userQuestion);
-        String nextLine = scanner.nextLine();
-        if (nextLine.isEmpty()) {
-            return "NA";
-        }
-        return nextLine;
-    }
-
-    // EFFECTS: returns user input of float type.
-    //          throws NonNumericValueGiven if input cannot be interpreted as a float
-    public Float queryFloat(String userQuestion) throws NonNumericValueGiven {
         try {
-            System.out.println(userQuestion);
-            String input = scanner.nextLine();
-            if (input.isEmpty()) {
-                return -1.0f;
-            }
-            return Float.parseFloat(input);
-        } catch (InputMismatchException e) {
-            throw new NonNumericValueGiven(userQuestion);
+            mineral.setGeneralFormula(formula);
+            mineral.setCrystalStructure(crystalStructure);
+            mineral.setHardness(hardness);
+            mineral.setDensity(density);
+            mineral.setIndexOfRefraction(indexOfRefraction);
+            mineral.setDescription(description);
+        } catch (NullPointerException e) {
+            //
         }
     }
+
 }

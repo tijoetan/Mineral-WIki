@@ -1,4 +1,4 @@
-package ui;
+package utils;
 
 import model.chemicalstructure.Formula;
 import model.entries.Family;

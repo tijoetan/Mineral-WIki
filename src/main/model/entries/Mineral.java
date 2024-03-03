@@ -4,6 +4,7 @@ import model.enums.Cleavage;
 import model.enums.CrystalStructure;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import utils.JsonFieldNames;
 
 // Mineral Data abstraction
 
@@ -104,14 +105,15 @@ public class Mineral extends WikiEntry {
         return attributeRow;
     }
 
+    // EFFECTS: Produces JSON object with the fields of the instance
     @Override
     public JSONObject toJson() {
         JSONObject mineralJson = super.toJson();
-        mineralJson.put("crystalStructure", crystalStructure.toString());
-        mineralJson.put("density", density);
-        mineralJson.put("ior", indexOfRefraction);
-        mineralJson.put("hardness", hardness);
-        mineralJson.put("cleavage", cleavage.toString());
+        mineralJson.put(JsonFieldNames.CRYSTAL_STRUCTURE, crystalStructure.toString());
+        mineralJson.put(JsonFieldNames.DENSITY, density);
+        mineralJson.put(JsonFieldNames.INDEX_OF_REFRACTION, indexOfRefraction);
+        mineralJson.put(JsonFieldNames.HARDNESS, hardness);
+        mineralJson.put(JsonFieldNames.CLEAVAGE, cleavage.toString());
         return mineralJson;
     }
 

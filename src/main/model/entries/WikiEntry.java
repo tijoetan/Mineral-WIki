@@ -3,33 +3,23 @@ package model.entries;
 // Abstract class for Mineral and Family Classes
 
 import model.chemicalstructure.Formula;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
+import utils.JsonFieldNames;
 
 public abstract class WikiEntry implements Writable {
     protected String description;
     protected Formula generalFormula;
     protected String name;
 
+    // EFFECTS: constructs WikiEntry with given name
     protected WikiEntry(String name) {
         this.name = name;
         this.description = "No description provided";
         this.generalFormula = new Formula();
     }
 
-    public void setDescription(String description) {
-        if (!(description == null || description.isEmpty())) {
-            this.description = description;
-        }
-    }
-
-    public void setGeneralFormula(Formula formula) {
-        if (formula != null && formula.isValidFormula()) {
-            this.generalFormula = formula;
-        }
-    }
-
+    // getters
     public String getName() {
         return this.name;
     }
@@ -42,15 +32,32 @@ public abstract class WikiEntry implements Writable {
         return (this.description);
     }
 
-    public abstract String giveAllAttributes();
+    // MODIFIES: this
+    // EFFECTS: sets description if provided description is not an empty string
+    public void setDescription(String description) {
+        if (!(description == null || description.isEmpty())) {
+            this.description = description;
+        }
+    }
 
+    // MODIFIES: this
+    // EFFECTS: sets formula if formula.isValidFormula()
+    public void setGeneralFormula(Formula formula) {
+        if (formula != null && formula.isValidFormula()) {
+            this.generalFormula = formula;
+        }
+    }
+
+    // EFFECTS: produces JSON object with the fields of the instance
     @Override
     public JSONObject toJson() {
         JSONObject wikiJson = new JSONObject();
-        wikiJson.put("name", name);
-        wikiJson.put("generalFormula", generalFormula.getFormulaAsString());
-        wikiJson.put("description", description);
+        wikiJson.put(JsonFieldNames.NAME, name);
+        wikiJson.put(JsonFieldNames.FORMULA, generalFormula.getFormulaAsString());
+        wikiJson.put(JsonFieldNames.DESCRIPTION, description);
         return wikiJson;
     }
+
+    public abstract String giveAllAttributes();
 
 }

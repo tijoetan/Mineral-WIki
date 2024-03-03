@@ -14,13 +14,15 @@ import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import model.tableentry.WikiEntryTable;
 import ui.uiexceptions.NonNumericValueGiven;
+import utils.FillWikiEntry;
+import utils.UserQuery;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static ui.UserQuery.queryFloat;
-import static ui.UserQuery.queryString;
+import static utils.UserQuery.queryFloat;
+import static utils.UserQuery.queryString;
 
 // Console application that interprets user commands to instructions on model classes
 

@@ -14,7 +14,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-// Implementation of WikiEntryTable for storing a collection of minreals
+// Implementation of WikiEntryTable for storing a collection of minerals
 
 public class MineralTable implements WikiEntryTable {
 

@@ -2,6 +2,7 @@ package model.entries;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import utils.JsonFieldNames;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class Family extends WikiEntry {
     @Override
     public JSONObject toJson() {
         JSONObject familyJson = super.toJson();
-        familyJson.put("mineralsWithFamilyName", mineralNamesToJsonArray());
+        familyJson.put(JsonFieldNames.MINERALS_OF_FAMILY, mineralNamesToJsonArray());
         return familyJson;
     }
 

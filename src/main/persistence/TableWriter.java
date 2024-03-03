@@ -4,10 +4,10 @@ package persistence;
 
 import model.tableentry.WikiEntryTable;
 import org.json.JSONObject;
+import utils.JsonFieldNames;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 public class TableWriter {
@@ -26,8 +26,13 @@ public class TableWriter {
         writer.close();
     }
 
-    public void writeToDestination(WikiEntryTable table) {
-        JSONObject tableJson = table.toJson();
-        writer.print(tableJson.toString(4));
+    public void writeToDestination(WikiEntryTable mineralTable, WikiEntryTable familyTable) {
+        JSONObject mineralTableJson = mineralTable.toJson();
+        JSONObject familyTableJson = familyTable.toJson();
+        JSONObject bothTableJson = new JSONObject();
+        bothTableJson.put(JsonFieldNames.MINERALS, mineralTableJson);
+        bothTableJson.put(JsonFieldNames.FAMILIES, familyTableJson);
+
+        writer.print(bothTableJson.toString(4));
     }
 }

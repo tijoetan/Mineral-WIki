@@ -2,6 +2,8 @@ package model.entries;
 
 import model.enums.Cleavage;
 import model.enums.CrystalStructure;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 // Mineral Data abstraction
 
@@ -100,6 +102,17 @@ public class Mineral extends WikiEntry {
                         this.indexOfRefraction,
                         this.cleavage);
         return attributeRow;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject mineralJson = super.toJson();
+        mineralJson.put("crystalStructure", crystalStructure.toString());
+        mineralJson.put("density", density);
+        mineralJson.put("ior", indexOfRefraction);
+        mineralJson.put("hardness", hardness);
+        mineralJson.put("cleavage", cleavage.toString());
+        return mineralJson;
     }
 
 }

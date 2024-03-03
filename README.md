@@ -34,4 +34,8 @@ like this very useful for learning about new minerals.
 
 - *As a user*, I would like to be prompted to save my current database to a file when I quit the application
 - *As a user*, I would like to be prompted to load a pre-existing mineral database from a save file when I start 
-the application
+the application [^1]
+
+---
+
+[^1]: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/tree/master/src/main/persistence 

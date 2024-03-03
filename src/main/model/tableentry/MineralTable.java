@@ -7,6 +7,7 @@ import model.enums.Attributes;
 import model.modelexceptions.EmptyTableException;
 import model.modelexceptions.ItemNotFoundException;
 import model.modelexceptions.MineralDuplicateException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -78,6 +79,14 @@ public class MineralTable implements WikiEntryTable {
         } else {
             throw new ItemNotFoundException();
         }
+    }
+
+    public JSONObject toJson() {
+        JSONObject tableJson = new JSONObject();
+        for (Mineral mineral : mineralNameTable.values()) {
+            tableJson.put(mineral.getName(), mineral.toJson());
+        }
+        return tableJson;
     }
 }
 

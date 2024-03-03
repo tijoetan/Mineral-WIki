@@ -1,5 +1,8 @@
 package model.entries;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,5 +47,20 @@ public class Family extends WikiEntry {
                 generalFormula.getFormulaAsString(),
                 relatedEntries);
         return row;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject familyJson = super.toJson();
+        familyJson.put("mineralsWithFamilyName", mineralNamesToJsonArray());
+        return familyJson;
+    }
+
+    private JSONArray mineralNamesToJsonArray() {
+        JSONArray mineralNamesJson = new JSONArray();
+        for (WikiEntry mineral : mineralsWithFamily) {
+            mineralNamesJson.put(mineral.getName());
+        }
+        return mineralNamesJson;
     }
 }

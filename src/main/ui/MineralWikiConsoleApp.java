@@ -85,7 +85,7 @@ public class MineralWikiConsoleApp {
         }
 
         try {
-            String requested = queryString("What would you like to edit?", this.scanner);
+            String requested = UserQuery.queryString("What would you like to edit?", this.scanner);
             WikiEntry target = table.getRequestedEntry(requested);
             if (table.equals(this.mineralTable)) {
                 System.out.println("Leave entry blank to keep the same");
@@ -240,27 +240,16 @@ public class MineralWikiConsoleApp {
         List<WikiEntry> familyMinerals = queryFamilyMinerals();
         String description = queryString("Please enter a quick description", this.scanner);
         Formula familyFormula = new Formula(queryString("What is the chemical formula", this.scanner));
-        fillFamily(startFamily, familyFormula, familyMinerals, description);
+        FillWikiEntry.fillFamily(
+                startFamily,
+                familyFormula,
+                familyMinerals,
+                description);
         return startFamily;
     }
 
-    // MODIFIES: family
-    // EFFECTS: calls appropriate setter commands on family for its attributes
-    public static void fillFamily(Family family,
-                                  Formula familyFormula,
-                                  List<WikiEntry> familyMinerals,
-                                  String description) {
-
-        try {
-            family.setGeneralFormula(familyFormula);
-            family.addMineralsWithFamily(familyMinerals);
-            family.setDescription(description);
-        } catch (NullPointerException e) {
-            //
-        }
-    }
-
     // EFFECTS: returns a list containing user specified mineral names that are part of a family
+
     public List<WikiEntry> queryFamilyMinerals() {
         List<WikiEntry> familyMinerals = new ArrayList<>();
         boolean doneEntering = false;
@@ -278,9 +267,9 @@ public class MineralWikiConsoleApp {
         }
         return familyMinerals;
     }
-
     // MODIFIES: this
     // EFFECTS: creates user specified mineral and adds it to mineralTable
+
     public void enterMineral() {
         try {
             String name = queryString("What is the name of your mineral?: ", this.scanner);
@@ -298,12 +287,12 @@ public class MineralWikiConsoleApp {
         }
     }
 
-
     // MODIFIES: startMineral
     // EFFECTS: populates fields of startMineral with user specified inputs.
     //          throws UnknownElementException if user formula is not valid
     //          throws NonNumericValueGiven if a numeric query does not receive a numeric response
     //          throws IllegalArgumentException if provided CrystalStructure is not in the Enum
+
     public Mineral setupUserMineral(Mineral startMineral)
             throws UnknownElementException, NonNumericValueGiven, IllegalArgumentException {
         String description = queryString("Please enter a quick description about your mineral:", this.scanner);
@@ -313,30 +302,15 @@ public class MineralWikiConsoleApp {
         Float indexOfRefraction = queryFloat("What is the mineral index of refraction?: ", this.scanner);
         Float density = queryFloat("What is the mineral density?: ", this.scanner);
         Float hardness = queryFloat("What is the Mohs hardness of the mineral?: ", this.scanner);
-        fillMineral(startMineral, formula, crystalStructure, hardness, density, indexOfRefraction, description);
+        FillWikiEntry.fillMineral(
+                startMineral,
+                formula,
+                crystalStructure,
+                hardness,
+                density,
+                indexOfRefraction,
+                description);
         return startMineral;
-    }
-
-    // MODIFIES: mineral
-    // EFFECTS: calls appropriate mineral setter methods with the given parameters
-    public static void fillMineral(Mineral mineral,
-                                   Formula formula,
-                                   CrystalStructure crystalStructure,
-                                   Float hardness,
-                                   Float density,
-                                   Float indexOfRefraction,
-                                   String description) {
-
-        try {
-            mineral.setGeneralFormula(formula);
-            mineral.setCrystalStructure(crystalStructure);
-            mineral.setHardness(hardness);
-            mineral.setDensity(density);
-            mineral.setIndexOfRefraction(indexOfRefraction);
-            mineral.setDescription(description);
-        } catch (NullPointerException e) {
-            //
-        }
     }
 
 }

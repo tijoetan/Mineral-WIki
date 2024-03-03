@@ -233,4 +233,17 @@ class MineralTableTest {
             // Expected
         }
     }
+    @Test
+    void testToJson() {
+        try {
+            testTable.addEntry(m1);
+            testTable.addEntry(m2);
+            testTable.addEntry(m3);
+            testTable.addEntry(m4);
+            testTable.addEntry(m5);
+        } catch (DuplicationException e) {
+            fail();
+        }
+        System.out.println(testTable.toJson().toString());
+    }
 }

@@ -4,6 +4,7 @@ import model.modelexceptions.DuplicationException;
 import model.modelexceptions.FamilyDuplicationException;
 import model.entries.WikiEntry;
 import model.modelexceptions.ItemNotFoundException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +25,8 @@ public class FamilyTable implements WikiEntryTable {
         return this.familyNameTable;
     }
 
+    // EFFECTS: returns Item in familyNameTable where name matches key
+    //          throws ItemNotFoundException if no match is found
     @Override
     public WikiEntry getRequestedEntry(String name) throws ItemNotFoundException {
         WikiEntry requestedFamily = this.familyNameTable.get(name);
@@ -34,6 +37,9 @@ public class FamilyTable implements WikiEntryTable {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds given entry to familyNameTable with the key being the name of the family
+    //          DuplicateException if item already exists in table
     @Override
     public void addEntry(WikiEntry entry) throws DuplicationException {
         if (this.familyNameTable.get(entry.getName()) == null) {
@@ -44,6 +50,9 @@ public class FamilyTable implements WikiEntryTable {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: Removes entry in familyNameTable with given name
+    //          throws ItemNotFoundException if item is not in table
     @Override
     public void removeEntry(String name) throws ItemNotFoundException {
         if (this.familyNameTable.get(name) != null) {
@@ -51,6 +60,14 @@ public class FamilyTable implements WikiEntryTable {
         } else {
             throw new ItemNotFoundException();
         }
+    }
+
+    public JSONObject toJson() {
+        JSONObject tableJson = new JSONObject();
+        for (WikiEntry family : familyNameTable.values()) {
+            tableJson.put(family.getName(), family.toJson());
+        }
+        return tableJson;
     }
 
     public List<WikiEntry> getFamilies() {

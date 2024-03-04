@@ -13,13 +13,21 @@ import model.modelexceptions.UnknownElementException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import model.tableentry.WikiEntryTable;
+import persistence.TableReader;
+import persistence.TableWriter;
 import ui.uiexceptions.NonNumericValueGiven;
 import utils.FillWikiEntry;
 import utils.UserQuery;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static utils.UserQuery.queryFloat;
 import static utils.UserQuery.queryString;
@@ -44,6 +52,7 @@ public class MineralWikiConsoleApp {
     // MODIFIES: this
     // EFFECTS: main loop that takes user inputs and updates and queries the tables
     public void runApp() {
+        askToLoad();
         while (this.running) {
             String question = "What would you like to do\n"
                     + "a: add item\n"
@@ -57,21 +66,58 @@ public class MineralWikiConsoleApp {
         }
     }
 
+    private void askToLoad() {
+        String userResponse = queryString("Would you like to load the database from a file\n"
+                        + "(y) Yes\n"
+                        + "(n) No",
+                scanner);
+        if (userResponse.equalsIgnoreCase("y")) {
+            showAllSavedFiles();
+            String source = queryString("Type the database that you would like to load", scanner);
+            TableReader reader = new TableReader("data/" + source + ".json", familyTable, mineralTable);
+            try {
+                reader.setupTables();
+            } catch (IOException e) {
+                System.out.println("Could not load file");
+            }
+        }
+    }
+
+    private void showAllSavedFiles() {
+        try (Stream<Path> fileStream = Files.walk(Paths.get("data/"))) {
+            StringBuilder fileNames = new StringBuilder();
+            fileStream
+                    .filter(path -> path.getFileName().toString().endsWith(".json"))
+                    .forEach(path -> fileNames.append(path.getFileName().toString().split("\\.")[0])
+                    .append("\n"));
+            System.out.println(fileNames);
+        } catch (IOException e) {
+            System.out.println("Could not find files");
+        }
+
+    }
+
     // MODIFIES: this
     // EFFECTS: performs operation based on input given
     public void handleCommands(String input) {
         switch (input.toLowerCase()) {
-            case "a": addItem();
+            case "a":
+                addItem();
                 break;
-            case "d": deleteItem();
+            case "d":
+                deleteItem();
                 break;
-            case "e": editItem();
+            case "e":
+                editItem();
                 break;
-            case "g": viewTable();
+            case "g":
+                viewTable();
                 break;
-            case "q": quit();
+            case "q":
+                quit();
                 break;
-            case "v": viewItem();
+            case "v":
+                viewItem();
                 break;
             default:
                 System.out.println("Command not understood");
@@ -153,8 +199,30 @@ public class MineralWikiConsoleApp {
     // MODIFIES: this
     // EFFECTS: sets running to false and ends the program
     public void quit() {
+        askToSave();
         System.out.println("Goodbye!");
         this.running = false;
+    }
+
+    // MODIFIES:
+    private void askToSave() {
+        String response = queryString("Would you like to save your current database?\n"
+                        + "(y) yes\n"
+                        + "(n) no",
+                scanner);
+        if (response.equalsIgnoreCase("y")) {
+            String destination = queryString("What would you like to name your database?: ", scanner);
+            TableWriter writer = new TableWriter("data/" + destination + ".json");
+            try {
+                writer.open();
+                writer.writeToDestination(mineralTable, familyTable);
+            } catch (FileNotFoundException e) {
+                System.out.println("Could not find file");
+            } finally {
+                writer.close();
+            }
+        }
+
     }
 
     // MODIFIES: this

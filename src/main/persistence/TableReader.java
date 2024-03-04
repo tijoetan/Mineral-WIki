@@ -65,31 +65,30 @@ public class TableReader {
 
     private Mineral setupMineral(JSONObject mineralData) {
         Mineral mineral = new Mineral(mineralData.getString(JsonFieldNames.NAME));
-        try {
-            FillWikiEntry.fillMineral(mineral,
-                    new Formula(mineralData.getString(JsonFieldNames.FORMULA)),
-                    CrystalStructure.valueOf(mineralData.getString(JsonFieldNames.CRYSTAL_STRUCTURE)),
-                    mineralData.getFloat(JsonFieldNames.HARDNESS),
-                    mineralData.getFloat(JsonFieldNames.DENSITY),
-                    mineralData.getFloat(JsonFieldNames.INDEX_OF_REFRACTION),
-                    mineralData.getString(JsonFieldNames.DESCRIPTION));
-        } catch (UnknownElementException e) {
-            //
-        }
+        FillWikiEntry.fillMineral(mineral,
+                getFormula(mineralData.getString(JsonFieldNames.FORMULA)),
+                CrystalStructure.valueOf(mineralData.getString(JsonFieldNames.CRYSTAL_STRUCTURE)),
+                mineralData.getFloat(JsonFieldNames.HARDNESS),
+                mineralData.getFloat(JsonFieldNames.DENSITY),
+                mineralData.getFloat(JsonFieldNames.INDEX_OF_REFRACTION),
+                mineralData.getString(JsonFieldNames.DESCRIPTION));
         return mineral;
     }
 
+    private static Formula getFormula(String mineralFormulaName) {
+        try {
+            return mineralFormulaName.isEmpty() ? new Formula() : new Formula(mineralFormulaName);
+        } catch (UnknownElementException e) {
+            return new Formula();
+        }
+    }
 
     public Family setUpFamily(JSONObject familyJson) {
         Family family = new Family(familyJson.getString(JsonFieldNames.NAME));
-        try {
-            FillWikiEntry.fillFamily(family,
-                    new Formula(familyJson.getString(JsonFieldNames.FORMULA)),
-                    getRelatedMinerals(familyJson.getJSONArray(JsonFieldNames.MINERALS_OF_FAMILY)),
-                    familyJson.getString(JsonFieldNames.DESCRIPTION));
-        } catch (UnknownElementException e) {
-            //
-        }
+        FillWikiEntry.fillFamily(family,
+                getFormula(familyJson.getString(JsonFieldNames.FORMULA)),
+                getRelatedMinerals(familyJson.getJSONArray(JsonFieldNames.MINERALS_OF_FAMILY)),
+                familyJson.getString(JsonFieldNames.DESCRIPTION));
         return family;
 
     }

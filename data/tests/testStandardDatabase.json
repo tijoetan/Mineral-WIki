@@ -1,0 +1,53 @@
+{
+    "minerals": {
+        "Orthoclase": {
+            "hardness": 6,
+            "cleavage": "NA",
+            "density": 2.59,
+            "name": "Orthoclase",
+            "generalFormula": "KAlSi3O8",
+            "description": "This is orthoclase, a feldspar mineral",
+            "crystalStructure": "MONOCLINIC",
+            "ior": 1.52
+        },
+        "Beryl": {
+            "hardness": 2.725,
+            "cleavage": "NA",
+            "density": 7.75,
+            "name": "Beryl",
+            "generalFormula": "Be3Al2Si6O18",
+            "description": "This is beryl a parent mineral for many common gemstones",
+            "crystalStructure": "HEXAGONAL",
+            "ior": 1.57
+        },
+        "Diamond": {
+            "hardness": 10,
+            "cleavage": "NA",
+            "density": 3.5,
+            "name": "Diamond",
+            "generalFormula": "C",
+            "description": "This is diamond",
+            "crystalStructure": "CUBIC",
+            "ior": 2.418
+        },
+        "Labradorite": {
+            "hardness": 6.25,
+            "cleavage": "NA",
+            "density": 2.7,
+            "name": "Labradorite",
+            "generalFormula": "(Ca, Na)(Al, Si)4O8",
+            "description": "This is a feldspar mineral",
+            "crystalStructure": "TRICLINIC",
+            "ior": 1.554
+        }
+    },
+    "families": {"Feldspar": {
+        "mineralsWithFamilyName": [
+            "Orthoclase",
+            "Labradorite"
+        ],
+        "name": "Feldspar",
+        "generalFormula": "(K, Na, Ca)Al(Si2, Si3)O8",
+        "description": "This is the feldspar family, it corresponds to aluminum tetrosilicates"
+    }}
+}

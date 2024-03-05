@@ -11,6 +11,7 @@ import model.modelexceptions.UnknownElementException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import utils.FillWikiEntry;
 import utils.JsonFieldNames;
@@ -36,20 +37,28 @@ public class TableReader {
         this.mineralTable = mineralTable;
     }
 
-    public JSONObject readFile() throws IOException {
+    public JSONObject readFile() throws IOException, InvalidFileException {
         StringBuilder sourceStream = new StringBuilder();
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(sourceStream::append);
         }
-        return new JSONObject(sourceStream.toString());
+        try {
+            return new JSONObject(sourceStream.toString());
+        } catch (JSONException e) {
+            throw new InvalidFileException();
+        }
     }
 
-    public void setupTables() throws IOException {
+    public void setupTables() throws IOException, InvalidFileException {
         JSONObject readFile = readFile();
-        JSONObject mineralJson = readFile.getJSONObject("minerals");
-        JSONObject familyJson = readFile.getJSONObject("families");
-        setUpMineralTable(mineralJson);
-        setUpFamilyTable(familyJson);
+        try {
+            JSONObject mineralJson = readFile.getJSONObject("minerals");
+            JSONObject familyJson = readFile.getJSONObject("families");
+            setUpMineralTable(mineralJson);
+            setUpFamilyTable(familyJson);
+        } catch (JSONException e) {
+            throw new InvalidFileException();
+        }
     }
 
     public void setUpMineralTable(JSONObject mineralJson) {
@@ -63,7 +72,7 @@ public class TableReader {
                 });
     }
 
-    private Mineral setupMineral(JSONObject mineralData) {
+    public Mineral setupMineral(JSONObject mineralData) {
         Mineral mineral = new Mineral(mineralData.getString(JsonFieldNames.NAME));
         FillWikiEntry.fillMineral(mineral,
                 getFormula(mineralData.getString(JsonFieldNames.FORMULA)),
@@ -73,14 +82,6 @@ public class TableReader {
                 mineralData.getFloat(JsonFieldNames.INDEX_OF_REFRACTION),
                 mineralData.getString(JsonFieldNames.DESCRIPTION));
         return mineral;
-    }
-
-    private static Formula getFormula(String mineralFormulaName) {
-        try {
-            return mineralFormulaName.isEmpty() ? new Formula() : new Formula(mineralFormulaName);
-        } catch (UnknownElementException e) {
-            return new Formula();
-        }
     }
 
     public Family setUpFamily(JSONObject familyJson) {
@@ -93,7 +94,7 @@ public class TableReader {
 
     }
 
-    private void setUpFamilyTable(JSONObject familyJson) {
+    public void setUpFamilyTable(JSONObject familyJson) {
         Arrays.stream(JSONObject.getNames(familyJson))
                 .forEach(s -> {
                     try {
@@ -104,7 +105,7 @@ public class TableReader {
                 });
     }
 
-    private List<WikiEntry> getRelatedMinerals(JSONArray mineralsWithFamilyName) {
+    public List<WikiEntry> getRelatedMinerals(JSONArray mineralsWithFamilyName) {
         List<WikiEntry> relatedMinerals = new ArrayList<>();
         for (int i = 0; i < mineralsWithFamilyName.length(); i++) {
             try {
@@ -115,5 +116,13 @@ public class TableReader {
             }
         }
         return relatedMinerals;
+    }
+
+    public static Formula getFormula(String mineralFormulaName) {
+        try {
+            return mineralFormulaName.isEmpty() ? new Formula() : new Formula(mineralFormulaName);
+        } catch (UnknownElementException e) {
+            return new Formula();
+        }
     }
 }

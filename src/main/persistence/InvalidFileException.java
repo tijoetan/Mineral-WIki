@@ -1,4 +1,4 @@
 package persistence;
 
-public class InvalidFileException extends Throwable {
+public class InvalidFileException extends Exception {
 }

@@ -1,0 +1,38 @@
+{
+    "minerals": {
+        "m1": {
+            "hardness": 0,
+            "cleavage": "NA",
+            "density": 0,
+            "name": "m1",
+            "generalFormula": "",
+            "description": "No description provided",
+            "crystalStructure": "NA",
+            "ior": 0
+        },
+        "m2": {
+            "hardness": 0,
+            "cleavage": "NA",
+            "density": 0,
+            "name": "m2",
+            "generalFormula": "",
+            "description": "No description provided",
+            "crystalStructure": "NA",
+            "ior": 0
+        }
+    },
+    "families": {
+        "f1": {
+            "mineralsWithFamilyName": [],
+            "name": "f1",
+            "generalFormula": "",
+            "description": "No description provided"
+        },
+        "f2": {
+            "mineralsWithFamilyName": [],
+            "name": "f2",
+            "generalFormula": "",
+            "description": "No description provided"
+        }
+    }
+}

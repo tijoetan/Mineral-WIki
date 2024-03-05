@@ -13,6 +13,7 @@ import model.modelexceptions.UnknownElementException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import model.tableentry.WikiEntryTable;
+import persistence.InvalidFileException;
 import persistence.TableReader;
 import persistence.TableWriter;
 import ui.uiexceptions.NonNumericValueGiven;
@@ -21,6 +22,7 @@ import utils.UserQuery;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,7 +40,7 @@ public class MineralWikiConsoleApp {
     private final Scanner scanner;
     private final MineralTable mineralTable;
     private final FamilyTable familyTable;
-    private Boolean running;
+    private boolean running;
 
     // EFFECTS: Constructor for MineralWikiConsoleApp and runs the application
     public MineralWikiConsoleApp() {
@@ -79,6 +81,8 @@ public class MineralWikiConsoleApp {
                 reader.setupTables();
             } catch (IOException e) {
                 System.out.println("Could not load file");
+            } catch (InvalidFileException e) {
+                System.out.println("Could not understand file");
             }
         }
     }
@@ -87,9 +91,11 @@ public class MineralWikiConsoleApp {
         try (Stream<Path> fileStream = Files.walk(Paths.get("data/"))) {
             StringBuilder fileNames = new StringBuilder();
             fileStream
-                    .filter(path -> path.getFileName().toString().endsWith(".json"))
+                    .filter(path -> path.toString().split("\\"
+                            + FileSystems.getDefault().getSeparator()).length <= 2
+                            && path.getFileName().toString().endsWith(".json"))
                     .forEach(path -> fileNames.append(path.getFileName().toString().split("\\.")[0])
-                    .append("\n"));
+                            .append("\n"));
             System.out.println(fileNames);
         } catch (IOException e) {
             System.out.println("Could not find files");

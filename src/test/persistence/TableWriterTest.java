@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,15 +19,27 @@ class TableWriterTest {
 
     @BeforeEach
     void runBefore() {
-        testWriter = new TableWriter("data/something2.json");
+        testWriter = new TableWriter("data/tests/actualWrittenFile.json");
     }
 
     @Test
-    void open() {
+    void openValidFile() {
+        try {
+            testWriter.open();
+        } catch (FileNotFoundException e) {
+            fail();
+        }
     }
 
     @Test
-    void close() {
+    void openInvalidFileExpectFileNotFoundException() {
+        try {
+            testWriter = new TableWriter("");
+            testWriter.open();
+            fail();
+        } catch (FileNotFoundException e) {
+            // Expected
+        }
     }
 
     @Test
@@ -47,9 +60,25 @@ class TableWriterTest {
         } catch (FileNotFoundException e) {
            fail();
         }
+
         testWriter.writeToDestination(mtable, ftable);
         testWriter.close();
 
+        testWrittenFilesAreEqual();
 
+    }
+
+    private void testWrittenFilesAreEqual() {
+        TableReader expected = new TableReader("data/tests/expectedWrittenFile.json",
+                new FamilyTable(),
+                new MineralTable());
+        TableReader actual = new TableReader("data/tests/actualWrittenFile.json",
+                new FamilyTable(),
+                new MineralTable());
+        try {
+            assertEquals(expected.readFile().toString(), actual.readFile().toString());
+        } catch (IOException | InvalidFileException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -49,5 +49,13 @@
         "name": "Feldspar",
         "generalFormula": "(K, Na, Ca)Al(Si2, Si3)O8",
         "description": "This is the feldspar family, it corresponds to aluminum tetrosilicates"
+    }, "Gemstones": {
+      "mineralsWithFamilyName": [
+        "Diamond",
+        "Beryl"
+      ],
+      "name": "Gemstones",
+      "generalFormula": "",
+      "description": "Contains Rare and prized Minerals"
     }}
 }

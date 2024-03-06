@@ -1,0 +1,22 @@
+{
+  "Orthoclase": {
+    "hardness": 6,
+    "cleavage": "NA",
+    "density": 2.59,
+    "name": "Orthoclase",
+    "generalFormula": "KAlSi3O8",
+    "description": "This is orthoclase, a feldspar mineral",
+    "crystalStructure": "MONOCLINIC",
+    "ior": 1.52
+  },
+  "Orthoclase": {
+    "hardness": 6,
+    "cleavage": "NA",
+    "density": 2.59,
+    "name": "Orthoclase",
+    "generalFormula": "KAlSi3O8",
+    "description": "This is orthoclase, a feldspar mineral",
+    "crystalStructure": "MONOCLINIC",
+    "ior": 1.52
+  }
+}

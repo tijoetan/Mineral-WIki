@@ -18,7 +18,6 @@ import persistence.TableReader;
 import persistence.TableWriter;
 import ui.uiexceptions.NonNumericValueGiven;
 import utils.FillWikiEntry;
-import utils.UserQuery;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,8 +30,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import static utils.UserQuery.queryFloat;
-import static utils.UserQuery.queryString;
+import static ui.UserQuery.queryFloat;
+import static ui.UserQuery.queryString;
 
 // Console application that interprets user commands to instructions on model classes
 

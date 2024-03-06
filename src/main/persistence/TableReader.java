@@ -51,14 +51,10 @@ public class TableReader {
 
     public void setupTables() throws IOException, InvalidFileException {
         JSONObject readFile = readFile();
-        try {
-            JSONObject mineralJson = readFile.getJSONObject("minerals");
-            JSONObject familyJson = readFile.getJSONObject("families");
-            setUpMineralTable(mineralJson);
-            setUpFamilyTable(familyJson);
-        } catch (JSONException e) {
-            throw new InvalidFileException();
-        }
+        JSONObject mineralJson = readFile.getJSONObject("minerals");
+        JSONObject familyJson = readFile.getJSONObject("families");
+        setUpMineralTable(mineralJson);
+        setUpFamilyTable(familyJson);
     }
 
     public void setUpMineralTable(JSONObject mineralJson) {

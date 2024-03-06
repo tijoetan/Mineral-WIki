@@ -1,0 +1,12 @@
+{
+  "Labradorite": {
+    "hardness": 6.25,
+    "cleavage": "NA",
+    "density": 2.7,
+    "name": "Labradorite",
+    "generalFormula": "(Ca, Na)(Al, Si)4O8",
+    "description": "This is a feldspar mineral",
+    "crystalStructure": "TRICLINIC",
+    "ior": 1.554
+  }
+}

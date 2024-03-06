@@ -1,14 +1,10 @@
 package persistence;
 
 import model.entries.Family;
-import model.entries.Mineral;
 import model.entries.WikiEntry;
-import model.enums.CrystalStructure;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
-import model.tableentry.WikiEntryTable;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,7 +66,7 @@ class TableReaderTest {
     }
 
     @Test
-    void testSetupTablesNoExceptions() {;
+    void testSetupTablesNoExceptions() {
         try {
             testReader = new TableReader("data/tests/testStandardDatabase.json",
                     familyTable,
@@ -86,11 +82,17 @@ class TableReaderTest {
             mineralTable.getRequestedEntry("Labradorite");
 
             // Checking Linking
-            List<WikiEntry> familyMinerals = ((Family) familyTable.getRequestedEntry("Feldspar")).
+            List<WikiEntry> familyMinerals1 = ((Family) familyTable.getRequestedEntry("Feldspar")).
                     getMineralsWithFamily();
-            assertEquals(2, familyMinerals.size());
-            assertEquals("Orthoclase", familyMinerals.get(0).getName());
-            assertEquals("Labradorite", familyMinerals.get(1).getName());
+            assertEquals(2, familyMinerals1.size());
+            assertEquals("Orthoclase", familyMinerals1.get(0).getName());
+            assertEquals("Labradorite", familyMinerals1.get(1).getName());
+
+            List<WikiEntry> familyMinerals2 = ((Family) familyTable.getRequestedEntry("Gemstones")).
+                    getMineralsWithFamily();
+            assertEquals(2, familyMinerals2.size());
+            assertEquals("Diamond", familyMinerals2.get(0).getName());
+            assertEquals("Beryl", familyMinerals2.get(1).getName());
 
         } catch (ItemNotFoundException e) {
             fail();
@@ -129,5 +131,15 @@ class TableReaderTest {
 
     @Test
     void setUpFamily() {
+    }
+
+    @Test
+    void testGetFormula() {
+        // Valid Formula
+        assertTrue(TableReader.getFormula("NaOH").isValidFormula());
+        // Invalid Formula
+        assertFalse(TableReader.getFormula("A").isValidFormula());
+        //Blank String
+        assertFalse(TableReader.getFormula("").isValidFormula());
     }
 }

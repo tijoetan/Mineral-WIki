@@ -57,7 +57,7 @@ public class Family extends WikiEntry {
         return familyJson;
     }
 
-    private JSONArray mineralNamesToJsonArray() {
+    public JSONArray mineralNamesToJsonArray() {
         JSONArray mineralNamesJson = new JSONArray();
         for (WikiEntry mineral : mineralsWithFamily) {
             mineralNamesJson.put(mineral.getName());

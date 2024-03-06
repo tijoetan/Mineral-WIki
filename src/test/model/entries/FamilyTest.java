@@ -2,6 +2,7 @@ package model.entries;
 
 import model.chemicalstructure.Formula;
 import model.modelexceptions.UnknownElementException;
+import org.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -86,6 +87,15 @@ class FamilyTest {
         assertEquals(f1Expected, f1Result);
         assertEquals(f2Expected, f2Result);
 
+    }
 
+    @Test
+    void testToJsonArray() {
+        f1.addMineralsWithFamily(Arrays.asList(m1, m2, m3, m4));
+        String[] expectedAnswers = {m1.getName(), m2.getName(), m3.getName(), m4.getName()};
+        JSONArray f1NameArray = f1.mineralNamesToJsonArray();
+        for (int i = 0; i < f1NameArray.length(); i++) {
+            assertEquals(expectedAnswers[i], f1NameArray.get(i));
+        }
     }
 }

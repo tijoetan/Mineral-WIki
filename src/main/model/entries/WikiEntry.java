@@ -35,7 +35,7 @@ public abstract class WikiEntry implements Writable {
     // MODIFIES: this
     // EFFECTS: sets description if provided description is not an empty string
     public void setDescription(String description) {
-        if (!(description == null || description.isEmpty())) {
+        if (!description.isEmpty()) {
             this.description = description;
         }
     }
@@ -43,7 +43,7 @@ public abstract class WikiEntry implements Writable {
     // MODIFIES: this
     // EFFECTS: sets formula if formula.isValidFormula()
     public void setGeneralFormula(Formula formula) {
-        if (formula != null && formula.isValidFormula()) {
+        if (formula.isValidFormula()) {
             this.generalFormula = formula;
         }
     }

@@ -8,7 +8,12 @@ import model.enums.CrystalStructure;
 
 import java.util.List;
 
-public abstract class FillWikiEntry {
+public class FillWikiEntry {
+
+    public FillWikiEntry() {
+
+    }
+
     // MODIFIES: family
     // EFFECTS: calls appropriate setter commands on family for its attributes
     public static void fillFamily(Family family,

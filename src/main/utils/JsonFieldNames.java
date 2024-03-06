@@ -1,6 +1,6 @@
 package utils;
 
-public abstract class JsonFieldNames {
+public class JsonFieldNames {
     public static final String MINERALS = "minerals";
 
     public static final String FAMILIES = "families";

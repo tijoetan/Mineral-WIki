@@ -17,6 +17,7 @@ public class TableWriter {
         this.destination = destination;
     }
 
+
     public void open() throws FileNotFoundException {
         writer =  new PrintWriter(destination);
     }

@@ -16,13 +16,10 @@ public class FillWikiEntry {
                                   List<WikiEntry> familyMinerals,
                                   String description) {
 
-        try {
-            family.setGeneralFormula(familyFormula);
-            family.addMineralsWithFamily(familyMinerals);
-            family.setDescription(description);
-        } catch (NullPointerException e) {
-            //
-        }
+        family.setGeneralFormula(familyFormula);
+        family.addMineralsWithFamily(familyMinerals);
+        family.setDescription(description);
+
     }
 
     // MODIFIES: mineral
@@ -35,15 +32,11 @@ public class FillWikiEntry {
                                    Float indexOfRefraction,
                                    String description) {
 
-        try {
-            mineral.setGeneralFormula(formula);
-            mineral.setCrystalStructure(crystalStructure);
-            mineral.setHardness(hardness);
-            mineral.setDensity(density);
-            mineral.setIndexOfRefraction(indexOfRefraction);
-            mineral.setDescription(description);
-        } catch (NullPointerException e) {
-            //
-        }
+        mineral.setGeneralFormula(formula);
+        mineral.setCrystalStructure(crystalStructure);
+        mineral.setHardness(hardness);
+        mineral.setDensity(density);
+        mineral.setIndexOfRefraction(indexOfRefraction);
+        mineral.setDescription(description);
     }
 }

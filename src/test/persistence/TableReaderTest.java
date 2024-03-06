@@ -1,13 +1,17 @@
 package persistence;
 
 import model.entries.Family;
+import model.entries.Mineral;
 import model.entries.WikiEntry;
+import model.modelexceptions.DuplicationException;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utils.JsonFieldNames;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,7 +35,7 @@ class TableReaderTest {
         testReader = new TableReader("data/tests/testValidFileRead.json", familyTable, mineralTable);
         JSONObject readJson = null;
         try {
-            readJson =  testReader.readFile();
+            readJson = testReader.readFile();
         } catch (IOException | InvalidFileException e) {
             fail();
         }
@@ -108,7 +112,7 @@ class TableReaderTest {
             testReader.setupTables();
             fail();
         } catch (IOException e) {
-           fail();
+            fail();
         } catch (InvalidFileException e) {
             // Expected
         }
@@ -130,8 +134,26 @@ class TableReaderTest {
     }
 
     @Test
-    void setUpFamily() {
+    void setUpMineralLinkingImproper() {
+        try {
+            mineralTable.addEntry(new Mineral("Diamond"));
+            mineralTable.addEntry(new Mineral("Ruby"));
+        } catch (DuplicationException e) {
+            fail();
+        }
+        testReader = new TableReader("data/tests/testFamilyTableSetupWithDuplication.json",
+                familyTable,
+                mineralTable);
+        try {
+            JSONArray familyLinks = testReader.readFile().
+                    getJSONObject("Feldspar").
+                    getJSONArray(JsonFieldNames.MINERALS_OF_FAMILY);
+            assertTrue(testReader.getRelatedMinerals(familyLinks).isEmpty());
+        } catch (IOException | InvalidFileException e) {
+            fail();
+        }
     }
+
 
     @Test
     void testGetFormula() {
@@ -143,3 +165,19 @@ class TableReaderTest {
         assertFalse(TableReader.getFormula("").isValidFormula());
     }
 }
+
+/*
+z = 6(x^2)^(5/2)
+Perfectly circular
+
+z = 6(x^2)^(5/2)
+z = 6(r^2)^(5/2)
+z = 6(r^5)
+z/6 = (r^5)
+(z/6)^(2/5) = r^2
+pi(z/6)^(2/5) = pi*r^2
+
+Integrate[pi(z/6)^(2/5), {z, 0, z}] = V
+pi*5/7(z/6)^(7/5)*6 = V
+V = 30pi/7(z/6)^(7/5)
+*/

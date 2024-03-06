@@ -5,7 +5,6 @@ import model.entries.Family;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
 import model.enums.CrystalStructure;
-import model.modelexceptions.DuplicationException;
 import model.modelexceptions.ItemNotFoundException;
 import model.modelexceptions.UnknownElementException;
 import model.tableentry.FamilyTable;
@@ -21,7 +20,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -51,21 +49,17 @@ public class TableReader {
 
     public void setupTables() throws IOException, InvalidFileException {
         JSONObject readFile = readFile();
-        JSONObject mineralJson = readFile.getJSONObject("minerals");
-        JSONObject familyJson = readFile.getJSONObject("families");
+        JSONObject mineralJson = readFile.getJSONObject(JsonFieldNames.MINERALS);
+        JSONObject familyJson = readFile.getJSONObject(JsonFieldNames.FAMILIES);
         setUpMineralTable(mineralJson);
         setUpFamilyTable(familyJson);
     }
 
     public void setUpMineralTable(JSONObject mineralJson) {
-        Arrays.stream(JSONObject.getNames(mineralJson))
-                .forEach(s -> {
-                    try {
-                        mineralTable.addEntry(setupMineral(mineralJson.getJSONObject(s)));
-                    } catch (DuplicationException e) {
-                        // ;
-                    }
-                });
+        for (String s : JSONObject.getNames(mineralJson)) {
+            Mineral newEntry = setupMineral(mineralJson.getJSONObject(s));
+            mineralTable.getMineralNameTable().put(newEntry.getName(), newEntry);
+        }
     }
 
     public Mineral setupMineral(JSONObject mineralData) {
@@ -91,14 +85,10 @@ public class TableReader {
     }
 
     public void setUpFamilyTable(JSONObject familyJson) {
-        Arrays.stream(JSONObject.getNames(familyJson))
-                .forEach(s -> {
-                    try {
-                        familyTable.addEntry(setUpFamily(familyJson.getJSONObject(s)));
-                    } catch (DuplicationException e) {
-                        //
-                    }
-                });
+        for (String s : JSONObject.getNames(familyJson)) {
+            Family newFamily = setUpFamily(familyJson.getJSONObject(s));
+            familyTable.getFamilyNameTable().put(newFamily.getName(), newFamily);
+        }
     }
 
     public List<WikiEntry> getRelatedMinerals(JSONArray mineralsWithFamilyName) {

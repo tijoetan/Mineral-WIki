@@ -59,12 +59,9 @@ public class TableReader {
         JSONObject readFile = readFile();
         JSONObject mineralJson = readFile.getJSONObject(JsonFieldNames.MINERALS);
         JSONObject familyJson = readFile.getJSONObject(JsonFieldNames.FAMILIES);
-        try {
-            setUpMineralTable(mineralJson);
-            setUpFamilyTable(familyJson);
-        } catch (JSONException e) {
-            throw new InvalidFileException();
-        }
+        setUpMineralTable(mineralJson);
+        setUpFamilyTable(familyJson);
+
     }
 
     // REQUIRES: the mineralJson given must be recognizable

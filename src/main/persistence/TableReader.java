@@ -23,18 +23,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-// Reads WikiEntryTable from JSON
+// Parses a .json file into a populated FamilyTable and MineralTable
+
 public class TableReader {
     private final String source;
     private final FamilyTable familyTable;
     private final MineralTable mineralTable;
 
+    // EFFECTS: constructs TableReader with provided source path, and relevant family and mineralTables to write to
     public TableReader(String source, FamilyTable familyTable, MineralTable mineralTable) {
         this.source = source;
         this.familyTable = familyTable;
         this.mineralTable = mineralTable;
     }
 
+    // EFFECTS: reads the path from the source and returns it converted to a JSONObject
+    //          throws IOException if the source cannot be read
+    //          throws InvalidFileException if the source file does not correspond to valid JSON
     public JSONObject readFile() throws IOException, InvalidFileException {
         StringBuilder sourceStream = new StringBuilder();
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
@@ -47,14 +52,24 @@ public class TableReader {
         }
     }
 
+    // REQUIRES: if a valid JSON file is given by source then it must be a valid format
+    // MODIFIES: this
+    // EFFECTS: populates mineralTable and familyTable with the data stored in source
     public void setupTables() throws IOException, InvalidFileException {
         JSONObject readFile = readFile();
         JSONObject mineralJson = readFile.getJSONObject(JsonFieldNames.MINERALS);
         JSONObject familyJson = readFile.getJSONObject(JsonFieldNames.FAMILIES);
-        setUpMineralTable(mineralJson);
-        setUpFamilyTable(familyJson);
+        try {
+            setUpMineralTable(mineralJson);
+            setUpFamilyTable(familyJson);
+        } catch (JSONException e) {
+            throw new InvalidFileException();
+        }
     }
 
+    // REQUIRES: the mineralJson given must be recognizable
+    // MODIFIES: this
+    // EFFECTS: adds the entries in mineralJson to mineralTable
     public void setUpMineralTable(JSONObject mineralJson) {
         for (String s : JSONObject.getNames(mineralJson)) {
             Mineral newEntry = setupMineral(mineralJson.getJSONObject(s));
@@ -62,6 +77,8 @@ public class TableReader {
         }
     }
 
+    // REQUIRES: this given mineralData must be recognizable
+    // EFFECTS: returns a new mineral with the fields based on the mineralData
     public Mineral setupMineral(JSONObject mineralData) {
         Mineral mineral = new Mineral(mineralData.getString(JsonFieldNames.NAME));
         FillWikiEntry.fillMineral(mineral,
@@ -74,16 +91,9 @@ public class TableReader {
         return mineral;
     }
 
-    public Family setUpFamily(JSONObject familyJson) {
-        Family family = new Family(familyJson.getString(JsonFieldNames.NAME));
-        FillWikiEntry.fillFamily(family,
-                getFormula(familyJson.getString(JsonFieldNames.FORMULA)),
-                getRelatedMinerals(familyJson.getJSONArray(JsonFieldNames.MINERALS_OF_FAMILY)),
-                familyJson.getString(JsonFieldNames.DESCRIPTION));
-        return family;
-
-    }
-
+    // REQUIRES: given familyJson can be parsed
+    // MODIFIES: this
+    // EFFECTS: fills familyTable with the families indicated in familyJson
     public void setUpFamilyTable(JSONObject familyJson) {
         for (String s : JSONObject.getNames(familyJson)) {
             Family newFamily = setUpFamily(familyJson.getJSONObject(s));
@@ -91,6 +101,20 @@ public class TableReader {
         }
     }
 
+    // REQUIRES: given familyData can be parsed
+    // EFFECTS: produces a new family with the fields setup by familyData
+    public Family setUpFamily(JSONObject familyData) {
+        Family family = new Family(familyData.getString(JsonFieldNames.NAME));
+        FillWikiEntry.fillFamily(family,
+                getFormula(familyData.getString(JsonFieldNames.FORMULA)),
+                getRelatedMinerals(familyData.getJSONArray(JsonFieldNames.MINERALS_OF_FAMILY)),
+                familyData.getString(JsonFieldNames.DESCRIPTION));
+        return family;
+
+    }
+
+    // EFFECTS: returns a new List containing minerals from mineralTable that have the same name as
+    //          mineralsWithFamilyName
     public List<WikiEntry> getRelatedMinerals(JSONArray mineralsWithFamilyName) {
         List<WikiEntry> relatedMinerals = new ArrayList<>();
         for (int i = 0; i < mineralsWithFamilyName.length(); i++) {
@@ -104,6 +128,8 @@ public class TableReader {
         return relatedMinerals;
     }
 
+    // EFFECTS: returns a new Formula based on the mineralFormulaName
+    //          if mineralFormulaName is empty or causes an error, a dummy formula is returned
     public static Formula getFormula(String mineralFormulaName) {
         try {
             return mineralFormulaName.isEmpty() ? new Formula() : new Formula(mineralFormulaName);

@@ -16,6 +16,7 @@ public class FamilyTable implements WikiEntryTable {
 
     private final HashMap<String, WikiEntry> familyNameTable;
 
+    // EFFECTS: constructs the FamilyTable with familyNameTable being a new HashMap
     public FamilyTable() {
         this.familyNameTable = new HashMap<>();
     }
@@ -62,6 +63,7 @@ public class FamilyTable implements WikiEntryTable {
         }
     }
 
+    // EFFECTS: creates a JSONObject containing key value pairs of the family names and a JSONObject of the family
     public JSONObject toJson() {
         JSONObject tableJson = new JSONObject();
         for (WikiEntry family : familyNameTable.values()) {
@@ -70,6 +72,7 @@ public class FamilyTable implements WikiEntryTable {
         return tableJson;
     }
 
+    // EFFECTS: returns the values stored in familyNameTable
     public List<WikiEntry> getFamilies() {
         return new ArrayList<>(familyNameTable.values());
     }

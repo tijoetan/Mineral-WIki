@@ -13,6 +13,7 @@ public class MoleculeGroup {
         this.elements = elements;
     }
 
+    // getters
     public int getAmount() {
         return amount;
     }

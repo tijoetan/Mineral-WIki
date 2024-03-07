@@ -50,6 +50,7 @@ public class Family extends WikiEntry {
         return row;
     }
 
+    // EFFECTS: converts mineral attributes to a JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject familyJson = super.toJson();
@@ -57,6 +58,7 @@ public class Family extends WikiEntry {
         return familyJson;
     }
 
+    // EFFECTS: returns a JSONArray containing the names of mineralsWithFamily
     public JSONArray mineralNamesToJsonArray() {
         JSONArray mineralNamesJson = new JSONArray();
         for (WikiEntry mineral : mineralsWithFamily) {

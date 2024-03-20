@@ -1,8 +1,9 @@
 package model.entries;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import utils.JsonFieldNames;
+import utils.fieldnames.JsonFieldNames;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,17 +38,27 @@ public class Family extends WikiEntry {
     // EFFECTS: prints out family name, formula and minerals with this family
     @Override
     public String giveAllAttributes() {
-        StringBuilder relatedEntries;
-        relatedEntries = new StringBuilder();
-        for (WikiEntry sub : mineralsWithFamily) {
-            relatedEntries.append(sub.getName());
-            relatedEntries.append(" ");
-        }
-        String row = String.format("Name: %s | General Formula: %s | Subs: %s",
+        return String.format("Name: %s | General Formula: %s | Subs: %s",
                 name,
                 generalFormula.getFormulaAsString(),
-                relatedEntries);
-        return row;
+                getRelatedEntries());
+    }
+
+    @NotNull
+    private StringBuilder getRelatedEntries() {
+        StringBuilder relatedEntries = new StringBuilder();
+        for (WikiEntry sub : mineralsWithFamily) {
+            relatedEntries.append(sub.getName());
+            relatedEntries.append('\n');
+        }
+        return relatedEntries;
+    }
+
+    @Override
+    public String[] giveAttributeAsObjects() {
+        return new String[]{name,
+                generalFormula.getFormulaAsString(),
+                getRelatedEntries().toString()};
     }
 
     // EFFECTS: converts mineral attributes to a JSONObject

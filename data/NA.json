@@ -1,0 +1,61 @@
+{
+    "minerals": {
+        "m1": {
+            "hardness": 0,
+            "cleavage": "NA",
+            "density": 0,
+            "name": "m1",
+            "generalFormula": "",
+            "description": "No description provided",
+            "crystalStructure": "NA",
+            "ior": 0
+        },
+        "m2": {
+            "hardness": 0,
+            "cleavage": "NA",
+            "density": 0,
+            "name": "m2",
+            "generalFormula": "",
+            "description": "No description provided",
+            "crystalStructure": "NA",
+            "ior": 0
+        },
+        "Denzel": {
+            "hardness": 8,
+            "cleavage": "NA",
+            "density": 81,
+            "name": "Denzel",
+            "generalFormula": "HgO3",
+            "description": "This is denzel the dog of pavit",
+            "crystalStructure": "CUBIC",
+            "ior": 5
+        }
+    },
+    "families": {
+        "family4": {
+            "mineralsWithFamilyName": [
+                "m1",
+                "m2",
+                "Denzel"
+            ],
+            "name": "family4",
+            "generalFormula": "YBCO",
+            "description": "This is the main mineral grouping"
+        },
+        "f1": {
+            "mineralsWithFamilyName": [],
+            "name": "f1",
+            "generalFormula": "",
+            "description": "No description provided"
+        },
+        "f2": {
+            "mineralsWithFamilyName": [
+                "m1",
+                "m2"
+            ],
+            "name": "f2",
+            "generalFormula": "AlO3",
+            "description": "No description provided"
+        }
+    }
+}

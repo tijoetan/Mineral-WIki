@@ -1,8 +1,7 @@
 package utils;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import utils.fieldnames.JsonFieldNames;
 
 class JsonFieldNamesTest {
     JsonFieldNames testField;

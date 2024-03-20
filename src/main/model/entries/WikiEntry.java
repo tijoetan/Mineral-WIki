@@ -5,7 +5,7 @@ package model.entries;
 import model.chemicalstructure.Formula;
 import org.json.JSONObject;
 import persistence.Writable;
-import utils.JsonFieldNames;
+import utils.fieldnames.JsonFieldNames;
 
 public abstract class WikiEntry implements Writable {
     protected String description;
@@ -59,5 +59,7 @@ public abstract class WikiEntry implements Writable {
     }
 
     public abstract String giveAllAttributes();
+
+    public abstract String[] giveAttributeAsObjects();
 
 }

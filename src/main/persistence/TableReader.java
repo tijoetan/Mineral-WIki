@@ -13,7 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import utils.FillWikiEntry;
-import utils.JsonFieldNames;
+import utils.fieldnames.JsonFieldNames;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

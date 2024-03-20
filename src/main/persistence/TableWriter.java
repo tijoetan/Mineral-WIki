@@ -4,7 +4,7 @@ package persistence;
 
 import model.tableentry.WikiEntryTable;
 import org.json.JSONObject;
-import utils.JsonFieldNames;
+import utils.fieldnames.JsonFieldNames;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

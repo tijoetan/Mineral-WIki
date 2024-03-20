@@ -15,6 +15,8 @@ public interface WikiEntryTable extends Writable {
 
     void removeEntry(String name) throws ItemNotFoundException;
 
+    String[][] getTableAsArray();
+
     JSONObject toJson();
 
 }

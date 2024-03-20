@@ -9,10 +9,7 @@ import model.modelexceptions.ItemNotFoundException;
 import model.modelexceptions.MineralDuplicateException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 // Implementation of WikiEntryTable for storing a collection of minerals
 
@@ -90,6 +87,16 @@ public class MineralTable implements WikiEntryTable {
         } else {
             throw new ItemNotFoundException();
         }
+    }
+
+    @Override
+    public String[][] getTableAsArray() {
+        List<Mineral> mineralValues = new ArrayList<>(mineralNameTable.values());
+        String[][] mineralArray = new String[mineralValues.size()][];
+        for (int i = 0; i < mineralValues.size(); i++) {
+            mineralArray[i] = mineralValues.get(i).giveAttributeAsObjects();
+        }
+        return mineralArray;
     }
 
     // EFFECTS: returns a new JSONObject containing each value in mineralNameTable converted to a JSONObject

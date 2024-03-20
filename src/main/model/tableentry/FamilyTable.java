@@ -1,5 +1,6 @@
 package model.tableentry;
 
+import model.entries.Family;
 import model.modelexceptions.DuplicationException;
 import model.modelexceptions.FamilyDuplicationException;
 import model.entries.WikiEntry;
@@ -61,6 +62,16 @@ public class FamilyTable implements WikiEntryTable {
         } else {
             throw new ItemNotFoundException();
         }
+    }
+
+    @Override
+    public String[][] getTableAsArray() {
+        List<WikiEntry> familyValues = new ArrayList<>(familyNameTable.values());
+        String[][] familyArray = new String[familyValues.size()][];
+        for (int i = 0; i < familyValues.size(); i++) {
+            familyArray[i] = familyValues.get(i).giveAttributeAsObjects();
+        }
+        return familyArray;
     }
 
     // EFFECTS: creates a JSONObject containing key value pairs of the family names and a JSONObject of the family

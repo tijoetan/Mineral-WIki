@@ -16,6 +16,7 @@ import model.tableentry.WikiEntryTable;
 import persistence.InvalidFileException;
 import persistence.TableReader;
 import persistence.TableWriter;
+import ui.additionmenu.UserQuery;
 import ui.uiexceptions.NonNumericValueGiven;
 import utils.FillWikiEntry;
 
@@ -30,8 +31,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import static ui.UserQuery.queryFloat;
-import static ui.UserQuery.queryString;
+import static ui.additionmenu.UserQuery.queryFloat;
+import static ui.additionmenu.UserQuery.queryString;
 
 // Console application that interprets user commands to instructions on model classes
 
@@ -48,6 +49,8 @@ public class MineralWikiConsoleApp {
         this.mineralTable = new MineralTable();
         this.familyTable = new FamilyTable();
         runApp();
+        new MineralWikiGuiApp(mineralTable);
+        new MineralWikiGuiApp(familyTable);
     }
 
     // MODIFIES: this

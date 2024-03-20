@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.JsonFieldNames;
+import utils.fieldnames.JsonFieldNames;
 
 import java.io.IOException;
 import java.util.List;

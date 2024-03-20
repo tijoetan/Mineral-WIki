@@ -1,4 +1,4 @@
-package utils;
+package utils.fieldnames;
 
 public class JsonFieldNames {
     // General Properties

@@ -49,8 +49,6 @@ public class MineralWikiConsoleApp {
         this.mineralTable = new MineralTable();
         this.familyTable = new FamilyTable();
         runApp();
-        new MineralWikiGuiApp(mineralTable);
-        new MineralWikiGuiApp(familyTable);
     }
 
     // MODIFIES: this

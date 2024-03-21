@@ -1,5 +1,7 @@
 package ui.table;
 
+import model.entries.Mineral;
+import model.modelexceptions.DuplicationException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import model.tableentry.WikiEntryTable;
@@ -10,7 +12,9 @@ import javax.swing.table.AbstractTableModel;
 public class TableDataHandler extends AbstractTableModel {
 
     private final String[] colNames;
-    private final String[][] tableValues;
+    private String[][] tableValues;
+
+    private final WikiEntryTable table;
 
     public TableDataHandler(WikiEntryTable table) {
         if (table instanceof MineralTable) {
@@ -21,6 +25,7 @@ public class TableDataHandler extends AbstractTableModel {
             throw new IllegalArgumentException();
         }
 
+        this.table = table;
         tableValues = table.getTableAsArray();
 
     }
@@ -44,5 +49,20 @@ public class TableDataHandler extends AbstractTableModel {
     public String getColumnName(int i) {
         return colNames[i];
 
+    }
+
+    public WikiEntryTable getTable() {
+        return table;
+    }
+
+    public void updateValues() {
+        tableValues = table.getTableAsArray();
+        fireTableDataChanged();
+    }
+
+
+    public void addEntry(Mineral userMineral) throws DuplicationException {
+        table.addEntry(userMineral);
+        updateValues();
     }
 }

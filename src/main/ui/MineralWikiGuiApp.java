@@ -1,25 +1,62 @@
 package ui;
 
-import model.tableentry.WikiEntryTable;
-import ui.additionmenu.MineralQueryHandler;
-import ui.table.TableDataHandler;
+import model.tableentry.FamilyTable;
+import model.tableentry.MineralTable;
+import ui.table.TableView;
+import ui.toolbar.ToolBar;
+import utils.fieldnames.WindowNames;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MineralWikiGuiApp {
-    public MineralWikiGuiApp(WikiEntryTable table) {
-        JFrame frame = new JFrame();
-        JTable viewTable = new JTable(new TableDataHandler(table));
-        viewTable.setBounds(0, 0, 1000, 1000);
-        JScrollPane pane = new JScrollPane(viewTable);
-        viewTable.setFillsViewportHeight(true);
-        frame.add(pane);
+
+    private final JFrame mainFrame;
+    private final CardPanel switchableWindowPanel;
+
+    private final MineralTable mineralTable;
+    private final FamilyTable familyTable;
+
+    private JPanel tableView;
+
+    private TableView mineralTableView;
+    private TableView familyTableView;
+
+    private final ToolBar toolBar;
+
+    public MineralWikiGuiApp() {
+
+        mineralTable = new MineralTable();
+        familyTable = new FamilyTable();
 
 
-        frame.setSize(800, 600);
+        mainFrame = new JFrame("Mineral Database");
+        switchableWindowPanel = new CardPanel();
 
-        frame.setVisible(true);
-        MineralQueryHandler.queryMineral();
+        setupTableView();
+        toolBar = new ToolBar(mineralTableView.getModel(),
+                familyTableView.getModel(), switchableWindowPanel);
+
+        switchableWindowPanel.add(tableView, WindowNames.TABLE_PAGE);
+        switchableWindowPanel.showPanel(WindowNames.TABLE_PAGE);
+
+        mainFrame.add(toolBar, BorderLayout.NORTH);
+        mainFrame.add(switchableWindowPanel, BorderLayout.CENTER);
+        mainFrame.setSize(1280, 720);
+        mainFrame.setVisible(true);
+        mainFrame.setLayout(null);
+    }
+
+    private void setupTableView() {
+        tableView = new JPanel();
+        tableView.setLayout(new BorderLayout());
+
+        mineralTableView = new TableView(mineralTable, new Dimension(2 * 1280 / 3, 720));
+        tableView.add(mineralTableView, BorderLayout.WEST);
+
+        familyTableView = new TableView(familyTable, null);
+        tableView.add(familyTableView, BorderLayout.CENTER);
+
     }
 
 }

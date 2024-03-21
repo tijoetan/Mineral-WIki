@@ -5,12 +5,13 @@ import model.enums.CrystalStructure;
 import utils.fieldnames.AttributeNames;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class MineralAdditionPanel {
+public class MineralAdditionPanel extends JPanel {
 
 
     private JTextField name;
-    private JTextArea description; // description
+    private JScrollPane description; // description
     private JComboBox crystalStructure;
     private JComboBox cleavage;
     private JTextField hardness;
@@ -18,10 +19,20 @@ public class MineralAdditionPanel {
     private JTextField density;
     private JTextField formula;
 
-    JPanel hostPanel;
+    GridBagConstraints constraints;
 
     public MineralAdditionPanel() {
-        resetFields();
+        setLayout(new GridBagLayout());
+
+        constraints = new GridBagConstraints();
+        constraints.gridheight = 1;
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.anchor = GridBagConstraints.WEST;
+
+        constraints.insets = new Insets(5, 0, 5, 5);
+        constraints.weighty = 0;
+        initializeFields();
         addFieldsToPanel();
     }
 
@@ -30,7 +41,8 @@ public class MineralAdditionPanel {
     }
 
     public String getDescription() {
-        return description.getText().trim();
+        JTextArea area = (JTextArea) description.getViewport().getView();
+        return area.getText().trim();
     }
 
     public Object getCrystalStructure() {
@@ -57,13 +69,17 @@ public class MineralAdditionPanel {
         return formula.getText();
     }
 
-    private void resetFields() {
-        hostPanel = new JPanel();
-        hostPanel.setLayout(new BoxLayout(hostPanel, BoxLayout.Y_AXIS));
-        hostPanel.setBounds(100, 100, 400, 200);
+    private void initializeFields() {
 
-        name = new JTextField(3);
-        description = new JTextArea(6, 6);
+        name = new JTextField(10);
+
+
+        JTextArea textDescription = new JTextArea(6, 30);
+
+        textDescription.setLineWrap(true);
+        textDescription.setMaximumSize(new Dimension(1, 1));
+        description = new JScrollPane(textDescription);
+
         crystalStructure = new JComboBox(CrystalStructure.values());
         cleavage = new JComboBox(Cleavage.values());
         hardness = new JTextField(3);
@@ -73,23 +89,26 @@ public class MineralAdditionPanel {
     }
 
     private void addFieldsToPanel() {
-        for (Object[] pair : produceLabelComponentPairs()) {
-            hostPanel.add(new JLabel((String) pair[0]));
-            hostPanel.add((JComponent) pair[1]);
-            hostPanel.add(Box.createVerticalStrut(5));
+        for (String attribute : AttributeNames.MINERAL_ATTRIBUTE_NAMES) {
+            add(new JLabel(attribute + ":"), constraints);
+            constraints.gridy++;
         }
+
+        constraints.gridy = 0;
+        constraints.gridx++;
+        for (JComponent component : produceComponentArray()) {
+            add(component, constraints);
+            constraints.gridy++;
+        }
+
+        constraints.gridx = 0;
+        add(new JLabel("Description:"), constraints);
+        constraints.gridx++;
+        add(description, constraints);
     }
 
-    public Object[][] produceLabelComponentPairs() {
-        return new Object[][]{new Object[]{AttributeNames.MINERAL_ATTRIBUTE_NAMES[0], name},
-                new Object[]{AttributeNames.MINERAL_ATTRIBUTE_NAMES[1], crystalStructure},
-                new Object[]{AttributeNames.MINERAL_ATTRIBUTE_NAMES[2], formula},
-                new Object[]{AttributeNames.MINERAL_ATTRIBUTE_NAMES[3], hardness},
-                new Object[]{AttributeNames.MINERAL_ATTRIBUTE_NAMES[4], density},
-                new Object[]{AttributeNames.MINERAL_ATTRIBUTE_NAMES[5], ior},
-                new Object[]{AttributeNames.MINERAL_ATTRIBUTE_NAMES[6], cleavage},
-                new Object[]{"Description", description}};
-
+    public JComponent[] produceComponentArray() {
+        return new JComponent[]{name, crystalStructure, formula, hardness, density, ior, cleavage};
     }
 
 }

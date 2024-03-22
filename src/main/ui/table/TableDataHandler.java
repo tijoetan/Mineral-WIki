@@ -1,6 +1,7 @@
 package ui.table;
 
 import model.entries.Mineral;
+import model.enums.Attributes;
 import model.modelexceptions.DuplicationException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
@@ -15,6 +16,7 @@ public class TableDataHandler extends AbstractTableModel {
     private String[][] tableValues;
 
     private final WikiEntryTable table;
+    private Attributes sortOrder;
 
     public TableDataHandler(WikiEntryTable table) {
         if (table instanceof MineralTable) {
@@ -25,8 +27,10 @@ public class TableDataHandler extends AbstractTableModel {
             throw new IllegalArgumentException();
         }
 
+
         this.table = table;
-        tableValues = table.getTableAsArray();
+        sortOrder = Attributes.DEFAULT;
+        tableValues = table.getTableAsArray(sortOrder);
 
     }
 
@@ -56,7 +60,7 @@ public class TableDataHandler extends AbstractTableModel {
     }
 
     public void updateValues() {
-        tableValues = table.getTableAsArray();
+        tableValues = table.getTableAsArray(sortOrder);
         fireTableDataChanged();
     }
 
@@ -64,5 +68,28 @@ public class TableDataHandler extends AbstractTableModel {
     public void addEntry(Mineral userMineral) throws DuplicationException {
         table.addEntry(userMineral);
         updateValues();
+    }
+
+    public void sortAndUpdate(Attributes sortOrder) {
+        if (this.sortOrder != sortOrder) {
+            this.sortOrder = sortOrder;
+            updateValues();
+        } else {
+            reverseData();
+        }
+    }
+
+    public Attributes getSortOrder() {
+        return sortOrder;
+    }
+
+    public void reverseData() {
+        String[][] tempData = new String[tableValues.length][];
+        for (int i = 0; i < tableValues.length; i++) {
+            tempData[tableValues.length - i - 1] = tableValues[i];
+        }
+        tableValues = tempData;
+        fireTableDataChanged();
+
     }
 }

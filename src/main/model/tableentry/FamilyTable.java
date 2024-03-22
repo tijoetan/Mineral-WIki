@@ -1,6 +1,7 @@
 package model.tableentry;
 
 import model.entries.Family;
+import model.enums.Attributes;
 import model.modelexceptions.DuplicationException;
 import model.modelexceptions.FamilyDuplicationException;
 import model.entries.WikiEntry;
@@ -65,7 +66,7 @@ public class FamilyTable implements WikiEntryTable {
     }
 
     @Override
-    public String[][] getTableAsArray() {
+    public String[][] getTableAsArray(Attributes attributes) {
         List<WikiEntry> familyValues = new ArrayList<>(familyNameTable.values());
         String[][] familyArray = new String[familyValues.size()][];
         for (int i = 0; i < familyValues.size(); i++) {

@@ -1,6 +1,14 @@
 package model.enums;
 
+import utils.StringUtils;
+
 // Contains the Crystal structures for a mineral
 public enum CrystalStructure {
-    CUBIC, HEXAGONAL, MONOCLINIC, NA, ORTHORHOMBIC, TRICLINIC, TRIGONAL
+    NA, CUBIC, HEXAGONAL, MONOCLINIC, ORTHORHOMBIC, TRICLINIC, TRIGONAL;
+
+    @Override
+    public String toString() {
+        return (this == NA) ? "?" :
+                StringUtils.getSentenceCase(super.toString());
+    }
 }

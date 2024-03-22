@@ -1,8 +1,9 @@
 package model.tableentry;
 
+import model.entries.WikiEntry;
+import model.enums.Attributes;
 import model.modelexceptions.DuplicationException;
 import model.modelexceptions.ItemNotFoundException;
-import model.entries.WikiEntry;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -15,7 +16,7 @@ public interface WikiEntryTable extends Writable {
 
     void removeEntry(String name) throws ItemNotFoundException;
 
-    String[][] getTableAsArray();
+    String[][] getTableAsArray(Attributes attribute);
 
     // List<WikiEntry> getAllMatches();
 

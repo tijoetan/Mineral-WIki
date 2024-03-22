@@ -19,6 +19,8 @@ public class ToolBar extends JPanel {
     private TableDataHandler familyTable;
 
     private JToolBar toolBar;
+    private JTextField searchBox;
+
 
     public ToolBar(TableDataHandler mineralTableView, TableDataHandler familyTable,
                    CardPanel panel) {
@@ -40,18 +42,46 @@ public class ToolBar extends JPanel {
         JButton addMineralButton = new JButton("Add Mineral");
         addMineralButton.addActionListener(new MineralAdditionButtonListener());
         toolBar.add(addMineralButton);
-        toolBar.add(Box.createHorizontalStrut(50));
+        toolBar.addSeparator();
 
         JButton tableViewButton = new JButton("Table Page");
         tableViewButton.addActionListener(new TableViewButtonListener());
         toolBar.add(tableViewButton);
-        toolBar.add(Box.createHorizontalStrut(250));
+        toolBar.add(Box.createHorizontalStrut(750));
 
         JButton editButton = new JButton("Edit Item");
         editButton.addActionListener(new EditButtonListener());
         toolBar.add(editButton);
+        toolBar.add(Box.createHorizontalStrut(50));
+
+        addSearchSection();
     }
 
+    private void addSearchSection() {
+        JTextField searchBar = new JTextField(20);
+        toolBar.add(searchBar);
+        toolBar.addSeparator();
+
+        JButton searchButton = new JButton("Search");
+        searchButton.addActionListener(new SearchButtonListener(searchBar));
+        toolBar.add(searchButton);
+
+    }
+
+
+    protected class SearchButtonListener implements ActionListener {
+
+        JTextField searchQuery;
+
+        public SearchButtonListener(JTextField searchQuery) {
+            this.searchQuery = searchQuery;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println(searchQuery.getText());
+        }
+    }
 
     protected class EditButtonListener implements ActionListener {
         @Override

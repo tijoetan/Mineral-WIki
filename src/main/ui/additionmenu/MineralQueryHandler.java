@@ -2,6 +2,7 @@ package ui.additionmenu;
 
 import model.chemicalstructure.Formula;
 import model.entries.Mineral;
+import model.enums.Cleavage;
 import model.enums.CrystalStructure;
 import model.modelexceptions.UnknownElementException;
 import utils.FillWikiEntry;
@@ -50,7 +51,8 @@ public class MineralQueryHandler {
                 formula,
                 (CrystalStructure) panel.getCrystalStructure(),
                 hardness, density, ior,
-                panel.getDescription());
+                panel.getDescription(),
+                (Cleavage) panel.getCleavage());
 
         return createdMineral;
     }

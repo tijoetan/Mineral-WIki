@@ -90,8 +90,13 @@ public class MineralTable implements WikiEntryTable {
     }
 
     @Override
-    public String[][] getTableAsArray() {
-        List<Mineral> mineralValues = new ArrayList<>(mineralNameTable.values());
+    public String[][] getTableAsArray(Attributes attribute) {
+        List<Mineral> mineralValues;
+        try {
+            mineralValues = getTableSortedBy(attribute);
+        } catch (EmptyTableException e) {
+            mineralValues = new ArrayList<>(mineralNameTable.values());
+        }
         String[][] mineralArray = new String[mineralValues.size()][];
         for (int i = 0; i < mineralValues.size(); i++) {
             mineralArray[i] = mineralValues.get(i).giveAttributeAsObjects();

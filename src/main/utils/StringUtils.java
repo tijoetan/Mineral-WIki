@@ -2,7 +2,18 @@ package utils;
 
 import utils.fieldnames.Constants;
 
-public class WrapString {
+public class StringUtils {
+
+    public static String getSentenceCase(String startString) {
+        StringBuilder returnString = new StringBuilder();
+        for (String word : startString.split(" ")) {
+            returnString.append(word.substring(0, 1).toUpperCase())
+                    .append(word.substring(1).toLowerCase())
+                    .append(" ");
+        }
+
+        return returnString.toString();
+    }
 
     public static String wrapString(String startString, int maxLength, int wrapType) {
         String wrapVal = wrapType == Constants.WRAP_FOR_GUI ? "<br>" : "\n";

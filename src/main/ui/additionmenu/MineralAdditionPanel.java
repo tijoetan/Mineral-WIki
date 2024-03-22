@@ -12,8 +12,8 @@ public class MineralAdditionPanel extends JPanel {
 
     private JTextField name;
     private JScrollPane description; // description
-    private JComboBox crystalStructure;
-    private JComboBox cleavage;
+    private JComboBox<CrystalStructure> crystalStructure;
+    private JComboBox<Cleavage> cleavage;
     private JTextField hardness;
     private JTextField ior;
     private JTextField density;
@@ -80,8 +80,8 @@ public class MineralAdditionPanel extends JPanel {
         textDescription.setMaximumSize(new Dimension(1, 1));
         description = new JScrollPane(textDescription);
 
-        crystalStructure = new JComboBox(CrystalStructure.values());
-        cleavage = new JComboBox(Cleavage.values());
+        crystalStructure = new JComboBox<>(CrystalStructure.values());
+        cleavage = new JComboBox<>(Cleavage.values());
         hardness = new JTextField(3);
         ior = new JTextField(3);
         density = new JTextField(3);

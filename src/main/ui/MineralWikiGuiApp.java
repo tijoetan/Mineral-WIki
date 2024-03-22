@@ -43,6 +43,8 @@ public class MineralWikiGuiApp {
         mainFrame.add(toolBar, BorderLayout.NORTH);
         mainFrame.add(switchableWindowPanel, BorderLayout.CENTER);
         mainFrame.setSize(1280, 720);
+        mainFrame.pack();
+        mainFrame.setResizable(false);
         mainFrame.setVisible(true);
         mainFrame.setLayout(null);
     }

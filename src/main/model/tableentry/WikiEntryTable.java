@@ -17,6 +17,9 @@ public interface WikiEntryTable extends Writable {
 
     String[][] getTableAsArray();
 
+    // List<WikiEntry> getAllMatches();
+
+
     JSONObject toJson();
 
 }

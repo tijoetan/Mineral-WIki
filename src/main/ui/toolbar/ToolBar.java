@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ToolBar extends JPanel {
-    private JButton addButton;
     private CardPanel windows;
 
     private TableDataHandler mineralTableView;
@@ -46,6 +45,21 @@ public class ToolBar extends JPanel {
         JButton tableViewButton = new JButton("Table Page");
         tableViewButton.addActionListener(new TableViewButtonListener());
         toolBar.add(tableViewButton);
+        toolBar.add(Box.createHorizontalStrut(250));
+
+        JButton editButton = new JButton("Edit Item");
+        editButton.addActionListener(new EditButtonListener());
+        toolBar.add(editButton);
+    }
+
+
+    protected class EditButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (windows.getActivePanelName().equals(WindowNames.TABLE_PAGE)) {
+                MineralQueryHandler.showErrorMessage("Cannot edit minerals in current view");
+            }
+        }
     }
 
     protected class TableViewButtonListener implements ActionListener {

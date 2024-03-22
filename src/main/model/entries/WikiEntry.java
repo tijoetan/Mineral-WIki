@@ -5,6 +5,8 @@ package model.entries;
 import model.chemicalstructure.Formula;
 import org.json.JSONObject;
 import persistence.Writable;
+import utils.WrapString;
+import utils.fieldnames.Constants;
 import utils.fieldnames.JsonFieldNames;
 
 public abstract class WikiEntry implements Writable {
@@ -36,7 +38,9 @@ public abstract class WikiEntry implements Writable {
     // EFFECTS: sets description if provided description is not an empty string
     public void setDescription(String description) {
         if (!description.isEmpty()) {
-            this.description = description;
+            this.description = WrapString.wrapString(description,
+                    Constants.MAX_LINE_LENGTH,
+                    Constants.WRAP_FOR_GUI);
         }
     }
 

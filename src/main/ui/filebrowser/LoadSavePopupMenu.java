@@ -5,6 +5,7 @@ import utils.fieldnames.Constants;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Random;
 
 public class LoadSavePopupMenu extends JButton implements ActionListener {
@@ -13,19 +14,18 @@ public class LoadSavePopupMenu extends JButton implements ActionListener {
     private final JMenuItem load;
     private final JMenuItem save;
 
-    Random numSeed = new Random(10);
 
     private int savePath;
+    private String loadFile;
+
 
     public int getSavePath() {
         return savePath;
     }
 
-    public int getLoadPath() {
-        return loadPath;
+    public String getLoadPath() {
+        return loadFile;
     }
-
-    private int loadPath;
 
     public LoadSavePopupMenu(String name) {
         super(name);
@@ -42,20 +42,27 @@ public class LoadSavePopupMenu extends JButton implements ActionListener {
 
 
 
-    private void saveFile() {
-        FileBroswer broswer = new FileBroswer();
-        broswer.showOpenDialog(this);
+    private boolean loadFile() {
+        FileBroswer browser = new FileBroswer();
+        int result = browser.showOpenDialog(this);
+        if (result == FileBroswer.APPROVE_OPTION) {
+            loadFile = browser.getSelectedFile().getPath();
+            return true;
+        }
+        return false;
     }
 
-    private void loadFile() {
-        loadPath = numSeed.nextInt();
+    private void saveFile() {
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(load)) {
-            loadFile();
-            firePropertyChange(Constants.LOAD_BUTTON_CLICKED, true, false);
+            boolean didLoadFile = loadFile();
+            if (didLoadFile) {
+                firePropertyChange(Constants.LOAD_BUTTON_CLICKED, true, false);
+            }
         } else if (e.getSource().equals(save)) {
             saveFile();
             firePropertyChange(Constants.SAVE_BUTTON_CLICKED, true, false);

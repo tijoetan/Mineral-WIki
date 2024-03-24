@@ -2,6 +2,10 @@ package ui.toolbar;
 
 import model.entries.Mineral;
 import model.modelexceptions.DuplicationException;
+import model.tableentry.FamilyTable;
+import model.tableentry.MineralTable;
+import persistence.InvalidFileException;
+import persistence.TableReader;
 import ui.CardPanel;
 import ui.additionmenu.MineralQueryHandler;
 import ui.filebrowser.LoadSavePopupMenu;
@@ -15,15 +19,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 public class ToolBar extends JPanel {
     private LoadSavePopupMenu menu;
-    private CardPanel windows;
+    private final CardPanel windows;
 
     private JButton addMineralButton;
     private JButton tableViewButton;
-    private TableDataHandler mineralTableView;
-    private TableDataHandler familyTable;
+    private final TableDataHandler mineralTableView;
+    private final TableDataHandler familyTable;
 
     private JToolBar toolBar;
     private JTextField searchBox;
@@ -51,13 +56,7 @@ public class ToolBar extends JPanel {
 
     private void addButtons() {
         menu = new LoadSavePopupMenu("File");
-        menu.addPropertyChangeListener(evt -> {
-            if (evt.getPropertyName().equals(Constants.LOAD_BUTTON_CLICKED)) {
-                System.out.println("Loading" + menu.getLoadPath());
-            } else if (evt.getPropertyName().equals(Constants.SAVE_BUTTON_CLICKED)) {
-                System.out.println("Saving" + menu.getSavePath());
-            }
-        });
+        menu.addPropertyChangeListener(new FileHandler());
         toolBar.add(menu);
 
         toolBar.add(Box.createHorizontalStrut(60));
@@ -112,14 +111,27 @@ public class ToolBar extends JPanel {
 
     }
 
-    protected class FileButtonListener implements ActionListener {
+    protected class FileHandler implements PropertyChangeListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("Press");
-            menu.show();
-        }
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals(Constants.LOAD_BUTTON_CLICKED)) {
+                TableReader reader = new TableReader(menu.getLoadPath(),
+                        (FamilyTable) familyTable.getTable(),
+                        (MineralTable) mineralTableView.getTable());
+                try {
+                    reader.setupTables();
+                    mineralTableView.updateValues();
+                    familyTable.updateValues();
 
+                } catch (IOException | InvalidFileException e) {
+                    MineralQueryHandler.showErrorMessage("File Error");
+                }
+                System.out.println("Loading" + menu.getLoadPath());
+            } else if (evt.getPropertyName().equals(Constants.SAVE_BUTTON_CLICKED)) {
+                System.out.println("Saving" + menu.getSavePath());
+            }
+        }
     }
 
     protected class SearchButtonListener implements ActionListener {

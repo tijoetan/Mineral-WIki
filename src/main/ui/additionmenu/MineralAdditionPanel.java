@@ -22,6 +22,8 @@ public class MineralAdditionPanel extends JPanel {
     GridBagConstraints constraints;
 
     public MineralAdditionPanel() {
+
+        firePropertyChange("Change", true, true);
         setLayout(new GridBagLayout());
 
         constraints = new GridBagConstraints();

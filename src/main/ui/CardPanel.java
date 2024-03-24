@@ -1,5 +1,7 @@
 package ui;
 
+import utils.fieldnames.Constants;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -32,6 +34,7 @@ public class CardPanel extends JPanel {
     public void showPanel(String pageName) {
         layout.show(this, pageName);
         activePanel = panels.get(pageName);
+        firePropertyChange(Constants.WINDOW_CHANGE_EVENT, true, false);
     }
 
     public String getActivePanelName() {

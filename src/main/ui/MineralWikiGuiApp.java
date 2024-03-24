@@ -38,6 +38,7 @@ public class MineralWikiGuiApp {
                 familyTableView.getModel(), switchableWindowPanel);
 
         switchableWindowPanel.add(tableView, WindowNames.TABLE_PAGE);
+        switchableWindowPanel.add(new JPanel(), WindowNames.ITEM_PAGE);
         switchableWindowPanel.showPanel(WindowNames.TABLE_PAGE);
 
         mainFrame.add(toolBar, BorderLayout.NORTH);

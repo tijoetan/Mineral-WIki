@@ -54,6 +54,7 @@ public class MineralQueryHandler {
                 panel.getDescription(),
                 (Cleavage) panel.getCleavage());
 
+
         return createdMineral;
     }
 

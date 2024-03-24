@@ -25,7 +25,7 @@ public class StringUtils {
                 break;
             }
             int lastSpace = starter.substring(0, maxLength + 1).lastIndexOf(" ") + 1;
-            if (!(lastSpace > 0)) {
+            if (lastSpace <= 0) {
                 lastSpace = maxLength - 1;
                 String toTransfer = starter.substring(0, lastSpace);
                 returnString.append(toTransfer).append("-").append(wrapVal);
@@ -36,6 +36,7 @@ public class StringUtils {
             starter.delete(0, lastSpace);
         }
 
+        System.out.println(startString);
         return returnString.toString();
 
     }

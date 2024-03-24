@@ -2,12 +2,15 @@ package ui;
 
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
+import persistence.InvalidFileException;
+import persistence.TableReader;
 import ui.table.TableView;
 import ui.toolbar.ToolBar;
 import utils.fieldnames.WindowNames;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class MineralWikiGuiApp {
 
@@ -28,7 +31,6 @@ public class MineralWikiGuiApp {
 
         mineralTable = new MineralTable();
         familyTable = new FamilyTable();
-
 
         mainFrame = new JFrame("Mineral Database");
         switchableWindowPanel = new CardPanel();

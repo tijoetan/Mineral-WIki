@@ -38,9 +38,7 @@ public abstract class WikiEntry implements Writable {
     // EFFECTS: sets description if provided description is not an empty string
     public void setDescription(String description) {
         if (!description.isEmpty()) {
-            this.description = StringUtils.wrapString(description,
-                    Constants.MAX_LINE_LENGTH,
-                    Constants.WRAP_FOR_GUI);
+            this.description = description;
         }
     }
 

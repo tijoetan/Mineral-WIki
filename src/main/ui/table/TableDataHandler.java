@@ -27,7 +27,6 @@ public class TableDataHandler extends AbstractTableModel {
             throw new IllegalArgumentException();
         }
 
-
         this.table = table;
         sortOrder = Attributes.DEFAULT;
         tableValues = table.getTableAsArray(sortOrder);
@@ -51,7 +50,11 @@ public class TableDataHandler extends AbstractTableModel {
 
     @Override
     public String getColumnName(int i) {
-        return colNames[i];
+        try {
+            return colNames[i];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return "";
+        }
 
     }
 

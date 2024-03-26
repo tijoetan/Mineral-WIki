@@ -10,7 +10,7 @@ import ui.CardPanel;
 import ui.additionmenu.MineralQueryHandler;
 import ui.filebrowser.LoadSavePopupMenu;
 import ui.table.TableDataHandler;
-import utils.fieldnames.Constants;
+import utils.fieldnames.PropertyNames;
 import utils.fieldnames.WindowNames;
 
 import javax.swing.*;
@@ -25,25 +25,27 @@ public class ToolBar extends JPanel {
     private LoadSavePopupMenu menu;
     private final CardPanel windows;
 
-    private JButton addMineralButton;
-    private JButton tableViewButton;
     private final TableDataHandler mineralTableView;
-    private final TableDataHandler familyTable;
+    private final TableDataHandler familyTableView;
 
     private JToolBar toolBar;
     private JTextField searchBox;
 
+    private JButton searchButton;
+    private JButton addMineralButton;
+    private JButton tableViewButton;
     private JButton editButton;
     private JButton deleteButton;
+    private JButton itemViewButton;
 
 
-    public ToolBar(TableDataHandler mineralTableView, TableDataHandler familyTable,
+    public ToolBar(TableDataHandler mineralTableView, TableDataHandler familyTableView,
                    CardPanel panel) {
 
         this.windows = panel;
-        windows.addPropertyChangeListener(Constants.WINDOW_CHANGE_EVENT, new WindowStateListener());
+        windows.addPropertyChangeListener(PropertyNames.WINDOW_CHANGE_EVENT, new WindowStateListener());
         this.mineralTableView = mineralTableView;
-        this.familyTable = familyTable;
+        this.familyTableView = familyTableView;
         setPreferredSize(new Dimension(1280, 30));
         setLayout(new BorderLayout());
 
@@ -55,36 +57,43 @@ public class ToolBar extends JPanel {
     }
 
     private void addButtons() {
+        addFileButton();
+        toolBar.add(Box.createHorizontalStrut(50));
+        addTableViewButton();
+        toolBar.addSeparator();
+        addItemViewButton();
+        toolBar.add(Box.createHorizontalStrut(500));
+        addAddMineralButton();
+        toolBar.addSeparator();
+        addEditButton();
+        toolBar.addSeparator();
+        addDeleteButton();
+        toolBar.add(Box.createHorizontalStrut(60));
+        addSearchSection();
+    }
+
+    private void addFileButton() {
         menu = new LoadSavePopupMenu("File");
         menu.addPropertyChangeListener(new FileHandler());
         toolBar.add(menu);
+    }
 
-        toolBar.add(Box.createHorizontalStrut(60));
-        addAddMineralButton();
-
-        addTableViewButton();
-
-        JButton otherViewButton = new JButton("Item View");
-        otherViewButton.addActionListener(e -> windows.showPanel(WindowNames.ITEM_PAGE));
-        toolBar.add(otherViewButton);
-        addEditButton();
-        addDeleteButton();
-        toolBar.add(Box.createHorizontalStrut(50));
-        addSearchSection();
+    private void addItemViewButton() {
+        itemViewButton = new JButton("Item View");
+        itemViewButton.addActionListener(e -> windows.showPanel(WindowNames.ITEM_PAGE));
+        toolBar.add(itemViewButton);
     }
 
     private void addAddMineralButton() {
         addMineralButton = new JButton("Add Mineral");
         addMineralButton.addActionListener(new MineralAdditionButtonListener());
         toolBar.add(addMineralButton);
-        toolBar.addSeparator();
     }
 
     private void addTableViewButton() {
         tableViewButton = new JButton("Table Page");
-        tableViewButton.addActionListener(new TableViewButtonListener());
+        tableViewButton.addActionListener(e -> windows.showPanel(WindowNames.TABLE_PAGE));
         toolBar.add(tableViewButton);
-        toolBar.add(Box.createHorizontalStrut(610));
     }
 
     private void addEditButton() {
@@ -105,7 +114,7 @@ public class ToolBar extends JPanel {
         toolBar.add(searchBox);
         toolBar.addSeparator();
 
-        JButton searchButton = new JButton("Search");
+        searchButton = new JButton("Search");
         searchButton.addActionListener(new SearchButtonListener());
         toolBar.add(searchButton);
 
@@ -115,20 +124,20 @@ public class ToolBar extends JPanel {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals(Constants.LOAD_BUTTON_CLICKED)) {
+            if (evt.getPropertyName().equals(PropertyNames.LOAD_BUTTON_CLICKED)) {
                 TableReader reader = new TableReader(menu.getLoadPath(),
-                        (FamilyTable) familyTable.getTable(),
+                        (FamilyTable) familyTableView.getTable(),
                         (MineralTable) mineralTableView.getTable());
                 try {
                     reader.setupTables();
                     mineralTableView.updateValues();
-                    familyTable.updateValues();
+                    familyTableView.updateValues();
 
                 } catch (IOException | InvalidFileException e) {
                     MineralQueryHandler.showErrorMessage("File Error");
                 }
                 System.out.println("Loading" + menu.getLoadPath());
-            } else if (evt.getPropertyName().equals(Constants.SAVE_BUTTON_CLICKED)) {
+            } else if (evt.getPropertyName().equals(PropertyNames.SAVE_BUTTON_CLICKED)) {
                 System.out.println("Saving" + menu.getSavePath());
             }
         }
@@ -182,6 +191,11 @@ public class ToolBar extends JPanel {
 
             editButton.setEnabled(enabled);
             deleteButton.setEnabled(enabled);
+            tableViewButton.setEnabled(enabled);
+
+            itemViewButton.setEnabled(!enabled);
+            addMineralButton.setEnabled(!enabled);
+
         }
     }
 
@@ -196,6 +210,7 @@ public class ToolBar extends JPanel {
 
             if (result == JOptionPane.YES_OPTION) {
                 System.out.println("Deleting");
+                firePropertyChange(PropertyNames.ITEM_DELETED, true, false);
                 windows.showPanel(WindowNames.TABLE_PAGE);
             }
         }

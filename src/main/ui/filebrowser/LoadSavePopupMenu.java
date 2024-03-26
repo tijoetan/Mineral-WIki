@@ -1,12 +1,10 @@
 package ui.filebrowser;
 
-import utils.fieldnames.Constants;
+import utils.fieldnames.PropertyNames;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.Random;
 
 public class LoadSavePopupMenu extends JButton implements ActionListener {
 
@@ -61,11 +59,11 @@ public class LoadSavePopupMenu extends JButton implements ActionListener {
         if (e.getSource().equals(load)) {
             boolean didLoadFile = loadFile();
             if (didLoadFile) {
-                firePropertyChange(Constants.LOAD_BUTTON_CLICKED, true, false);
+                firePropertyChange(PropertyNames.LOAD_BUTTON_CLICKED, true, false);
             }
         } else if (e.getSource().equals(save)) {
             saveFile();
-            firePropertyChange(Constants.SAVE_BUTTON_CLICKED, true, false);
+            firePropertyChange(PropertyNames.SAVE_BUTTON_CLICKED, true, false);
         } else {
             buttonMenu.show(this, this.getX(), this.getY() + this.getHeight());
         }

@@ -1,8 +1,10 @@
 package ui.table;
 
 import model.entries.Mineral;
+import model.entries.WikiEntry;
 import model.enums.Attributes;
 import model.modelexceptions.DuplicationException;
+import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import model.tableentry.WikiEntryTable;
@@ -62,6 +64,10 @@ public class TableDataHandler extends AbstractTableModel {
         return table;
     }
 
+    public WikiEntry getEntry(String name) throws ItemNotFoundException {
+        return table.getRequestedEntry(name);
+    }
+
     public void updateValues() {
         tableValues = table.getTableAsArray(sortOrder);
         fireTableDataChanged();
@@ -70,6 +76,11 @@ public class TableDataHandler extends AbstractTableModel {
 
     public void addEntry(Mineral userMineral) throws DuplicationException {
         table.addEntry(userMineral);
+        updateValues();
+    }
+
+    public void deleteEntry(String name) throws ItemNotFoundException {
+        table.removeEntry(name);
         updateValues();
     }
 

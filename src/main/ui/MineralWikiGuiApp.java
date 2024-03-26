@@ -1,15 +1,23 @@
 package ui;
 
+import model.entries.Mineral;
+import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import persistence.InvalidFileException;
 import persistence.TableReader;
+import ui.additionmenu.MineralQueryHandler;
+import ui.displaypage.ItemView;
 import ui.table.TableView;
 import ui.toolbar.ToolBar;
+import utils.fieldnames.Constants;
+import utils.fieldnames.PropertyNames;
 import utils.fieldnames.WindowNames;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 public class MineralWikiGuiApp {
@@ -21,6 +29,7 @@ public class MineralWikiGuiApp {
     private final FamilyTable familyTable;
 
     private JPanel tableView;
+    private final ItemView itemView;
 
     private TableView mineralTableView;
     private TableView familyTableView;
@@ -36,11 +45,14 @@ public class MineralWikiGuiApp {
         switchableWindowPanel = new CardPanel();
 
         setupTableView();
+        itemView = new ItemView();
         toolBar = new ToolBar(mineralTableView.getModel(),
                 familyTableView.getModel(), switchableWindowPanel);
+        toolBar.addPropertyChangeListener(PropertyNames.ITEM_DELETED, e -> deleteSelectedItem());
+
 
         switchableWindowPanel.add(tableView, WindowNames.TABLE_PAGE);
-        switchableWindowPanel.add(new JPanel(), WindowNames.ITEM_PAGE);
+        switchableWindowPanel.add(itemView, WindowNames.ITEM_PAGE);
         switchableWindowPanel.showPanel(WindowNames.TABLE_PAGE);
 
         mainFrame.add(toolBar, BorderLayout.NORTH);
@@ -52,16 +64,43 @@ public class MineralWikiGuiApp {
         mainFrame.setLayout(null);
     }
 
+    private void deleteSelectedItem() {
+        try {
+            mineralTableView.getModel().deleteEntry(itemView.getHostedItemName());
+            itemView.setupDefaultView();
+            return;
+        } catch (ItemNotFoundException ignored) {
+            // Not in mineral table
+        }
+
+        try {
+            familyTableView.getModel().deleteEntry(itemView.getHostedItemName());
+        } catch (ItemNotFoundException ignored) {
+            MineralQueryHandler.showErrorMessage("Nothing to delete");
+        }
+
+
+    }
+
     private void setupTableView() {
         tableView = new JPanel();
         tableView.setLayout(new BorderLayout());
 
         mineralTableView = new TableView(mineralTable, new Dimension(2 * 1280 / 3, 720));
+        mineralTableView.addPropertyChangeListener(PropertyNames.ITEM_CLICKED, new SwitchWindowOnMineralClick());
         tableView.add(mineralTableView, BorderLayout.WEST);
 
         familyTableView = new TableView(familyTable, null);
         tableView.add(familyTableView, BorderLayout.CENTER);
 
+    }
+
+    protected class SwitchWindowOnMineralClick implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            itemView.updateDisplayPage((Mineral) mineralTableView.getClickedItem());
+            switchableWindowPanel.showPanel(WindowNames.ITEM_PAGE);
+        }
     }
 
 }

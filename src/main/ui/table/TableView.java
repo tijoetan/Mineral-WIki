@@ -1,9 +1,12 @@
 package ui.table;
 
+import model.entries.WikiEntry;
 import model.enums.Attributes;
+import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.WikiEntryTable;
 import ui.additionmenu.MineralQueryHandler;
 import utils.fieldnames.AttributeNames;
+import utils.fieldnames.PropertyNames;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +15,7 @@ import java.awt.event.MouseEvent;
 
 public class TableView extends JScrollPane {
 
+    private WikiEntry clickedItem;
     private final JTable viewTable;
     private final TableDataHandler handler;
 
@@ -24,7 +28,8 @@ public class TableView extends JScrollPane {
         setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         setPreferredSize(preferredSize);
         viewTable.getColumn(AttributeNames.NAME).setCellRenderer(new NameCellRenderer());
-        viewTable.addMouseMotionListener(new SuggestSelectionOverHyperlinks());
+        viewTable.addMouseMotionListener(new HyperlinkManager());
+        viewTable.addMouseListener(new HyperlinkManager());
     }
 
     public TableDataHandler getModel() {
@@ -52,6 +57,10 @@ public class TableView extends JScrollPane {
         }
     }
 
+    public WikiEntry getClickedItem() {
+        return clickedItem;
+    }
+
     protected class ClickMouseListener extends MouseAdapter {
 
         @Override
@@ -64,18 +73,36 @@ public class TableView extends JScrollPane {
 
     }
 
-    protected class SuggestSelectionOverHyperlinks extends MouseAdapter {
+    protected class HyperlinkManager extends MouseAdapter {
         @Override
         public void mouseMoved(MouseEvent e) {
-            System.out.println("CLicked");
             Point clickPoint = e.getPoint();
             if (viewTable.getColumnName(viewTable.columnAtPoint(clickPoint)).equals(AttributeNames.NAME)) {
-                System.out.println("SIjfe");
                 viewTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 return;
             }
             viewTable.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            Point clickPoint = e.getPoint();
+            System.out.println("Click");
+            int column = viewTable.columnAtPoint(clickPoint);
+            if (viewTable.getColumnName(column).equals(AttributeNames.NAME)) {
+                int row = viewTable.rowAtPoint(clickPoint);
+                String nameAtPoint = (String) viewTable.getValueAt(row, column);
+                try {
+                    clickedItem = handler.getEntry(nameAtPoint);
+                    firePropertyChange(PropertyNames.ITEM_CLICKED, true, false);
+                } catch (ItemNotFoundException ex) {
+                    throw new IllegalStateException();
+                }
+
+            }
+        }
+
+
     }
 
 }

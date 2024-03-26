@@ -30,20 +30,25 @@ public class MineralDisplayPage extends JPanel {
 
     }
 
+    public String getMineralName() {
+        return mineral.getName();
+    }
+
 
     private void setupCenterPane() {
         JLabel mineralNameLabel = new JLabel(StringUtils.getSentenceCase(mineral.getName()));
         mineralNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        mineralNameLabel.setFont(new Font("Inter", Font.ITALIC, 70));
+        mineralNameLabel.setFont(new Font("Inter", Font.ITALIC | Font.BOLD, 70));
+        System.out.println(mineralNameLabel.getFont());
         JPanel labelBox = new JPanel(new BorderLayout());
         labelBox.add(mineralNameLabel, BorderLayout.WEST);
         labelBox.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
-        labelBox.setPreferredSize(new Dimension(200, 60));
+        labelBox.setPreferredSize(new Dimension(200, 75));
 
         descriptionLabel = new JLabel("<html>"
                 + StringUtils.wrapString(mineral.getDescription(), Constants.MAX_LINE_LENGTH, Constants.WRAP_FOR_GUI)
                 + "</html>");
-        descriptionLabel.setFont(new Font("Garamond", Font.PLAIN, 30));
+        descriptionLabel.setFont(new Font("Inter", Font.PLAIN, 30));
         descriptionLabel.setVerticalAlignment(SwingConstants.TOP);
 
         JPanel textPanel = new JPanel();

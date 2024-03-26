@@ -1,5 +1,6 @@
 package ui.additionmenu;
 
+import model.entries.Mineral;
 import model.enums.Cleavage;
 import model.enums.CrystalStructure;
 import utils.fieldnames.AttributeNames;
@@ -9,8 +10,8 @@ import java.awt.*;
 
 public class MineralAdditionPanel extends JPanel {
 
-
     private JTextField name;
+    private JTextArea textDescription;
     private JScrollPane description; // description
     private JComboBox<CrystalStructure> crystalStructure;
     private JComboBox<Cleavage> cleavage;
@@ -76,7 +77,7 @@ public class MineralAdditionPanel extends JPanel {
         name = new JTextField(10);
 
 
-        JTextArea textDescription = new JTextArea(6, 30);
+        textDescription = new JTextArea(6, 30);
 
         textDescription.setLineWrap(true);
         textDescription.setMaximumSize(new Dimension(1, 1));
@@ -111,6 +112,19 @@ public class MineralAdditionPanel extends JPanel {
 
     public JComponent[] produceComponentArray() {
         return new JComponent[]{name, crystalStructure, formula, hardness, density, ior, cleavage};
+    }
+
+    public void setFields(Mineral mineral) {
+        name.setText(mineral.getName());
+        name.setEnabled(false);
+        textDescription.setText(mineral.getDescription());
+        formula.setText(mineral.getGeneralFormula().getFormulaAsString());
+        crystalStructure.setSelectedItem(mineral.getCrystalStructure());
+        hardness.setText(String.valueOf(mineral.getHardness()));
+        density.setText(String.valueOf(mineral.getDensity()));
+        ior.setText(String.valueOf(mineral.getIndexOfRefraction()));
+        cleavage.setSelectedItem(mineral.getCleavage());
+
     }
 
 }

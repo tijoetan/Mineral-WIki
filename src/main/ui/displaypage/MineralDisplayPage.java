@@ -30,8 +30,8 @@ public class MineralDisplayPage extends JPanel {
 
     }
 
-    public String getMineralName() {
-        return mineral.getName();
+    public Mineral getMineral() {
+        return this.mineral;
     }
 
 

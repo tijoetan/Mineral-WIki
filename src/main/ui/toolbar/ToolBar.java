@@ -98,7 +98,7 @@ public class ToolBar extends JPanel {
 
     private void addEditButton() {
         editButton = new JButton("Edit Item");
-        editButton.addActionListener(new EditButtonListener());
+        editButton.addActionListener(e -> firePropertyChange(PropertyNames.ITEM_EDITED, true, false));
         editButton.setEnabled(false);
         toolBar.add(editButton);
     }
@@ -155,7 +155,7 @@ public class ToolBar extends JPanel {
     protected static class EditButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Editing Item");
+            System.out.println("Editing");
         }
     }
 
@@ -169,7 +169,7 @@ public class ToolBar extends JPanel {
     protected class MineralAdditionButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Mineral userMineral = MineralQueryHandler.queryMineral();
+            Mineral userMineral = MineralQueryHandler.queryAddMineral();
             if (userMineral != null) {
                 try {
                     mineralTableView.addEntry(userMineral);

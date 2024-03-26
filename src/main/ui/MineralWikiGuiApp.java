@@ -4,13 +4,10 @@ import model.entries.Mineral;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
-import persistence.InvalidFileException;
-import persistence.TableReader;
 import ui.additionmenu.MineralQueryHandler;
 import ui.displaypage.ItemView;
 import ui.table.TableView;
 import ui.toolbar.ToolBar;
-import utils.fieldnames.Constants;
 import utils.fieldnames.PropertyNames;
 import utils.fieldnames.WindowNames;
 
@@ -18,7 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
+import java.util.Arrays;
 
 public class MineralWikiGuiApp {
 
@@ -49,6 +46,7 @@ public class MineralWikiGuiApp {
         toolBar = new ToolBar(mineralTableView.getModel(),
                 familyTableView.getModel(), switchableWindowPanel);
         toolBar.addPropertyChangeListener(PropertyNames.ITEM_DELETED, e -> deleteSelectedItem());
+        toolBar.addPropertyChangeListener(PropertyNames.ITEM_EDITED, e -> editSelectedItem());
 
 
         switchableWindowPanel.add(tableView, WindowNames.TABLE_PAGE);
@@ -62,6 +60,13 @@ public class MineralWikiGuiApp {
         mainFrame.setResizable(false);
         mainFrame.setVisible(true);
         mainFrame.setLayout(null);
+    }
+
+    private void editSelectedItem() {
+        Mineral updatedMineral = MineralQueryHandler.queryEditMineral((Mineral) itemView.getHostedItem());
+        mineralTableView.getModel().updateValues();
+        System.out.println(Arrays.toString(updatedMineral.giveAttributeAsObjects()));
+        itemView.updateDisplayPage(updatedMineral);
     }
 
     private void deleteSelectedItem() {

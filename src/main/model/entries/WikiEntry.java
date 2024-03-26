@@ -31,7 +31,7 @@ public abstract class WikiEntry implements Writable {
     }
 
     public String getDescription() {
-        return (this.description);
+        return this.description;
     }
 
     // MODIFIES: this

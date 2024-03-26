@@ -5,35 +5,57 @@ import model.entries.Mineral;
 import model.enums.Cleavage;
 import model.enums.CrystalStructure;
 import model.modelexceptions.UnknownElementException;
+import org.jetbrains.annotations.Nullable;
 import utils.FillWikiEntry;
 
 import javax.swing.*;
+import java.util.Arrays;
 
 public class MineralQueryHandler {
     public static void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
 
-    public static Mineral queryMineral() {
+    public static Mineral queryAddMineral() {
         MineralAdditionPanel panel = new MineralAdditionPanel();
+        return queryMineral(panel, "Specify your mineral!");
+    }
+
+    private static Mineral queryMineral(MineralAdditionPanel panel, String title) {
+        return queryMineral(panel, title, null);
+    }
+
+    @Nullable
+    private static Mineral queryMineral(MineralAdditionPanel panel, String title, Mineral mineral) {
         int userResponse = JOptionPane.showConfirmDialog(null,
                 panel,
-                "Specify your mineral!",
+                title,
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
         if (userResponse == JOptionPane.OK_OPTION) {
-            return populateMineral(panel);
+            if (mineral == null) {
+                mineral = new Mineral(panel.getName());
+            }
+            return populateMineral(panel, mineral);
         } else {
-            System.out.println("Sorry");
             return null;
         }
     }
 
-    private static Mineral populateMineral(MineralAdditionPanel panel) {
+    public static Mineral queryEditMineral(Mineral mineral) {
+        MineralAdditionPanel panel = new MineralAdditionPanel();
+        System.out.println(Arrays.toString(mineral.giveAttributeAsObjects()));
+        panel.setFields(mineral);
+        return queryMineral(panel, "Make your Changes!", mineral);
+//      System.out.println(Arrays.toString(mineral.giveAttributeAsObjects()));
+
+
+    }
+
+    private static Mineral populateMineral(MineralAdditionPanel panel, Mineral mineral) {
         float ior;
         float density;
         Formula formula;
         float hardness;
-        Mineral createdMineral = new Mineral(panel.getName());
         formula = getFormula(panel);
 
         try {
@@ -47,7 +69,7 @@ public class MineralQueryHandler {
             density = 0f;
         }
 
-        FillWikiEntry.fillMineral(createdMineral,
+        FillWikiEntry.fillMineral(mineral,
                 formula,
                 (CrystalStructure) panel.getCrystalStructure(),
                 hardness, density, ior,
@@ -55,7 +77,7 @@ public class MineralQueryHandler {
                 (Cleavage) panel.getCleavage());
 
 
-        return createdMineral;
+        return mineral;
     }
 
     private static Formula getFormula(MineralAdditionPanel panel) {

@@ -1,6 +1,7 @@
 package ui.displaypage;
 
 import model.entries.Mineral;
+import model.entries.WikiEntry;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,14 +25,20 @@ public class ItemView extends JPanel {
     public void updateDisplayPage(Mineral mineral) {
         removeAll();
         page = new MineralDisplayPage(mineral);
+        System.out.println("Updating");
         add(page, BorderLayout.CENTER);
+        updateUI();
     }
 
 
     public String getHostedItemName() {
         if (page != null) {
-            return page.getMineralName();
+            return getHostedItem().getName();
         }
         return "";
+    }
+
+    public WikiEntry getHostedItem() {
+        return page.getMineral();
     }
 }

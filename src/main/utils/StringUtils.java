@@ -11,8 +11,7 @@ public class StringUtils {
                     .append(word.substring(1).toLowerCase())
                     .append(" ");
         }
-
-        return returnString.toString();
+        return returnString.substring(0, returnString.length() - 1);
     }
 
     public static String wrapString(String startString, int maxLength, int wrapType) {
@@ -39,5 +38,18 @@ public class StringUtils {
         System.out.println(startString);
         return returnString.toString();
 
+    }
+
+    public static String subscriptValue(int value) {
+        return value == 1 ? "" :
+                "<sub>" + value + "</sub>";
+    }
+
+    public static String trimTo(String text, int length) {
+        if (text.length() <= length) {
+            return text;
+        }
+
+        return text.substring(0, length - 2) + "...";
     }
 }

@@ -12,4 +12,13 @@ public enum Cleavage {
                 StringUtils.getSentenceCase(super.toString());
     }
 
+    public String getLiteralString() {
+        return super.toString();
+    }
+
+//    @
+//    public static Cleavage valueOf(String ei) {
+//
+//    }
+
 }

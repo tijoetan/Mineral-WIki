@@ -30,6 +30,7 @@ public class TableView extends JScrollPane {
         viewTable.getColumn(AttributeNames.NAME).setCellRenderer(new NameCellRenderer());
         viewTable.addMouseMotionListener(new HyperlinkManager());
         viewTable.addMouseListener(new HyperlinkManager());
+        viewTable.setRowHeight(30);
     }
 
     public TableDataHandler getModel() {

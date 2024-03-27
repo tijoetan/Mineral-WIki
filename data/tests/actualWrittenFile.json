@@ -2,22 +2,22 @@
     "minerals": {
         "m1": {
             "hardness": 0,
-            "cleavage": "NA",
+            "cleavage": "?",
             "density": 0,
             "name": "m1",
             "generalFormula": "",
             "description": "No description provided",
-            "crystalStructure": "NA",
+            "crystalStructure": "?",
             "ior": 0
         },
         "m2": {
             "hardness": 0,
-            "cleavage": "NA",
+            "cleavage": "?",
             "density": 0,
             "name": "m2",
             "generalFormula": "",
             "description": "No description provided",
-            "crystalStructure": "NA",
+            "crystalStructure": "?",
             "ior": 0
         }
     },

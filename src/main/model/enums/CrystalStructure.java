@@ -11,4 +11,8 @@ public enum CrystalStructure {
         return (this == NA) ? "?" :
                 StringUtils.getSentenceCase(super.toString());
     }
+
+    public String getLiteralString() {
+        return super.toString();
+    }
 }

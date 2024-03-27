@@ -1,9 +1,14 @@
 package ui;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
 import model.entries.Mineral;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
+import sun.awt.image.MultiResolutionCachedImage;
+import sun.awt.image.ToolkitImage;
 import ui.additionmenu.MineralQueryHandler;
 import ui.displaypage.ItemView;
 import ui.table.TableView;
@@ -11,10 +16,13 @@ import ui.toolbar.ToolBar;
 import utils.fieldnames.PropertyNames;
 import utils.fieldnames.WindowNames;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class MineralWikiGuiApp {
@@ -60,6 +68,11 @@ public class MineralWikiGuiApp {
         mainFrame.setResizable(false);
         mainFrame.setVisible(true);
         mainFrame.setLayout(null);
+        try {
+            mainFrame.setIconImage(ImageIO.read(new File("data/icons/appIcon.png")));
+        } catch (IOException e) {
+            //
+        }
     }
 
     private void editSelectedItem() {

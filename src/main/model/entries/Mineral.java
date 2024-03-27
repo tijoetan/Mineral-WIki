@@ -119,11 +119,11 @@ public class Mineral extends WikiEntry {
     @Override
     public JSONObject toJson() {
         JSONObject mineralJson = super.toJson();
-        mineralJson.put(JsonFieldNames.CRYSTAL_STRUCTURE, crystalStructure.toString());
+        mineralJson.put(JsonFieldNames.CRYSTAL_STRUCTURE, crystalStructure.getLiteralString());
         mineralJson.put(JsonFieldNames.DENSITY, density);
         mineralJson.put(JsonFieldNames.INDEX_OF_REFRACTION, indexOfRefraction);
         mineralJson.put(JsonFieldNames.HARDNESS, hardness);
-        mineralJson.put(JsonFieldNames.CLEAVAGE, cleavage.toString());
+        mineralJson.put(JsonFieldNames.CLEAVAGE, cleavage.getLiteralString());
         return mineralJson;
     }
 

@@ -124,7 +124,6 @@ public class MineralAdditionPanel extends JPanel {
         density.setText(String.valueOf(mineral.getDensity()));
         ior.setText(String.valueOf(mineral.getIndexOfRefraction()));
         cleavage.setSelectedItem(mineral.getCleavage());
-
     }
 
 }

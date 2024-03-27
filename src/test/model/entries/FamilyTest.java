@@ -77,12 +77,12 @@ class FamilyTest {
         String f1Expected = String.format("Name: %s | General Formula: %s | Subs: %s",
                 "f1",
                 f1Formula.getFormulaAsString(),
-                "m1 m2 ");
+                "m1\nm2 ");
 
         String f2Expected = String.format("Name: %s | General Formula: %s | Subs: %s",
                 "f2",
                 f2Formula.getFormulaAsString(),
-                "m3 m4 ");
+                "m3\nm4 ");
 
         assertEquals(f1Expected, f1Result);
         assertEquals(f2Expected, f2Result);

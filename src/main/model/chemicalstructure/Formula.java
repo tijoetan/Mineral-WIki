@@ -2,6 +2,7 @@ package model.chemicalstructure;
 
 import model.enums.AtomicSymbols;
 import model.modelexceptions.UnknownElementException;
+import utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +33,8 @@ public class Formula {
 
     private boolean isValidFormula = true;
 
-    private static final Pattern substitutableGroup = Pattern.compile("\\([^\\)]+,[^\\)]+\\)(\\d)?");
-    private static final Pattern covalentIon = Pattern.compile("\\([^\\)]+\\)\\d?");
+    private static final Pattern substitutableGroup = Pattern.compile("\\([^\\)]+,[^\\)]+\\)(\\d)*");
+    private static final Pattern covalentIon = Pattern.compile("\\([^\\)]+\\)\\d*");
     private static final Pattern elementMatch = Pattern.compile("[A-Z][a-z]?\\d*");
     private static final Pattern generalDigit = Pattern.compile("(\\d)+");
     private static final Pattern bracketDigit = Pattern.compile("\\)(\\d)+");
@@ -49,7 +50,7 @@ public class Formula {
             isValidFormula = false;
         } else {
             parseFormula(unparsedFormula);
-//          parsedFormulaString = convertFormulaToString();
+            parsedFormulaString = convertFormulaToString();
         }
     }
 
@@ -62,10 +63,43 @@ public class Formula {
         this.isValidFormula = false;
     }
 
-    // EFFECTS: converts all the element groups to a proper string format.
-//    private String convertFormulaToString() {
-//        return "";
-//    }
+    private String convertFormulaToString() {
+        StringBuilder parsedFormulaStringBuilder = new StringBuilder("<html>");
+        for (MoleculeGroup group : covalentGroups) {
+            parsedFormulaStringBuilder.append("(");
+            convertMoleculeListString(group.getElements(), parsedFormulaStringBuilder);
+            parsedFormulaStringBuilder.append(")")
+                    .append(StringUtils.subscriptValue(group.getAmount()));
+        }
+
+        for (MoleculeGroup group : substitutableGroups) {
+            parsedFormulaStringBuilder.append("(");
+            for (FormulaElement element : group.getElements()) {
+                parsedFormulaStringBuilder.append(StringUtils.getSentenceCase(element.getSymbol().toString()))
+                        .append(StringUtils.subscriptValue(element.getCount()))
+                        .append(", ");
+            }
+
+            parsedFormulaStringBuilder.delete(parsedFormulaStringBuilder.length() - 2,
+                            parsedFormulaStringBuilder.length())
+                    .append(")")
+                    .append(StringUtils.subscriptValue(group.getAmount()));
+        }
+
+        convertMoleculeListString(moleculeList, parsedFormulaStringBuilder);
+        parsedFormulaStringBuilder.append("</html>");
+        return parsedFormulaStringBuilder.toString();
+    }
+
+    private static void convertMoleculeListString(List<FormulaElement> group,
+                                                  StringBuilder parsedFormulaStringBuilder) {
+        for (FormulaElement element : group) {
+            System.out.println(StringUtils.getSentenceCase(element.getSymbol().toString()));
+            parsedFormulaStringBuilder.append(StringUtils.getSentenceCase(element.getSymbol().toString()))
+                    .append(StringUtils.subscriptValue(element.getCount()));
+        }
+    }
+
 
     // getters
     public String getFormulaAsString() {
@@ -145,6 +179,7 @@ public class Formula {
         Matcher amountChecker = bracketDigit.matcher(group);
         if (amountChecker.find()) {
             amount = getNumericalComponent(amountChecker.group());
+            System.out.println(amount);
         } else {
             amount = 1;
         }

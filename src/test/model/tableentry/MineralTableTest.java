@@ -3,7 +3,7 @@ package model.tableentry;
 import model.chemicalstructure.Formula;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
-import model.enums.Attributes;
+import utils.fieldnames.Attributes;
 import model.enums.Cleavage;
 import model.enums.CrystalStructure;
 import model.modelexceptions.DuplicationException;

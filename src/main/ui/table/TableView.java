@@ -1,10 +1,10 @@
 package ui.table;
 
 import model.entries.WikiEntry;
-import model.enums.Attributes;
+import utils.UserQuery;
+import utils.fieldnames.Attributes;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.WikiEntryTable;
-import ui.additionmenu.mineraladdition.MineralQueryHandler;
 import utils.fieldnames.AttributeNames;
 import utils.fieldnames.PropertyNames;
 
@@ -53,7 +53,7 @@ public class TableView extends JScrollPane {
             case AttributeNames.NAME: handler.sortAndUpdate(Attributes.DEFAULT);
                 break;
             default:
-                MineralQueryHandler.showErrorMessage("Cannot sort this");
+                UserQuery.showErrorMessage("Cannot sort this");
 
         }
     }

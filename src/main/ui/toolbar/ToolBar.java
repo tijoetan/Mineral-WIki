@@ -1,5 +1,6 @@
 package ui.toolbar;
 
+import model.entries.Family;
 import model.entries.Mineral;
 import model.modelexceptions.DuplicationException;
 import model.tableentry.FamilyTable;
@@ -7,9 +8,12 @@ import model.tableentry.MineralTable;
 import persistence.InvalidFileException;
 import persistence.TableReader;
 import ui.CardPanel;
+import ui.additionmenu.QuerySelector;
+import ui.additionmenu.familyaddition.FamilyQueryHandler;
 import ui.additionmenu.mineraladdition.MineralQueryHandler;
 import ui.filebrowser.LoadSavePopupMenu;
 import ui.table.TableDataHandler;
+import utils.UserQuery;
 import utils.fieldnames.PropertyNames;
 import utils.fieldnames.WindowNames;
 
@@ -120,6 +124,28 @@ public class ToolBar extends JPanel {
 
     }
 
+    private void addMineral() {
+        Mineral userMineral = MineralQueryHandler.queryAddMineral();
+        if (userMineral != null) {
+            try {
+                mineralTableView.addEntry(userMineral);
+            } catch (DuplicationException ex) {
+                UserQuery.showErrorMessage("Mineral Names cannot be repeated");
+            }
+        }
+    }
+
+    public void addFamily() {
+        Family userFamily = FamilyQueryHandler.queryAddFamily(mineralTableView.getTable());
+        if (userFamily != null) {
+            try {
+                familyTableView.addEntry(userFamily);
+            } catch (DuplicationException e) {
+                UserQuery.showErrorMessage("Family Names cannot be repeated");
+            }
+        }
+    }
+
     protected class FileHandler implements PropertyChangeListener {
 
         @Override
@@ -134,7 +160,7 @@ public class ToolBar extends JPanel {
                     familyTableView.updateValues();
 
                 } catch (IOException | InvalidFileException e) {
-                    MineralQueryHandler.showErrorMessage("File Error");
+                    UserQuery.showErrorMessage("File Error");
                 }
                 System.out.println("Loading" + menu.getLoadPath());
             } else if (evt.getPropertyName().equals(PropertyNames.SAVE_BUTTON_CLICKED)) {
@@ -155,17 +181,20 @@ public class ToolBar extends JPanel {
     protected class MineralAdditionButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Mineral userMineral = MineralQueryHandler.queryAddMineral();
-            if (userMineral != null) {
-                try {
-                    mineralTableView.addEntry(userMineral);
-                } catch (DuplicationException ex) {
-                    MineralQueryHandler.showErrorMessage("Mineral Names cannot be repeated");
-                }
+            switch (QuerySelector.chooseOption()) {
+                case FAMILY:
+                    addFamily();
+                    System.out.println("Family");
+                    break;
+                case MINERAL:
+                    addMineral();
+                    System.out.println("Mineral");
+                    break;
             }
 
         }
     }
+
 
     protected class WindowStateListener implements PropertyChangeListener {
 

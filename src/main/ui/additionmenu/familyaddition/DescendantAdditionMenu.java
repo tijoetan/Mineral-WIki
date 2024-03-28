@@ -1,6 +1,6 @@
 package ui.additionmenu.familyaddition;
 
-import ui.additionmenu.mineraladdition.MineralQueryHandler;
+import utils.UserQuery;
 import utils.fieldnames.PropertyNames;
 
 import javax.swing.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DescendantAdditionMenu extends JPanel {
-    private JTextField nameBox;
+    private final JTextField nameBox;
     private final JButton addButton;
     private final JPanel addedItemFrame;
     private final List<AddedItemBox> addedItems;
@@ -62,7 +62,7 @@ public class DescendantAdditionMenu extends JPanel {
     public void addDescendant(String name) {
         AddedItemBox newBox = new AddedItemBox(name);
         if (addedItems.contains(newBox)) {
-            MineralQueryHandler.showErrorMessage("Already Added");
+            UserQuery.showErrorMessage("Already Added");
             return;
         }
 

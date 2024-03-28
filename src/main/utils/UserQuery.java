@@ -2,6 +2,7 @@ package utils;
 
 import ui.uiexceptions.NonNumericValueGiven;
 
+import javax.swing.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -29,5 +30,9 @@ public class UserQuery {
         } catch (InputMismatchException e) {
             throw new NonNumericValueGiven(userQuestion);
         }
+    }
+
+    public static void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(null, message);
     }
 }

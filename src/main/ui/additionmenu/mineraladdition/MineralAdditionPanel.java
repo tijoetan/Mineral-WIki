@@ -118,7 +118,7 @@ public class MineralAdditionPanel extends JPanel {
         name.setText(mineral.getName());
         name.setEnabled(false);
         textDescription.setText(mineral.getDescription());
-        formula.setText(mineral.getGeneralFormula().getFormulaAsString());
+        formula.setText(mineral.getGeneralFormula().getUnparsedFormula());
         crystalStructure.setSelectedItem(mineral.getCrystalStructure());
         hardness.setText(String.valueOf(mineral.getHardness()));
         density.setText(String.valueOf(mineral.getDensity()));

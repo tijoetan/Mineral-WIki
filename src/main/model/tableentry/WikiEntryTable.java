@@ -1,7 +1,7 @@
 package model.tableentry;
 
 import model.entries.WikiEntry;
-import model.enums.Attributes;
+import utils.fieldnames.Attributes;
 import model.modelexceptions.DuplicationException;
 import model.modelexceptions.ItemNotFoundException;
 import org.json.JSONObject;

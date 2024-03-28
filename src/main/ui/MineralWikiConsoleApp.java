@@ -4,7 +4,7 @@ import model.chemicalstructure.Formula;
 import model.entries.Family;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
-import model.enums.Attributes;
+import utils.fieldnames.Attributes;
 import model.enums.CrystalStructure;
 import model.modelexceptions.DuplicationException;
 import model.modelexceptions.EmptyTableException;

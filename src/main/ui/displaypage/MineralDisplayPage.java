@@ -1,18 +1,12 @@
 package ui.displaypage;
 
-import javafx.scene.shape.Line;
 import model.entries.Mineral;
-import model.enums.Attributes;
 import utils.StringUtils;
 import utils.fieldnames.AttributeNames;
 import utils.fieldnames.Constants;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.geom.Line2D;
-import java.security.acl.Group;
 
 public class MineralDisplayPage extends JPanel {
 

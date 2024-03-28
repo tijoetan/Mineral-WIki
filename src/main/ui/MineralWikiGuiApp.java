@@ -1,13 +1,17 @@
 package ui;
 
+import model.entries.Family;
 import model.entries.Mineral;
+import model.entries.WikiEntry;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
+import ui.additionmenu.familyaddition.FamilyQueryHandler;
 import ui.additionmenu.mineraladdition.MineralQueryHandler;
 import ui.displaypage.ItemView;
 import ui.table.TableView;
 import ui.toolbar.ToolBar;
+import utils.UserQuery;
 import utils.fieldnames.PropertyNames;
 import utils.fieldnames.WindowNames;
 
@@ -79,10 +83,17 @@ public class MineralWikiGuiApp {
     }
 
     private void editSelectedItem() {
-        Mineral updatedMineral = MineralQueryHandler.queryEditMineral((Mineral) itemView.getHostedItem());
-        mineralTableView.getModel().updateValues();
-        System.out.println(Arrays.toString(updatedMineral.giveAttributeAsObjects()));
-        itemView.updateDisplayPage(updatedMineral);
+        WikiEntry selectedItem = itemView.getHostedItem();
+        if (selectedItem instanceof Mineral) {
+            Mineral updatedMineral = MineralQueryHandler.queryEditMineral((Mineral) selectedItem);
+            mineralTableView.getModel().updateValues();
+            System.out.println(Arrays.toString(updatedMineral.giveAttributeAsObjects()));
+            itemView.updateDisplayPage(updatedMineral);
+        } else if (selectedItem instanceof Family) {
+            Family updatedFamily = FamilyQueryHandler.queryEditFamily((Family) selectedItem, mineralTable);
+            familyTableView.getModel().updateValues();
+
+        }
     }
 
     private void deleteSelectedItem() {
@@ -97,7 +108,7 @@ public class MineralWikiGuiApp {
         try {
             familyTableView.getModel().deleteEntry(itemView.getHostedItemName());
         } catch (ItemNotFoundException ignored) {
-            MineralQueryHandler.showErrorMessage("Nothing to delete");
+            UserQuery.showErrorMessage("Nothing to delete");
         }
 
 

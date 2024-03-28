@@ -1,7 +1,6 @@
 package model.tableentry;
 
-import model.entries.Family;
-import model.enums.Attributes;
+import utils.fieldnames.Attributes;
 import model.modelexceptions.DuplicationException;
 import model.modelexceptions.FamilyDuplicationException;
 import model.entries.WikiEntry;

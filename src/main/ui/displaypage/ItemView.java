@@ -22,9 +22,9 @@ public class ItemView extends JPanel {
         add(defaultLabel, BorderLayout.CENTER);
     }
 
-    public void updateDisplayPage(Mineral mineral) {
+    public void updateDisplayPage(WikiEntry mineral) {
         removeAll();
-        page = new MineralDisplayPage(mineral);
+        page = new MineralDisplayPage((Mineral) mineral);
         System.out.println("Updating");
         add(page, BorderLayout.CENTER);
         updateUI();

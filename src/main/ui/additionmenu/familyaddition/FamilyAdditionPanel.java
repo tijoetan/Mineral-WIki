@@ -1,5 +1,7 @@
 package ui.additionmenu.familyaddition;
 
+import model.entries.Family;
+import model.entries.WikiEntry;
 import utils.fieldnames.AttributeNames;
 
 import javax.swing.*;
@@ -10,6 +12,7 @@ import java.util.stream.Collectors;
 public class FamilyAdditionPanel extends JPanel {
     private final JTextField familyName;
     private final JTextField familyFormula;
+    private final JTextArea description;
     private final DescendantAdditionMenu descendantAdditionMenu;
 
     GridBagConstraints constraints;
@@ -19,6 +22,8 @@ public class FamilyAdditionPanel extends JPanel {
         familyName = new JTextField(8);
         familyFormula = new JTextField(12);
         descendantAdditionMenu = new DescendantAdditionMenu();
+        description = new JTextArea(6, 30);
+        description.setLineWrap(true);
 
         setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
@@ -31,6 +36,11 @@ public class FamilyAdditionPanel extends JPanel {
         constraints.gridx++;
         setupBoxes();
 
+    }
+
+
+    public String getDescription() {
+        return description.getText();
     }
 
     public String getFamilyName() {
@@ -48,11 +58,22 @@ public class FamilyAdditionPanel extends JPanel {
                 .collect(Collectors.toList());
     }
 
+    public void configurePanelBy(Family family) {
+        familyName.setText(family.getName());
+        familyName.setEnabled(false);
+
+        familyFormula.setText(family.getGeneralFormula().getUnparsedFormula());
+        for (WikiEntry descendant : family.getMineralsWithFamily()) {
+            descendantAdditionMenu.addDescendant(descendant.getName());
+        }
+    }
+
     private void setupBoxes() {
         for (JComponent component : getAttributes()) {
             add(component, constraints);
             constraints.gridy++;
         }
+        add(new JScrollPane(description), constraints);
     }
 
     private void setupLabels() {
@@ -60,7 +81,7 @@ public class FamilyAdditionPanel extends JPanel {
             add(new JLabel(label + ":"), constraints);
             constraints.gridy++;
         }
-
+        add(new JLabel("Description:"), constraints);
         constraints.gridy = 0;
     }
 
@@ -69,11 +90,5 @@ public class FamilyAdditionPanel extends JPanel {
     }
 
 
-    public static void main(String[] args) {
-        JFrame mainFrame = new JFrame();
-        mainFrame.setSize(400, 400);
-        mainFrame.add(new FamilyAdditionPanel());
-        mainFrame.setVisible(true);
-    }
 
 }

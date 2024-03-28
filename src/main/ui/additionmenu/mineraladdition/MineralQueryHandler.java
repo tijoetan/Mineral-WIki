@@ -7,14 +7,12 @@ import model.enums.CrystalStructure;
 import model.modelexceptions.UnknownElementException;
 import org.jetbrains.annotations.Nullable;
 import utils.FillWikiEntry;
+import utils.UserQuery;
 
 import javax.swing.*;
 import java.util.Arrays;
 
 public class MineralQueryHandler {
-    public static void showErrorMessage(String message) {
-        JOptionPane.showMessageDialog(null, message);
-    }
 
     public static Mineral queryAddMineral() {
         MineralAdditionPanel panel = new MineralAdditionPanel();
@@ -63,7 +61,7 @@ public class MineralQueryHandler {
             ior = Float.parseFloat(panel.getIor());
             density = Float.parseFloat(panel.getDensity());
         } catch (NumberFormatException e) {
-            showErrorMessage("Number not provided \n Defaulting to 0");
+            UserQuery.showErrorMessage("Number not provided \n Defaulting to 0");
             hardness = 0f;
             ior = 0f;
             density = 0f;
@@ -86,7 +84,7 @@ public class MineralQueryHandler {
             formula = new Formula(panel.getFormula());
             System.out.println(panel.getFormula());
         } catch (UnknownElementException e) {
-            showErrorMessage("Could not Understand formula \n Defaulting to blank formula");
+            UserQuery.showErrorMessage("Could not Understand formula \n Defaulting to blank formula");
             formula = new Formula();
         }
         return formula;

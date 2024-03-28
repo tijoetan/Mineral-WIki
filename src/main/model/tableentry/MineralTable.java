@@ -3,7 +3,7 @@ package model.tableentry;
 import model.modelexceptions.DuplicationException;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
-import model.enums.Attributes;
+import utils.fieldnames.Attributes;
 import model.modelexceptions.EmptyTableException;
 import model.modelexceptions.ItemNotFoundException;
 import model.modelexceptions.MineralDuplicateException;

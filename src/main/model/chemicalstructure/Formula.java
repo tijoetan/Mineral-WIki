@@ -63,7 +63,7 @@ public class Formula {
         this.isValidFormula = false;
     }
 
-    private String convertFormulaToString() {
+    public String convertFormulaToString() {
         StringBuilder parsedFormulaStringBuilder = new StringBuilder("<html>");
         for (MoleculeGroup group : covalentGroups) {
             parsedFormulaStringBuilder.append("(");
@@ -103,7 +103,7 @@ public class Formula {
 
     // getters
     public String getFormulaAsString() {
-        return unparsedFormula;
+        return parsedFormulaString;
     }
 
     public boolean isValidFormula() {
@@ -189,4 +189,7 @@ public class Formula {
         return new MoleculeGroup(amount, processedSubgroups);
     }
 
+    public String getUnparsedFormula() {
+        return unparsedFormula;
+    }
 }

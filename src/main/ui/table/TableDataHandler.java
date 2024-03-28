@@ -1,14 +1,13 @@
 package ui.table;
 
-import model.entries.Mineral;
 import model.entries.WikiEntry;
-import model.enums.Attributes;
 import model.modelexceptions.DuplicationException;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import model.tableentry.WikiEntryTable;
 import utils.fieldnames.AttributeNames;
+import utils.fieldnames.Attributes;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -74,7 +73,7 @@ public class TableDataHandler extends AbstractTableModel {
     }
 
 
-    public void addEntry(Mineral userMineral) throws DuplicationException {
+    public void addEntry(WikiEntry userMineral) throws DuplicationException {
         table.addEntry(userMineral);
         updateValues();
     }

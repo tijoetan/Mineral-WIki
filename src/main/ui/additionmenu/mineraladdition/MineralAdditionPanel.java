@@ -1,4 +1,4 @@
-package ui.additionmenu;
+package ui.additionmenu.mineraladdition;
 
 import model.entries.Mineral;
 import model.enums.Cleavage;

@@ -16,7 +16,7 @@ import model.tableentry.WikiEntryTable;
 import persistence.InvalidFileException;
 import persistence.TableReader;
 import persistence.TableWriter;
-import ui.additionmenu.UserQuery;
+import utils.UserQuery;
 import ui.uiexceptions.NonNumericValueGiven;
 import utils.FillWikiEntry;
 
@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import static ui.additionmenu.UserQuery.queryFloat;
-import static ui.additionmenu.UserQuery.queryString;
+import static utils.UserQuery.queryFloat;
+import static utils.UserQuery.queryString;
 
 // Console application that interprets user commands to instructions on model classes
 

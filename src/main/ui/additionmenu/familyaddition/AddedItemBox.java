@@ -1,4 +1,4 @@
-package ui.additionmenu;
+package ui.additionmenu.familyaddition;
 
 import utils.StringUtils;
 import utils.fieldnames.Constants;
@@ -14,21 +14,21 @@ public class AddedItemBox extends JPanel {
     private String name;
 
     public AddedItemBox(String name) {
+        setLayout(new BorderLayout());
         this.name = name;
         itemName = new JLabel("<html>" + StringUtils.wrapString(
                 StringUtils.trimTo(name, 16),
                 10, Constants.WRAP_FOR_GUI) + "</html>");
-        System.out.println(itemName.getPreferredSize().height);
         deleteButton = new JButton("x");
         deleteButton.addActionListener(e -> firePropertyChange(PropertyNames.DESCENDANT_DELETED,
                 true,
                 false));
         deleteButton.setBackground(Color.LIGHT_GRAY);
-        add(itemName);
-        add(deleteButton);
+        add(itemName, BorderLayout.CENTER);
+        add(deleteButton, BorderLayout.EAST);
         setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.DARK_GRAY, Color.BLACK));
         setBackground(Color.GRAY);
-        setPreferredSize(new Dimension(120, 50));
+        setPreferredSize(new Dimension(110, 40));
 
     }
 

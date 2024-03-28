@@ -1,8 +1,5 @@
 package utils.fieldnames;
 
-import model.enums.Attributes;
-import model.enums.Cleavage;
-
 public class AttributeNames {
     public static final String NAME = "Name";
     public static final String CRYSTAL_STRUCTURE = "Crystal Structure";
@@ -11,6 +8,9 @@ public class AttributeNames {
     public static final String DENSITY = "Density";
     public static final String IOR = "Index of Refraction";
     public static final String CLEAVAGE = "Cleavage";
+
+    public static final String DESCENDANTS = "Minerals with Family";
+
 
     public static final String[] MINERAL_ATTRIBUTE_NAMES =
             {NAME,
@@ -22,9 +22,9 @@ public class AttributeNames {
                     CLEAVAGE};
 
     public static final String[] FAMILY_ATTRIBUTE_NAMES =
-            {"Name",
-                    "Formula",
-                    "Descendants"};
+            {NAME,
+                    FORMULA,
+                    DESCENDANTS};
 
     // EFFECTS: none
     public AttributeNames() {

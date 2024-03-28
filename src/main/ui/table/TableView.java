@@ -4,7 +4,7 @@ import model.entries.WikiEntry;
 import model.enums.Attributes;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.WikiEntryTable;
-import ui.additionmenu.MineralQueryHandler;
+import ui.additionmenu.mineraladdition.MineralQueryHandler;
 import utils.fieldnames.AttributeNames;
 import utils.fieldnames.PropertyNames;
 

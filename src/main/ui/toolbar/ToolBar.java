@@ -7,7 +7,7 @@ import model.tableentry.MineralTable;
 import persistence.InvalidFileException;
 import persistence.TableReader;
 import ui.CardPanel;
-import ui.additionmenu.MineralQueryHandler;
+import ui.additionmenu.mineraladdition.MineralQueryHandler;
 import ui.filebrowser.LoadSavePopupMenu;
 import ui.table.TableDataHandler;
 import utils.fieldnames.PropertyNames;
@@ -28,7 +28,7 @@ public class ToolBar extends JPanel {
     private final TableDataHandler mineralTableView;
     private final TableDataHandler familyTableView;
 
-    private JToolBar toolBar;
+    private final JToolBar toolBar;
     private JTextField searchBox;
 
     private JButton searchButton;
@@ -151,20 +151,6 @@ public class ToolBar extends JPanel {
         }
     }
 
-
-    protected static class EditButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("Editing");
-        }
-    }
-
-    protected class TableViewButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            windows.showPanel(WindowNames.TABLE_PAGE);
-        }
-    }
 
     protected class MineralAdditionButtonListener implements ActionListener {
         @Override

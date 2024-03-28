@@ -1,15 +1,10 @@
 package ui;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.ImagePattern;
 import model.entries.Mineral;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
-import sun.awt.image.MultiResolutionCachedImage;
-import sun.awt.image.ToolkitImage;
-import ui.additionmenu.MineralQueryHandler;
+import ui.additionmenu.mineraladdition.MineralQueryHandler;
 import ui.displaypage.ItemView;
 import ui.table.TableView;
 import ui.toolbar.ToolBar;
@@ -53,12 +48,10 @@ public class MineralWikiGuiApp {
         itemView = new ItemView();
         toolBar = new ToolBar(mineralTableView.getModel(),
                 familyTableView.getModel(), switchableWindowPanel);
-        toolBar.addPropertyChangeListener(PropertyNames.ITEM_DELETED, e -> deleteSelectedItem());
-        toolBar.addPropertyChangeListener(PropertyNames.ITEM_EDITED, e -> editSelectedItem());
+        setupToolbar();
 
 
-        switchableWindowPanel.add(tableView, WindowNames.TABLE_PAGE);
-        switchableWindowPanel.add(itemView, WindowNames.ITEM_PAGE);
+        addWindows();
         switchableWindowPanel.showPanel(WindowNames.TABLE_PAGE);
 
         mainFrame.add(toolBar, BorderLayout.NORTH);
@@ -73,6 +66,16 @@ public class MineralWikiGuiApp {
         } catch (IOException e) {
             //
         }
+    }
+
+    private void setupToolbar() {
+        toolBar.addPropertyChangeListener(PropertyNames.ITEM_DELETED, e -> deleteSelectedItem());
+        toolBar.addPropertyChangeListener(PropertyNames.ITEM_EDITED, e -> editSelectedItem());
+    }
+
+    private void addWindows() {
+        switchableWindowPanel.add(tableView, WindowNames.TABLE_PAGE);
+        switchableWindowPanel.add(itemView, WindowNames.ITEM_PAGE);
     }
 
     private void editSelectedItem() {

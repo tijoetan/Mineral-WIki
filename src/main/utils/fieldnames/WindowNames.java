@@ -1,5 +1,7 @@
 package utils.fieldnames;
 
+// Window Names
+
 public class WindowNames {
 
     public static final String TABLE_PAGE = "TABLE_PAGE";

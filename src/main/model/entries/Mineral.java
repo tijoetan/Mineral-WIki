@@ -91,19 +91,18 @@ public class Mineral extends WikiEntry {
     // EFFECTS: prints out all the mineral attributes
     @Override
     public String giveAllAttributes() {
-        String attributeRow =
-                String.format("Name: %s | Crystal Structure: %s | Formula: %s "
-                                + "| Hardness: %s | Density: %s | IOR: %s | Cleavage %s",
-                        this.name,
-                        this.crystalStructure,
-                        this.generalFormula.getFormulaAsString(),
-                        this.hardness,
-                        this.density,
-                        this.indexOfRefraction,
-                        this.cleavage);
-        return attributeRow;
+        return String.format("Name: %s | Crystal Structure: %s | Formula: %s "
+                        + "| Hardness: %s | Density: %s | IOR: %s | Cleavage %s",
+                this.name,
+                this.crystalStructure,
+                this.generalFormula.getFormulaAsString(),
+                this.hardness,
+                this.density,
+                this.indexOfRefraction,
+                this.cleavage);
     }
 
+    // EFFECTS: produces a String array of all the attributes
     @Override
     public String[] giveAttributeAsObjects() {
         return new String[]{name,

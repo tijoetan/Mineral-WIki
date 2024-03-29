@@ -4,7 +4,7 @@ import model.entries.WikiEntry;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.WikiEntryTable;
 import ui.clickeditemhandler.ClickedItemHandler;
-import utils.UserQuery;
+import ui.additionmenu.UserQuery;
 import utils.fieldnames.AttributeNames;
 import utils.fieldnames.Attributes;
 

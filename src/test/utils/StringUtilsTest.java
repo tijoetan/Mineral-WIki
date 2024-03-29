@@ -3,7 +3,13 @@ package utils;
 import org.junit.jupiter.api.Test;
 import utils.fieldnames.Constants;
 
-class WrapStringTest {
+class StringUtilsTest {
+
+    @Test
+    void testExistence() {
+        StringUtils utils = new StringUtils();
+    }
+
     @Test
     void testWrapping() {
         String startString =  "IIEIFJEIFJEIFJEIFJEI" +

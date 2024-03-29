@@ -6,6 +6,7 @@ import model.entries.WikiEntry;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
+import ui.additionmenu.UserQuery;
 import ui.additionmenu.familyaddition.FamilyQueryHandler;
 import ui.additionmenu.mineraladdition.MineralQueryHandler;
 import ui.cardpanel.CardPanel;
@@ -14,7 +15,6 @@ import ui.clickeditemhandler.ClickedItemHandler;
 import ui.displaypage.ItemView;
 import ui.table.TableView;
 import ui.toolbar.ToolBar;
-import utils.UserQuery;
 import utils.fieldnames.PropertyNames;
 import utils.fieldnames.WindowNames;
 

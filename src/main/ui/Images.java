@@ -1,4 +1,4 @@
-package utils;
+package ui;
 
 import model.enums.Cleavage;
 import model.enums.CrystalStructure;

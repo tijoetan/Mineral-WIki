@@ -14,7 +14,7 @@ import ui.additionmenu.familyaddition.FamilyQueryHandler;
 import ui.additionmenu.mineraladdition.MineralQueryHandler;
 import ui.filebrowser.LoadSavePopupMenu;
 import ui.table.TableDataHandler;
-import utils.UserQuery;
+import ui.additionmenu.UserQuery;
 import utils.fieldnames.PropertyNames;
 import utils.fieldnames.WindowNames;
 

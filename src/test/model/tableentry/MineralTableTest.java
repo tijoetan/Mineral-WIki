@@ -246,4 +246,60 @@ class MineralTableTest {
         }
         System.out.println(testTable.toJson().toString());
     }
+
+    @Test
+    void testGetTableAsArray() {
+        testGetTableSortedByNonEmptyTable();
+        String[][] defaultSort = testTable.getTableAsArray(Attributes.DEFAULT);
+        String[][] nonDefaultSort = testTable.getTableAsArray(Attributes.IOR);
+
+        assertEquals(5, defaultSort.length);
+        assertEquals(5, nonDefaultSort.length);
+
+        testDefaultOrdering(defaultSort);
+
+
+        testNonDefaultOrdering(nonDefaultSort);
+    }
+
+    @Test
+    void testGetTableAsArrayEmptyTable() {
+        assertEquals(0, testTable.getTableAsArray(Attributes.DEFAULT).length);
+    }
+
+    private void testNonDefaultOrdering(String[][] nonDefaultSort) {
+        for (int i = 0; i < 7; i++) {
+            assertEquals(nonDefaultSort[2][i], m1.giveAttributeAsObjects()[i]);
+        }
+        for (int i = 0; i < 7; i++) {
+            assertEquals(nonDefaultSort[4][i], m2.giveAttributeAsObjects()[i]);
+        }
+        for (int i = 0; i < 7; i++) {
+            assertEquals(nonDefaultSort[3][i], m3.giveAttributeAsObjects()[i]);
+        }
+        for (int i = 0; i < 7; i++) {
+            assertEquals(nonDefaultSort[1][i], m4.giveAttributeAsObjects()[i]);
+        }
+        for (int i = 0; i < 7; i++) {
+            assertEquals(nonDefaultSort[0][i], m5.giveAttributeAsObjects()[i]);
+        }
+    }
+
+    private void testDefaultOrdering(String[][] defaultSort) {
+        for (int i = 0; i < 7; i++) {
+            assertEquals(defaultSort[3][i], m1.giveAttributeAsObjects()[i]);
+        }
+        for (int i = 0; i < 7; i++) {
+            assertEquals(defaultSort[2][i], m2.giveAttributeAsObjects()[i]);
+        }
+        for (int i = 0; i < 7; i++) {
+            assertEquals(defaultSort[1][i], m3.giveAttributeAsObjects()[i]);
+        }
+        for (int i = 0; i < 7; i++) {
+            assertEquals(defaultSort[0][i], m4.giveAttributeAsObjects()[i]);
+        }
+        for (int i = 0; i < 7; i++) {
+            assertEquals(defaultSort[4][i], m5.giveAttributeAsObjects()[i]);
+        }
+    }
 }

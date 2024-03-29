@@ -1,7 +1,9 @@
 package ui.table;
 
+import model.entries.Mineral;
 import model.entries.WikiEntry;
 import model.modelexceptions.DuplicationException;
+import model.modelexceptions.EmptyTableException;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
@@ -10,6 +12,8 @@ import utils.fieldnames.AttributeNames;
 import utils.fieldnames.Attributes;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableDataHandler extends AbstractTableModel {
 
@@ -34,6 +38,7 @@ public class TableDataHandler extends AbstractTableModel {
 
 
     }
+
 
     @Override
     public int getRowCount() {

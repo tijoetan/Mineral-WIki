@@ -25,7 +25,7 @@ public class Family extends WikiEntry {
 
     // MODIFIES: this
     // EFFECTS: adds mineral to mineralsWithFamily if it is not already there
-    public void addMineralsWithFamily(List<WikiEntry> minerals) {
+    public void setMineralsWithFamily(List<WikiEntry> minerals) {
         mineralsWithFamily = minerals;
     }
 
@@ -34,10 +34,11 @@ public class Family extends WikiEntry {
     public String giveAllAttributes() {
         return String.format("Name: %s | General Formula: %s | Subs: %s",
                 name,
-                generalFormula.getFormulaAsString(),
+                generalFormula.getUnparsedFormula(),
                 getRelatedEntries());
     }
 
+    // EFFECTS: Produces a string containing all the descendant names separated by line breaks
     private StringBuilder getRelatedEntries() {
         StringBuilder relatedEntries = new StringBuilder();
         for (WikiEntry sub : mineralsWithFamily) {
@@ -47,6 +48,7 @@ public class Family extends WikiEntry {
         return relatedEntries;
     }
 
+    // EFFECTS: Produces an array of all the Family attributes as Strings
     public String[] giveAttributeAsObjects() {
         return new String[]{name,
                 generalFormula.getFormulaAsString(),

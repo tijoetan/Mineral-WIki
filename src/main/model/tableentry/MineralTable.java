@@ -89,6 +89,8 @@ public class MineralTable implements WikiEntryTable {
         }
     }
 
+    // EFFECTS: produces a 2D String array with the rows being in order of given attribute
+    //          of Minerals converted to array
     @Override
     public String[][] getTableAsArray(Attributes attribute) {
         List<Mineral> mineralValues;

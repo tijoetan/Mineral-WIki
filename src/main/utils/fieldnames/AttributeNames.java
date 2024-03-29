@@ -1,5 +1,7 @@
 package utils.fieldnames;
 
+// Static class that contains attribute names for UI
+
 public class AttributeNames {
     public static final String NAME = "Name";
     public static final String CRYSTAL_STRUCTURE = "Crystal Structure";

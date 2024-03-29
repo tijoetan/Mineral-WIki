@@ -8,7 +8,7 @@ import model.modelexceptions.UnknownElementException;
 import model.tableentry.WikiEntryTable;
 import ui.uiexceptions.BlankNameException;
 import utils.FillWikiEntry;
-import utils.UserQuery;
+import ui.additionmenu.UserQuery;
 
 import javax.swing.*;
 import java.util.ArrayList;

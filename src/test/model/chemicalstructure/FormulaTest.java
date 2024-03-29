@@ -69,9 +69,17 @@ class FormulaTest {
         } catch (UnknownElementException e) {
             fail();
         }
-        assertEquals("N", f1.getFormulaAsString());
-        assertEquals("NA", f2.getFormulaAsString());
-        assertEquals("AlO3", f3.getFormulaAsString());
+        assertEquals("N", f1.getUnparsedFormula());
+        assertEquals("NA", f2.getUnparsedFormula());
+        assertEquals("AlO3", f3.getUnparsedFormula());
+    }
+
+    @Test
+    void testGetUnparsedFormula() {
+        testGetFormulaAsString();
+        assertEquals("<html>N</html>", f1.getFormulaAsString());
+        assertNull(f2.getFormulaAsString());
+        assertEquals("<html>AlO<sub>3</sub></html>", f3.getFormulaAsString());
     }
 
     @Test

@@ -8,6 +8,7 @@ import model.modelexceptions.ItemNotFoundException;
 import model.modelexceptions.UnknownElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utils.fieldnames.Attributes;
 
 import java.util.List;
 
@@ -157,5 +158,21 @@ class FamilyTableTest {
         assertTrue(familyList.contains(f1));
         assertTrue(familyList.contains(f2));
         assertTrue(familyList.contains(f3));
+    }
+
+    @Test
+    void testGetTableAsArray() {
+        testGetFamilies();
+        String[][] testArray = testTable.getTableAsArray(Attributes.DEFAULT);
+        assertEquals(3, testArray.length);
+        for (int i = 0; i < 3; i++) {
+            assertEquals(testArray[0][i], f2.giveAttributeAsObjects()[i]);
+        }
+        for (int i = 0; i < 3; i++) {
+            assertEquals(testArray[1][i], f3.giveAttributeAsObjects()[i]);
+        }
+        for (int i = 0; i < 3; i++) {
+            assertEquals(testArray[2][i], f1.giveAttributeAsObjects()[i]);
+        }
     }
 }

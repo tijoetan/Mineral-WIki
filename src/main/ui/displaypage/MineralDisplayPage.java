@@ -1,7 +1,7 @@
 package ui.displaypage;
 
 import model.entries.Mineral;
-import utils.Images;
+import ui.Images;
 import utils.StringUtils;
 import utils.fieldnames.AttributeNames;
 

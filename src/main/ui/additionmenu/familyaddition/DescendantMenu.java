@@ -2,7 +2,7 @@ package ui.additionmenu.familyaddition;
 
 import model.entries.WikiEntry;
 import ui.clickeditemhandler.ClickedItemHandler;
-import utils.UserQuery;
+import ui.additionmenu.UserQuery;
 import utils.fieldnames.PropertyNames;
 
 import javax.swing.*;

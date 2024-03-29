@@ -55,7 +55,7 @@ public class FamilyDisplayPage extends DisplayPage {
             builder.append("The quick brown fox jumps over the lazy dog");
         }
         testFamily.setDescription(builder.toString());
-        testFamily.addMineralsWithFamily(Arrays.asList(new Mineral("ef"), new Mineral("fiejfe"),
+        testFamily.setMineralsWithFamily(Arrays.asList(new Mineral("ef"), new Mineral("fiejfe"),
                 new Mineral("fiejaef"), new Mineral("EIQ"), new Mineral("WIQ")));
         JFrame frame = new JFrame();
         frame.add(new FamilyDisplayPage(testFamily));

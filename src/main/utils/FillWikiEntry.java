@@ -9,6 +9,8 @@ import model.enums.CrystalStructure;
 
 import java.util.List;
 
+// Populates WikiEntries
+
 public class FillWikiEntry {
 
     // EFFECTS: none
@@ -24,7 +26,7 @@ public class FillWikiEntry {
                                   String description) {
 
         family.setGeneralFormula(familyFormula);
-        family.addMineralsWithFamily(familyMinerals);
+        family.setMineralsWithFamily(familyMinerals);
         family.setDescription(description);
 
     }

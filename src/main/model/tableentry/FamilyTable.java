@@ -64,6 +64,7 @@ public class FamilyTable implements WikiEntryTable {
         }
     }
 
+    // EFFECTS: produces 2D String array of all the families in the table
     @Override
     public String[][] getTableAsArray(Attributes attributes) {
         List<WikiEntry> familyValues = new ArrayList<>(familyNameTable.values());

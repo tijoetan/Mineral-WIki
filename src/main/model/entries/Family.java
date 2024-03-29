@@ -1,6 +1,5 @@
 package model.entries;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import utils.fieldnames.JsonFieldNames;
@@ -39,7 +38,6 @@ public class Family extends WikiEntry {
                 getRelatedEntries());
     }
 
-    @NotNull
     private StringBuilder getRelatedEntries() {
         StringBuilder relatedEntries = new StringBuilder();
         for (WikiEntry sub : mineralsWithFamily) {
@@ -49,7 +47,6 @@ public class Family extends WikiEntry {
         return relatedEntries;
     }
 
-    @Override
     public String[] giveAttributeAsObjects() {
         return new String[]{name,
                 generalFormula.getFormulaAsString(),

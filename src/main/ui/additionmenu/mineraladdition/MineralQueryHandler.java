@@ -5,7 +5,6 @@ import model.entries.Mineral;
 import model.enums.Cleavage;
 import model.enums.CrystalStructure;
 import model.modelexceptions.UnknownElementException;
-import org.jetbrains.annotations.Nullable;
 import ui.uiexceptions.BlankNameException;
 import utils.FillWikiEntry;
 import utils.UserQuery;
@@ -29,7 +28,6 @@ public class MineralQueryHandler {
         }
     }
 
-    @Nullable
     private static Mineral queryMineral(MineralAdditionPanel panel, String title, Mineral mineral)
             throws BlankNameException {
         int userResponse = JOptionPane.showConfirmDialog(null,

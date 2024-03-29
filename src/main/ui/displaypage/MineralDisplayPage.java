@@ -1,11 +1,6 @@
 package ui.displaypage;
 
-import model.chemicalstructure.Formula;
 import model.entries.Mineral;
-import model.enums.Cleavage;
-import model.enums.CrystalStructure;
-import model.modelexceptions.UnknownElementException;
-import org.jetbrains.annotations.NotNull;
 import utils.Images;
 import utils.StringUtils;
 import utils.fieldnames.AttributeNames;
@@ -93,7 +88,6 @@ public class MineralDisplayPage extends DisplayPage {
         return enumPanel;
     }
 
-    @NotNull
     private JPanel setupCleavagePanel() {
         return setupEnumPanel(
                 AttributeNames.CLEAVAGE,

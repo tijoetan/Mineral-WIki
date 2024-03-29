@@ -60,12 +60,7 @@ public class FillWikiEntry {
                                    String description,
                                    Cleavage cleavage) {
 
-        mineral.setGeneralFormula(formula);
-        mineral.setCrystalStructure(crystalStructure);
-        mineral.setHardness(hardness);
-        mineral.setDensity(density);
-        mineral.setIndexOfRefraction(indexOfRefraction);
-        mineral.setDescription(description);
+        fillMineral(mineral, formula, crystalStructure, hardness, density, indexOfRefraction, description);
         mineral.setCleavage(cleavage);
     }
 }

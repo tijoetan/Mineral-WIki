@@ -51,13 +51,14 @@ public class StringUtils {
                 "<sub>" + value + "</sub>";
     }
 
+    // REQUIRES: length >= 3
     // EFFECTS: Trims text to given length by removing characters past the length limit and adding "..."
     public static String trimTo(String text, int length) {
         if (text.length() <= length) {
             return text;
         }
 
-        return text.substring(0, length - 2) + "...";
+        return text.substring(0, length - 3) + "...";
     }
 
     // EFFECTS: None

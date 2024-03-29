@@ -106,7 +106,7 @@ class MineralTest {
     }
 
     @Test
-    void giveAllAttributes() {
+    void testGiveAllAttributes() {
         Formula m1Formula = new Formula();
         Cleavage m1Cleavage = Cleavage.CUBIC;
         CrystalStructure m1Structure = CrystalStructure.HEXAGONAL;
@@ -141,5 +141,21 @@ class MineralTest {
         assertEquals(desiredEntry, entry);
     }
 
+    @Test
+    void testGiveAllAttributesAsObject() {
+        testGiveAllAttributes();
+        String[] m1Attributes = m1.giveAttributeAsObjects();
+        String[] expectedM1Attributes = new String[]{"Quartz",
+                "Hexagonal",
+                "<html>Pr</html>",
+                "2.5",
+                "19.6",
+                "1.8",
+                "Cubic"};
 
+        assertEquals(7, m1Attributes.length);
+        for (int i = 0; i < m1Attributes.length; i++) {
+            assertEquals(expectedM1Attributes[i], m1Attributes[i]);
+        }
+    }
 }

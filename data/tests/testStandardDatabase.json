@@ -5,7 +5,7 @@
             "cleavage": "PRISMATIC",
             "density": 2.59,
             "name": "Orthoclase",
-            "generalFormula": "<html>KAlSiO<\/html>",
+            "generalFormula": "KAlSiO",
             "description": "This is orthoclase, a feldspar mineral",
             "crystalStructure": "MONOCLINIC",
             "ior": 1.52

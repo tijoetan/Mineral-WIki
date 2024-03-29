@@ -35,7 +35,7 @@ public class StringUtils {
             starter.delete(0, lastSpace);
         }
 
-        System.out.println(startString);
+//        System.out.println(startString);
         return returnString.toString();
 
     }

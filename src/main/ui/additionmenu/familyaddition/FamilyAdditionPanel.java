@@ -21,7 +21,7 @@ public class FamilyAdditionPanel extends JPanel {
     public FamilyAdditionPanel() {
         familyName = new JTextField(8);
         familyFormula = new JTextField(12);
-        descendantAdditionMenu = new DescendantAdditionMenu();
+        descendantAdditionMenu = new DescendantAdditionMenu(2);
         description = new JTextArea(6, 30);
         description.setLineWrap(true);
 
@@ -54,7 +54,7 @@ public class FamilyAdditionPanel extends JPanel {
     public List<String> getDescendants() {
         return descendantAdditionMenu.getAddedItems()
                 .stream()
-                .map(AddedItemBox::getName)
+                .map(JComponent::getName)
                 .collect(Collectors.toList());
     }
 

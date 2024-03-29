@@ -32,6 +32,7 @@ public class TableDataHandler extends AbstractTableModel {
         sortOrder = Attributes.DEFAULT;
         tableValues = table.getTableAsArray(sortOrder);
 
+
     }
 
     @Override

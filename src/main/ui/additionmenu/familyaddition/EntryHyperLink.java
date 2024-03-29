@@ -1,0 +1,43 @@
+package ui.additionmenu.familyaddition;
+
+import model.entries.WikiEntry;
+import utils.fieldnames.PropertyNames;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeListener;
+
+public class EntryHyperLink extends JLabel {
+    private final WikiEntry entry;
+
+
+    public EntryHyperLink(WikiEntry entry) {
+        super();
+        this.entry = entry;
+        setName(entry.getName());
+        setupText();
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                clickActivity();
+            }
+        });
+    }
+
+    public WikiEntry getEntry() {
+        return entry;
+    }
+
+    private void clickActivity() {
+        firePropertyChange(PropertyNames.ITEM_CLICKED, true, false);
+    }
+
+    private void setupText() {
+        setText("<html><font color='blue'><u>" + entry.getName() + "</u></font></html>");
+        setFont(new Font("Inter", Font.BOLD | Font.ITALIC, 30));
+        setPreferredSize(new Dimension(getPreferredSize().width + 20,getPreferredSize().height + 20));
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    }
+}

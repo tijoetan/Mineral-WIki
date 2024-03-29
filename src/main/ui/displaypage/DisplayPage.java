@@ -32,7 +32,7 @@ public abstract class DisplayPage extends JPanel {
         JLabel itemNameLabel = new JLabel(StringUtils.getSentenceCase(entry.getName()));
         itemNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
         itemNameLabel.setFont(new Font("Inter", Font.ITALIC | Font.BOLD, 70));
-        System.out.println(itemNameLabel.getFont());
+//        System.out.println(itemNameLabel.getFont());
         JPanel labelBox = new JPanel(new BorderLayout());
         labelBox.add(itemNameLabel, BorderLayout.WEST);
         labelBox.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));

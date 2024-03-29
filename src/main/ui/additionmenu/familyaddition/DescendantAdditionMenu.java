@@ -1,38 +1,37 @@
 package ui.additionmenu.familyaddition;
 
+import model.entries.WikiEntry;
 import utils.UserQuery;
 import utils.fieldnames.PropertyNames;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DescendantAdditionMenu extends JPanel {
-    private final JTextField nameBox;
-    private final JButton addButton;
     private final JPanel addedItemFrame;
-    private final List<AddedItemBox> addedItems;
+    private final List<JComponent> addedItems;
+    private final AdditionPanel additionPanel;
     private GridBagConstraints constraints;
     JScrollPane pane;
+    private final int rowCount;
 
-    public DescendantAdditionMenu() {
+    private int defaultConstraints;
+
+    public DescendantAdditionMenu(int rowCount) {
+        defaultConstraints = GridBagConstraints.NONE;
+        this.rowCount = rowCount;
         addedItems = new ArrayList<>();
         setLayout(new BorderLayout());
-        nameBox = new JTextField(5);
         GridBagLayout layout = new GridBagLayout();
         setupConstraints();
         layout.setConstraints(this, constraints);
-        JToolBar additionPanel = new JToolBar();
-        additionPanel.setFloatable(false);
 
         addedItemFrame = new JPanel(layout);
-        addButton = new JButton("+");
-        addButton.addActionListener(e -> addDescendant(nameBox.getText()));
-
-        additionPanel.add(new JLabel("Name: "));
-        additionPanel.add(nameBox);
-        additionPanel.add(addButton);
+        additionPanel = new AdditionPanel();
+        additionPanel.addButtonActionListener(e -> addDescendant(additionPanel.getText()));
 
 
         pane = new JScrollPane(addedItemFrame);
@@ -42,8 +41,20 @@ public class DescendantAdditionMenu extends JPanel {
         add(additionPanel, BorderLayout.NORTH);
         add(pane, BorderLayout.CENTER);
 
-
     }
+
+    public DescendantAdditionMenu(int rowCount, List<WikiEntry> entries) {
+        this(rowCount);
+        remove(additionPanel);
+        defaultConstraints = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 1;
+        pane.setPreferredSize(new Dimension(300, 400));
+        for (WikiEntry entry : entries) {
+            addDescendant(entry);
+        }
+    }
+
+
 
     private void setupConstraints() {
         constraints = new GridBagConstraints();
@@ -54,7 +65,7 @@ public class DescendantAdditionMenu extends JPanel {
 
     }
 
-    public List<AddedItemBox> getAddedItems() {
+    public List<JComponent> getAddedItems() {
         return new ArrayList<>(addedItems);
     }
 
@@ -68,9 +79,22 @@ public class DescendantAdditionMenu extends JPanel {
 
         addedItems.add(newBox);
         newBox.addPropertyChangeListener(PropertyNames.DESCENDANT_DELETED, e -> deleteItem(e.getSource()));
-        nameBox.setText("");
+        additionPanel.clearText();
         updateComponents();
+    }
 
+    public void addDescendant(WikiEntry entry) {
+        EntryHyperLink link = new EntryHyperLink(entry);
+        if (!addedItems.contains(link)) {
+            addedItems.add(link);
+            link.addPropertyChangeListener(PropertyNames.ITEM_CLICKED, e -> gotoView(e.getSource()));
+            updateComponents();
+        }
+    }
+
+    private void gotoView(Object source) {
+        EntryHyperLink link = (EntryHyperLink) source;
+        System.out.println(Arrays.toString(link.getEntry().giveAttributeAsObjects()));
     }
 
     private void deleteItem(Object source) {
@@ -81,20 +105,20 @@ public class DescendantAdditionMenu extends JPanel {
     }
 
     public void updateComponents() {
-        constraints.fill = GridBagConstraints.NONE;
+        constraints.fill = defaultConstraints;
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.weightx = 0;
         constraints.weighty = 0;
         addedItemFrame.removeAll();
 
-        for (AddedItemBox box : addedItems) {
+        for (JComponent box : addedItems) {
             addedItemFrame.add(box, constraints);
-            constraints.gridx = (constraints.gridx + 1) % 2;
+            constraints.gridx = (constraints.gridx + 1) % rowCount;
             constraints.gridy = constraints.gridx == 0 ? constraints.gridy + 1 : constraints.gridy;
         }
 
-        constraints.gridx = 1;
+        constraints.gridx = rowCount - 1;
         constraints.weightx = 1;
         constraints.weighty = 1;
         constraints.fill = GridBagConstraints.BOTH;

@@ -6,15 +6,18 @@ import model.entries.Mineral;
 import model.entries.WikiEntry;
 import model.enums.CrystalStructure;
 import model.modelexceptions.UnknownElementException;
+import ui.additionmenu.familyaddition.DescendantAdditionMenu;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FamilyDisplayPage extends DisplayPage {
     private Family family;
     private JPanel descendantListPanel;
+    private DescendantAdditionMenu menu;
 
     protected FamilyDisplayPage(Family family) {
         super(family);
@@ -29,10 +32,11 @@ public class FamilyDisplayPage extends DisplayPage {
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.weightx = 1;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weighty = 1;
+        constraints.fill = GridBagConstraints.BOTH;
         setupFormulaField();
         sidePanel.add(formulaPanel, constraints);
-        sidePanel.setPreferredSize(new Dimension(400, 200));
+        sidePanel.setPreferredSize(new Dimension(400, Integer.MAX_VALUE));
         setupDescendantLists();
         constraints.gridy++;
         sidePanel.add(descendantListPanel, constraints);
@@ -42,16 +46,9 @@ public class FamilyDisplayPage extends DisplayPage {
     }
 
     private void setupDescendantLists() {
-        descendantListPanel = new JPanel();
-        String[] data = family.getMineralsWithFamily()
-                .stream()
-                .map(WikiEntry::getName)
-                .collect(Collectors.toList())
-                .toArray(new String[]{});
-        JList<WikiEntry> mineralJList = new JList<>(family.getMineralsWithFamily().toArray(new WikiEntry[]{}));
-        mineralJList.setVisibleRowCount(2);
-        mineralJList.setLayoutOrientation(JList.VERTICAL_WRAP);
-        descendantListPanel.add(new JScrollPane(mineralJList));
+        descendantListPanel = new JPanel(new BorderLayout());
+        menu = new DescendantAdditionMenu(3, family.getMineralsWithFamily());
+        descendantListPanel.add(menu, BorderLayout.CENTER);
     }
 
 

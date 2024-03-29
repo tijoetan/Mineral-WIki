@@ -11,11 +11,10 @@ import java.awt.*;
 public class AddedItemBox extends JPanel {
     private JButton deleteButton;
     private JLabel itemName;
-    private final String name;
 
     public AddedItemBox(String name) {
         setLayout(new BorderLayout());
-        this.name = name;
+        setName(name);
         itemName = new JLabel("<html>" + StringUtils.wrapString(
                 StringUtils.trimTo(name, 16),
                 10, Constants.WRAP_FOR_GUI) + "</html>");
@@ -32,15 +31,11 @@ public class AddedItemBox extends JPanel {
 
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other instanceof AddedItemBox) {
             AddedItemBox otherBox = (AddedItemBox) other;
-            return otherBox.getName().equals(name);
+            return otherBox.getName().equals(getName());
         }
         return false;
     }

@@ -27,6 +27,8 @@ import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+// Toolbar with important buttons
+
 public class ToolBar extends JPanel {
 
     private String savePath;
@@ -47,7 +49,7 @@ public class ToolBar extends JPanel {
     private JButton deleteButton;
     private JButton itemViewButton;
 
-
+    // EFFECTS: constructs new Toolbar
     public ToolBar(TableDataHandler mineralTableView, TableDataHandler familyTableView,
                    CardPanel panel) {
         savePath = null;
@@ -65,6 +67,8 @@ public class ToolBar extends JPanel {
         add(toolBar, BorderLayout.WEST);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds all buttons and spacing to ToolBar
     private void addButtons() {
         addFileButton();
         toolBar.add(Box.createHorizontalStrut(50));
@@ -72,7 +76,7 @@ public class ToolBar extends JPanel {
         toolBar.addSeparator();
         addItemViewButton();
         toolBar.add(Box.createHorizontalStrut(850));
-        addAddMineralButton();
+        addAddButton();
         toolBar.addSeparator();
         addEditButton();
         toolBar.addSeparator();
@@ -81,30 +85,40 @@ public class ToolBar extends JPanel {
         //addSearchSection();
     }
 
+    // MODIFIES: this
+    // EFFECTS: configures and adds file button to Toolbar
     private void addFileButton() {
         menu = new LoadSavePopupMenu("File");
         menu.addPropertyChangeListener(new FileHandler());
         toolBar.add(menu);
     }
 
+    // MODIFIES: this
+    // EFFECTS: configures and adds Item view button to ToolBar
     private void addItemViewButton() {
         itemViewButton = new JButton("Item View");
         itemViewButton.addActionListener(e -> windows.showPanel(WindowNames.ITEM_PAGE));
         toolBar.add(itemViewButton);
     }
 
-    private void addAddMineralButton() {
+    // MODIFES: this
+    // EFFECTS: configures and adds Add button to Toolbar
+    private void addAddButton() {
         addMineralButton = new JButton("Add Item");
         addMineralButton.addActionListener(new MineralAdditionButtonListener());
         toolBar.add(addMineralButton);
     }
 
+    // MODIFIES: this
+    // EFFECTS: configures and adds Table view button to toolbar
     private void addTableViewButton() {
         tableViewButton = new JButton("Table Page");
         tableViewButton.addActionListener(e -> windows.showPanel(WindowNames.TABLE_PAGE));
         toolBar.add(tableViewButton);
     }
 
+    // MODIFIES: this
+    // EFFECTS: configures and adds Edit button to toolbar
     private void addEditButton() {
         editButton = new JButton("Edit Item");
         editButton.addActionListener(e -> firePropertyChange(PropertyNames.ITEM_EDITED, true, false));
@@ -112,12 +126,15 @@ public class ToolBar extends JPanel {
         toolBar.add(editButton);
     }
 
+    // MODIFIES: this
+    // EFEFCTS: configures and adds delete button to toolbar
     private void addDeleteButton() {
         deleteButton = new JButton("Delete Item");
         deleteButton.addActionListener(new DeleteButtonListener());
         toolBar.add(deleteButton);
     }
 
+    // Not used
     private void addSearchSection() {
         searchBox = new JTextField(20);
         toolBar.add(searchBox);
@@ -129,6 +146,8 @@ public class ToolBar extends JPanel {
 
     }
 
+    // MODIFIES: this, mineralTableView
+    // EFFECTS: adds user configured mineral to mineralTableView
     private void addMineral() {
         Mineral userMineral = MineralQueryHandler.queryAddMineral();
         if (userMineral != null) {
@@ -140,6 +159,8 @@ public class ToolBar extends JPanel {
         }
     }
 
+    // MODIFIES: this, familyTableView
+    // EFFECTS: adds user configured family to familyTableView
     public void addFamily() {
         Family userFamily = FamilyQueryHandler.queryAddFamily(mineralTableView.getTable());
         if (userFamily != null) {
@@ -151,20 +172,8 @@ public class ToolBar extends JPanel {
         }
     }
 
-    protected class FileHandler implements PropertyChangeListener {
-
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals(PropertyNames.LOAD_BUTTON_CLICKED)) {
-                loadTable();
-            } else if (evt.getPropertyName().equals(PropertyNames.SAVE_AS_BUTTON_CLICKED)) {
-                saveTableAs();
-            } else if (evt.getPropertyName().equals(PropertyNames.SAVE_BUTTON_CLICKED)) {
-                saveTable();
-            }
-        }
-    }
-
+    // MODIFIES: this
+    // EFFECTS: sets save path to that in menu and saves table to the path
     private void saveTableAs() {
         savePath = menu.getSavePath();
         if (!savePath.endsWith(".json")) {
@@ -173,6 +182,8 @@ public class ToolBar extends JPanel {
         saveTable();
     }
 
+    // MODIFIES: this, mineralTableView, familyTableView
+    // EFFECTS: configures table views to the file in menu.getLoadPath()
     private void loadTable() {
         TableReader reader = new TableReader(menu.getLoadPath(),
                 (FamilyTable) familyTableView.getTable(),
@@ -189,6 +200,7 @@ public class ToolBar extends JPanel {
         System.out.println("Loading" + menu.getLoadPath());
     }
 
+    // EFFECTS: writes tables to .json file in savePath
     private void saveTable() {
         if (savePath == null) {
             UserQuery.showErrorMessage("Must choose destination");
@@ -206,6 +218,25 @@ public class ToolBar extends JPanel {
         writer.close();
     }
 
+    // Listener class for File Button clicks
+    protected class FileHandler implements PropertyChangeListener {
+
+        // MODIFIES: this
+        // EFFECTS: calls correct method depending on button clicked
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals(PropertyNames.LOAD_BUTTON_CLICKED)) {
+                loadTable();
+            } else if (evt.getPropertyName().equals(PropertyNames.SAVE_AS_BUTTON_CLICKED)) {
+                saveTableAs();
+            } else if (evt.getPropertyName().equals(PropertyNames.SAVE_BUTTON_CLICKED)) {
+                saveTable();
+            }
+        }
+
+    }
+
+    // Not used
     protected class SearchButtonListener implements ActionListener {
 
         @Override
@@ -214,8 +245,10 @@ public class ToolBar extends JPanel {
         }
     }
 
-
+    // listener class for addition button
     protected class MineralAdditionButtonListener implements ActionListener {
+
+        // EFFECTS: prompts user on type of entry to add and calls respective method to add it
         @Override
         public void actionPerformed(ActionEvent e) {
             switch (QuerySelector.chooseOption()) {

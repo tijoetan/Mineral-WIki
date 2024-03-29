@@ -8,6 +8,8 @@ import utils.fieldnames.Constants;
 import javax.swing.*;
 import java.awt.*;
 
+// Parent class for Mineral/Family Display page
+
 public abstract class DisplayPage extends JPanel {
     protected JPanel centerPanel;
 
@@ -21,6 +23,7 @@ public abstract class DisplayPage extends JPanel {
         return entry;
     }
 
+    // EFFECTS: Constructs Display Page
     protected DisplayPage(WikiEntry entry) {
         this.entry = entry;
         setLayout(new BorderLayout());
@@ -28,6 +31,7 @@ public abstract class DisplayPage extends JPanel {
 
     }
 
+    // EFFECTS: sets up Center page with mineral name and description
     protected void setupCenterPane() {
         JLabel itemNameLabel = new JLabel(StringUtils.getSentenceCase(entry.getName()));
         itemNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -53,6 +57,7 @@ public abstract class DisplayPage extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
     }
 
+    // EFFECTS: sets up formula panel
     protected void setupFormulaField() {
         formulaPanel = new JPanel();
         formulaPanel.setLayout(new BoxLayout(formulaPanel, BoxLayout.Y_AXIS));

@@ -10,18 +10,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 
+// Display page for Families
+
 public class FamilyDisplayPage extends DisplayPage {
     private final Family family;
     private JPanel descendantListPanel;
 
-    protected FamilyDisplayPage(Family family) {
+    // EFFECTS: constructs display Page for given family
+    public FamilyDisplayPage(Family family) {
         super(family);
         this.family = family;
         setupSidePanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up side panel with descendants and formula
     @Override
-    protected void setupSidePanel() {
+    public void setupSidePanel() {
         sidePanel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;

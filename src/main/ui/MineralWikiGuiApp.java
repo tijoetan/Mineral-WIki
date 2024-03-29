@@ -40,6 +40,7 @@ public class MineralWikiGuiApp implements ClickObserver {
 
     private final ToolBar toolBar;
 
+    // EFFECTS: makes new MineralWikiGuiApp
     public MineralWikiGuiApp() {
 
         mineralTable = new MineralTable();
@@ -73,16 +74,22 @@ public class MineralWikiGuiApp implements ClickObserver {
         }
     }
 
+    // MODIFIES: toolBar
+    // EFFECTS: adds Listeners to toolbar
     private void setupToolbar() {
         toolBar.addPropertyChangeListener(PropertyNames.ITEM_DELETED, e -> deleteSelectedItem());
         toolBar.addPropertyChangeListener(PropertyNames.ITEM_EDITED, e -> editSelectedItem());
     }
 
+    // MODIFIES: switchableWindowPanel
+    // EFFECTS: adds table and item views to the main panel
     private void addWindows() {
         switchableWindowPanel.add(tableView, WindowNames.TABLE_PAGE);
         switchableWindowPanel.add(itemView, WindowNames.ITEM_PAGE);
     }
 
+    // MODIFIES: mineralTableView, familyTableView
+    // EFFECTS: allows user to edit selected item in itemView by prompting correct edit panel
     private void editSelectedItem() {
         WikiEntry selectedItem = itemView.getHostedItem();
         if (selectedItem instanceof Mineral) {
@@ -97,6 +104,8 @@ public class MineralWikiGuiApp implements ClickObserver {
         }
     }
 
+    // MODIFIES: mineralTableView, familyTableView
+    // EFFECTS: removes selected item in itemView from correct table
     private void deleteSelectedItem() {
         try {
             mineralTableView.getModel().deleteEntry(itemView.getHostedItemName());
@@ -115,6 +124,8 @@ public class MineralWikiGuiApp implements ClickObserver {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: constructs mineral and family table views
     private void setupTableView() {
         tableView = new JPanel();
         tableView.setLayout(new BorderLayout());
@@ -129,6 +140,8 @@ public class MineralWikiGuiApp implements ClickObserver {
 
     }
 
+    // MODIFIES: itemView
+    // EFFECTS: displays ClickedItemHandlers selected item on itemView
     @Override
     public void update() {
         itemView.updateDisplayPage(ClickedItemHandler.getInstance().getClickedItem());

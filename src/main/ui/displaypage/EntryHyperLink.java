@@ -9,10 +9,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+// Descendant label in FamilyDisplayPage
+
 public class EntryHyperLink extends JLabel {
     private final WikiEntry entry;
 
-
+    // EFFECTS: constructs EntryHyperLink for entry
     public EntryHyperLink(WikiEntry entry) {
         super();
         this.entry = entry;
@@ -26,15 +28,21 @@ public class EntryHyperLink extends JLabel {
         });
     }
 
+
+    // getters
     public WikiEntry getEntry() {
         return entry;
     }
 
+    // MODIFIES: ClickedItemHandler
+    // EFFECTS: sets clickedItem to entry
     private void clickActivity() {
         ClickedItemHandler.getInstance().setClickedItem(entry);
         firePropertyChange(PropertyNames.ITEM_CLICKED, true, false);
     }
 
+    // MODIFIES: this
+    // EFEFCTS: creates hyperlink label
     private void setupText() {
         setText("<html><font color='blue'><u>" + entry.getName() + "</u></font></html>");
         setFont(new Font("Inter", Font.BOLD | Font.ITALIC, 30));

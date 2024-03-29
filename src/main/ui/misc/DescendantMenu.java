@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//
+// Menu that displays updatable Grid of Descendants
 
 public class DescendantMenu extends JPanel {
     private final JPanel addedItemFrame;
@@ -26,6 +26,7 @@ public class DescendantMenu extends JPanel {
 
     private int defaultConstraints;
 
+    // Constructor for Descendant Panel used in FamilyAdditionPanel
     public DescendantMenu(int rowCount) {
         defaultConstraints = GridBagConstraints.NONE;
         this.rowCount = rowCount;
@@ -49,6 +50,7 @@ public class DescendantMenu extends JPanel {
 
     }
 
+    // Constructor used for FamilyDisplayPanel
     public DescendantMenu(int rowCount, List<WikiEntry> entries) {
         this(rowCount);
         remove(additionPanel);
@@ -60,8 +62,13 @@ public class DescendantMenu extends JPanel {
         }
     }
 
+    //getters
+    public List<JComponent> getAddedItems() {
+        return new ArrayList<>(addedItems);
+    }
 
-
+    // MODIFIES: this
+    // EFFECTS: creates and initializes constarings
     private void setupConstraints() {
         constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -71,11 +78,8 @@ public class DescendantMenu extends JPanel {
 
     }
 
-    public List<JComponent> getAddedItems() {
-        return new ArrayList<>(addedItems);
-    }
-
-
+    // MODIFIES: this
+    // EFFECTS: adds AddedItemBox to view and addedItems
     public void addDescendant(String name) {
         AddedItemBox newBox = new AddedItemBox(name);
         if (addedItems.contains(newBox)) {
@@ -89,21 +93,18 @@ public class DescendantMenu extends JPanel {
         updateComponents();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds EntryHyperLink to view and addedItems
     public void addDescendant(WikiEntry entry) {
         EntryHyperLink link = new EntryHyperLink(entry);
         if (!addedItems.contains(link)) {
             addedItems.add(link);
-            link.addPropertyChangeListener(PropertyNames.ITEM_CLICKED, e -> gotoView(e.getSource()));
             updateComponents();
         }
     }
 
-    private void gotoView(Object source) {
-        EntryHyperLink link = (EntryHyperLink) source;
-        ClickedItemHandler.getInstance().setClickedItem(link.getEntry());
-        firePropertyChange(PropertyNames.ITEM_CLICKED, true, false);
-    }
-
+    // MODIFIES: this
+    // EFFECTS: removes given AddedItemBox from view and addedItems
     private void deleteItem(Object source) {
         AddedItemBox addBox = (AddedItemBox) source;
         addedItems.remove(addBox);
@@ -111,6 +112,8 @@ public class DescendantMenu extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: redraws view based on addedItems
     public void updateComponents() {
         constraints.fill = defaultConstraints;
         constraints.gridx = 0;

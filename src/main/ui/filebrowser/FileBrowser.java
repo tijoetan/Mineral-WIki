@@ -5,7 +5,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.nio.file.FileSystems;
 
+// Slightly customized JFileChooser
+
 public class FileBrowser extends JFileChooser {
+
+    // EFFECTS: creates and configures FileBroswer
     public FileBrowser() {
         super();
         String separator = FileSystems.getDefault().getSeparator();

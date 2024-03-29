@@ -19,6 +19,7 @@ public class TableView extends JScrollPane {
     private final JTable viewTable;
     private final TableDataHandler handler;
 
+    // EFFECTS: constructs tableView based on given table
     public TableView(WikiEntryTable table, Dimension preferredSize) {
         handler = new TableDataHandler(table);
         viewTable = new JTable(handler);
@@ -33,10 +34,13 @@ public class TableView extends JScrollPane {
         viewTable.setRowHeight(30);
     }
 
+    // getters
     public TableDataHandler getModel() {
         return handler;
     }
 
+    // MODIFIES: this, handler
+    // EFFECTS: sorts table data from columnName
     public void sortTableBy(String columnName) {
 
         switch (columnName) {
@@ -58,8 +62,11 @@ public class TableView extends JScrollPane {
         }
     }
 
+    // listener class for table view sorting
     protected class ClickMouseListener extends MouseAdapter {
 
+        // MODIFIES: this
+        // EFFECTS: sorts Table based on clicked column
         @Override
         public void mouseClicked(MouseEvent e) {
             Point clickPoint = e.getPoint();
@@ -70,7 +77,11 @@ public class TableView extends JScrollPane {
 
     }
 
+    // listener class for clicking link
     protected class HyperlinkManager extends MouseAdapter {
+
+        // MODIFIES: this
+        // EFFECTS: change cursor if hovering over name column
         @Override
         public void mouseMoved(MouseEvent e) {
             Point clickPoint = e.getPoint();
@@ -81,6 +92,8 @@ public class TableView extends JScrollPane {
             viewTable.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
 
+        // MODIFIES: ClickItemHandler
+        // EFFECTS: changes clickedItem to item at click location
         @Override
         public void mousePressed(MouseEvent e) {
             Point clickPoint = e.getPoint();
@@ -93,7 +106,7 @@ public class TableView extends JScrollPane {
                     WikiEntry clickedItem = handler.getEntry(nameAtPoint);
                     System.out.println(Arrays.toString(clickedItem.giveAttributeAsObjects()));
                     ClickedItemHandler.getInstance().setClickedItem(clickedItem);
-//                    firePropertyChange(PropertyNames.ITEM_CLICKED, true, false);
+                    /* firePropertyChange(PropertyNames.ITEM_CLICKED, true, false); */
                 } catch (ItemNotFoundException ex) {
                     throw new IllegalStateException();
                 }

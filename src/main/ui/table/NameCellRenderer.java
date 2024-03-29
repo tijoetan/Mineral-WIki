@@ -5,7 +5,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
+// Name Cell renderer for name column in TableView
+
 public class NameCellRenderer extends DefaultTableCellRenderer {
+
+    // EFFECTS: produces rendered component
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
                                                    boolean isSelected,

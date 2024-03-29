@@ -12,6 +12,8 @@ import ui.misc.UserQuery;
 import javax.swing.*;
 import java.util.Arrays;
 
+// Class for handling Mineral Queries
+
 public class MineralQueryHandler {
 
     // EFFECTS: produces user specified Mineral

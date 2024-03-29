@@ -12,13 +12,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+// Contains images used in enum panels
+
 public class Images {
     private static Images instance;
 
     private final Map<Cleavage, Image> cleavageImageMap;
     private final Map<CrystalStructure, Image> crystalStructureImageMap;
 
-
+    // EFFECTS: initializes and populates maps with Enum Image pairs
     private Images() {
         cleavageImageMap = new HashMap<>();
         crystalStructureImageMap = new HashMap<>();
@@ -44,6 +46,7 @@ public class Images {
         }
     }
 
+    //getters
     private ImageIcon getCleavageImage(Cleavage cleavage) {
         return new ImageIcon(cleavageImageMap.get(cleavage)
                 .getScaledInstance(300, 200, Image.SCALE_SMOOTH));
@@ -55,7 +58,7 @@ public class Images {
     }
 
 
-
+    // EFFECTS: returns cleavage image from instance corresponding to given key
     public static ImageIcon getInstanceCleavageImage(Cleavage key) {
         if (instance == null) {
             instance = new Images();
@@ -64,6 +67,7 @@ public class Images {
         return instance.getCleavageImage(key);
     }
 
+    // EFFECTS: returns crystalStructure image from instance corresponding to given key
     public static ImageIcon getInstanceCrystalImage(CrystalStructure key) {
         if (instance == null) {
             instance = new Images();

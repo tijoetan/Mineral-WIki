@@ -8,23 +8,28 @@ import utils.fieldnames.AttributeNames;
 import javax.swing.*;
 import java.awt.*;
 
+// Display page for minerals
+
 public class MineralDisplayPage extends DisplayPage {
 
     private final Mineral mineral;
     private JTable stats;
     private JPanel enumPanel;
 
-
+    // EFFECTS: constructs display page for given mineral
     public MineralDisplayPage(Mineral mineral) {
         super(mineral);
         this.mineral = mineral;
         setupSidePanel();
     }
 
+    //getters
     public Mineral getMineral() {
         return this.mineral;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up panel with quantitative table, formula and enumeration panel
     @Override
     public void setupSidePanel() {
 
@@ -42,10 +47,12 @@ public class MineralDisplayPage extends DisplayPage {
 
         setupStats();
 
-        placeItemsOnPanel();
+        placeItemsOnSidePanel();
     }
 
-    private void placeItemsOnPanel() {
+    // MODIFIES: this
+    // EFFECTS: lays out sidePanel components
+    private void placeItemsOnSidePanel() {
         sidePanel = new JPanel();
         sidePanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -64,6 +71,7 @@ public class MineralDisplayPage extends DisplayPage {
         add(sidePanel, BorderLayout.WEST);
     }
 
+    // EFFECTS: sets up enumeration panel panels with correct value and image
     private JPanel setupEnumPanel(String attributeName,
                                   String attributeValue,
                                   ImageIcon displayImage) {
@@ -88,6 +96,7 @@ public class MineralDisplayPage extends DisplayPage {
         return enumPanel;
     }
 
+    // EFFECTS: sets up cleavage Panel with correct image and label
     private JPanel setupCleavagePanel() {
         return setupEnumPanel(
                 AttributeNames.CLEAVAGE,
@@ -95,6 +104,7 @@ public class MineralDisplayPage extends DisplayPage {
                 Images.getInstanceCleavageImage(mineral.getCleavage()));
     }
 
+    // EFFECTS: sets up crystal structure panel with correct image and label
     private JPanel setupCrystalPanel() {
         return setupEnumPanel(
                 AttributeNames.CRYSTAL_STRUCTURE,
@@ -102,6 +112,7 @@ public class MineralDisplayPage extends DisplayPage {
                 Images.getInstanceCrystalImage(mineral.getCrystalStructure()));
     }
 
+    // EFFECTS: produces table filled with quantitative properties of mineral
     private void setupStats() {
         stats = new JTable(getQuantitativeTable(),
                 new String[]{"Property", "Value"});
@@ -109,6 +120,7 @@ public class MineralDisplayPage extends DisplayPage {
         stats.setRowHeight(60);
     }
 
+    // EFFECTS: produces 2D array with quantitative properties and corresponding values
     public String[][] getQuantitativeTable() {
         String[] ior = new String[]{AttributeNames.IOR + " (Dimensionless)",
                 String.valueOf(mineral.getIndexOfRefraction())};
@@ -119,26 +131,5 @@ public class MineralDisplayPage extends DisplayPage {
 
         return new String[][]{hardness, ior, density};
     }
-/*
-    public static void main(String[] args) throws UnknownElementException {
-        Mineral testMineral = new Mineral("Mineral");
-        testMineral.setHardness(20.0f);
-        testMineral.setDensity(10.0f);
-        testMineral.setIndexOfRefraction(4.0f);
-        testMineral.setCrystalStructure(CrystalStructure.CUBIC);
-        testMineral.setGeneralFormula(new Formula("(Pb, S, F, O)1290Cl2"));
-        testMineral.setCleavage(Cleavage.BASAL);
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 250; i++) {
-            builder.append("The quick brown fox jumps over the lazy dog");
-        }
-        testMineral.setDescription(builder.toString());
-
-        JFrame frame = new JFrame();
-        frame.add(new MineralDisplayPage(testMineral));
-        frame.setSize(1280, 720);
-        frame.setVisible(true);
-    }
- */
 
 }

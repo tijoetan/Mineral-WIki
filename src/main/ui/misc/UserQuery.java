@@ -32,6 +32,7 @@ public class UserQuery {
         }
     }
 
+    // EFFECTS: Displays error popup to user
     public static void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(null, message);
     }

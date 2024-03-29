@@ -8,13 +8,13 @@ import model.tableentry.MineralTable;
 import persistence.InvalidFileException;
 import persistence.TableReader;
 import persistence.TableWriter;
-import ui.cardpanel.CardPanel;
+import ui.misc.CardPanel;
 import ui.additionmenu.QuerySelector;
 import ui.additionmenu.familyaddition.FamilyQueryHandler;
 import ui.additionmenu.mineraladdition.MineralQueryHandler;
 import ui.filebrowser.LoadSavePopupMenu;
 import ui.table.TableDataHandler;
-import ui.additionmenu.UserQuery;
+import ui.misc.UserQuery;
 import utils.fieldnames.PropertyNames;
 import utils.fieldnames.WindowNames;
 
@@ -71,14 +71,14 @@ public class ToolBar extends JPanel {
         addTableViewButton();
         toolBar.addSeparator();
         addItemViewButton();
-        toolBar.add(Box.createHorizontalStrut(500));
+        toolBar.add(Box.createHorizontalStrut(850));
         addAddMineralButton();
         toolBar.addSeparator();
         addEditButton();
         toolBar.addSeparator();
         addDeleteButton();
         toolBar.add(Box.createHorizontalStrut(60));
-        addSearchSection();
+        //addSearchSection();
     }
 
     private void addFileButton() {
@@ -94,7 +94,7 @@ public class ToolBar extends JPanel {
     }
 
     private void addAddMineralButton() {
-        addMineralButton = new JButton("Add Mineral");
+        addMineralButton = new JButton("Add Item");
         addMineralButton.addActionListener(new MineralAdditionButtonListener());
         toolBar.add(addMineralButton);
     }

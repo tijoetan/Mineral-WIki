@@ -4,7 +4,7 @@ import model.chemicalstructure.Formula;
 import model.entries.Family;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
-import ui.additionmenu.UserQuery;
+import ui.misc.UserQuery;
 import utils.fieldnames.Attributes;
 import model.enums.CrystalStructure;
 import model.modelexceptions.DuplicationException;
@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import static ui.additionmenu.UserQuery.queryFloat;
-import static ui.additionmenu.UserQuery.queryString;
+import static ui.misc.UserQuery.queryFloat;
+import static ui.misc.UserQuery.queryString;
 
 // Console application that interprets user commands to instructions on model classes
 

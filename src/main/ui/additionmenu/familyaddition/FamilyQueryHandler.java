@@ -8,13 +8,17 @@ import model.modelexceptions.UnknownElementException;
 import model.tableentry.WikiEntryTable;
 import ui.uiexceptions.BlankNameException;
 import utils.FillWikiEntry;
-import ui.additionmenu.UserQuery;
+import ui.misc.UserQuery;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Manages family queries
+
 public class FamilyQueryHandler {
+
+    // EFFECTS: Makes FamilyAdditionPanel and returns the user specified Family
     public static Family queryAddFamily(WikiEntryTable mineralTable) {
         FamilyAdditionPanel panel = new FamilyAdditionPanel();
         try {
@@ -25,6 +29,8 @@ public class FamilyQueryHandler {
         }
     }
 
+    // EFFECTS: shows popup of panel with title and returns user specified family
+    //          throws BlankNameException if Family name is not provided
     private static Family queryFamily(FamilyAdditionPanel panel,
                                       String title,
                                       WikiEntryTable mineralTable,
@@ -53,6 +59,7 @@ public class FamilyQueryHandler {
 
     }
 
+    // EFFECTS: prompts addition configured with family attributes
     public static Family queryEditFamily(Family family, WikiEntryTable mineralTable) {
         FamilyAdditionPanel additionPanel = new FamilyAdditionPanel();
         additionPanel.configurePanelBy(family);
@@ -63,6 +70,7 @@ public class FamilyQueryHandler {
         }
     }
 
+    // EFFECTS: fills newFamily with attributes in panel
     private static void populateFamilyFields(FamilyAdditionPanel panel,
                                              Family newFamily,
                                              WikiEntryTable mineralTable) {

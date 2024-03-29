@@ -7,18 +7,20 @@ import model.enums.CrystalStructure;
 import model.modelexceptions.UnknownElementException;
 import ui.uiexceptions.BlankNameException;
 import utils.FillWikiEntry;
-import ui.additionmenu.UserQuery;
+import ui.misc.UserQuery;
 
 import javax.swing.*;
 import java.util.Arrays;
 
 public class MineralQueryHandler {
 
+    // EFFECTS: produces user specified Mineral
     public static Mineral queryAddMineral() {
         MineralAdditionPanel panel = new MineralAdditionPanel();
         return queryMineral(panel, "Specify your mineral!");
     }
 
+    // EFFECTS: produces on given title popup with panel
     private static Mineral queryMineral(MineralAdditionPanel panel, String title) {
         try {
             return queryMineral(panel, title, null);
@@ -28,6 +30,7 @@ public class MineralQueryHandler {
         }
     }
 
+    // EFFECTS: produces popup with given popup and title with fields initialized to mineral
     private static Mineral queryMineral(MineralAdditionPanel panel, String title, Mineral mineral)
             throws BlankNameException {
         int userResponse = JOptionPane.showConfirmDialog(null,
@@ -47,6 +50,7 @@ public class MineralQueryHandler {
         }
     }
 
+    // EFFECTS: edits mineral
     public static Mineral queryEditMineral(Mineral mineral) {
         MineralAdditionPanel panel = new MineralAdditionPanel();
         System.out.println(Arrays.toString(mineral.giveAttributeAsObjects()));
@@ -61,6 +65,7 @@ public class MineralQueryHandler {
 
     }
 
+    // EFFECTS: fills mineral based on user specification on panel
     private static Mineral populateMineral(MineralAdditionPanel panel, Mineral mineral) {
         float ior;
         float density;
@@ -90,6 +95,7 @@ public class MineralQueryHandler {
         return mineral;
     }
 
+    // EFFECTS: produces formula based on panel formula field
     private static Formula getFormula(MineralAdditionPanel panel) {
         Formula formula;
         try {

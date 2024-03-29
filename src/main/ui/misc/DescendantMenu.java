@@ -1,14 +1,19 @@
-package ui.additionmenu.familyaddition;
+package ui.misc;
 
 import model.entries.WikiEntry;
+import ui.additionmenu.familyaddition.AddedItemBox;
+import ui.additionmenu.familyaddition.AdditionPanel;
 import ui.clickeditemhandler.ClickedItemHandler;
-import ui.additionmenu.UserQuery;
+import ui.misc.UserQuery;
+import ui.displaypage.EntryHyperLink;
 import utils.fieldnames.PropertyNames;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+//
 
 public class DescendantMenu extends JPanel {
     private final JPanel addedItemFrame;

@@ -8,10 +8,13 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 
+// Addition Box for family descendants
+
 public class AddedItemBox extends JPanel {
     private JButton deleteButton;
     private JLabel itemName;
 
+    // EFFECTS: Constructs new AddedItemBox
     public AddedItemBox(String name) {
         setLayout(new BorderLayout());
         setName(name);
@@ -31,6 +34,7 @@ public class AddedItemBox extends JPanel {
 
     }
 
+    // EFFECTS: returns true if two AddedItemBoxes have the same name
     @Override
     public boolean equals(Object other) {
         if (other instanceof AddedItemBox) {

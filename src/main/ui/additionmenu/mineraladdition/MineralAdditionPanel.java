@@ -8,6 +8,8 @@ import utils.fieldnames.AttributeNames;
 import javax.swing.*;
 import java.awt.*;
 
+// Addition Panel for minerals
+
 public class MineralAdditionPanel extends JPanel {
 
     private JTextField name;
@@ -22,6 +24,7 @@ public class MineralAdditionPanel extends JPanel {
 
     GridBagConstraints constraints;
 
+    // EFFECTS: constructs MineralAdditionPanel
     public MineralAdditionPanel() {
 
         firePropertyChange("Change", true, true);
@@ -39,6 +42,7 @@ public class MineralAdditionPanel extends JPanel {
         addFieldsToPanel();
     }
 
+    //getters
     public String getName() {
         return name.getText().trim();
     }
@@ -72,6 +76,8 @@ public class MineralAdditionPanel extends JPanel {
         return formula.getText();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates user specification boxes
     private void initializeFields() {
 
         name = new JTextField(10);
@@ -91,6 +97,8 @@ public class MineralAdditionPanel extends JPanel {
         formula = new JTextField(8);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds Labels and User Boxes to main Panel
     private void addFieldsToPanel() {
         for (String attribute : AttributeNames.MINERAL_ATTRIBUTE_NAMES) {
             add(new JLabel(attribute + ":"), constraints);
@@ -110,10 +118,13 @@ public class MineralAdditionPanel extends JPanel {
         add(description, constraints);
     }
 
+    // EFFECTS: produces Array of all user editable boxes
     public JComponent[] produceComponentArray() {
         return new JComponent[]{name, crystalStructure, formula, hardness, density, ior, cleavage};
     }
 
+    // MODIFIES: this
+    // EFFECTS: configures fields based on mineral attributes
     public void setFields(Mineral mineral) {
         name.setText(mineral.getName());
         name.setEnabled(false);

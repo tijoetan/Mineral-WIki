@@ -1,4 +1,4 @@
-package ui.additionmenu.familyaddition;
+package ui.displaypage;
 
 import model.entries.WikiEntry;
 import ui.clickeditemhandler.ClickedItemHandler;

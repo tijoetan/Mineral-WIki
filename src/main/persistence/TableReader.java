@@ -53,7 +53,8 @@ public class TableReader {
         }
     }
 
-    // REQUIRES: if a valid JSON file is given by source then it must be a valid format
+    // REQUIRES: if a valid JSON file is given by source then it must be a valid format and has at least
+    //              1 Mineral and 1 Family
     // MODIFIES: this
     // EFFECTS: populates mineralTable and familyTable with the data stored in source
     public void setupTables() throws IOException, InvalidFileException {

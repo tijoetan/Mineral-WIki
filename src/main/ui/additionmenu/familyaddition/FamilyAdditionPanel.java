@@ -1,13 +1,17 @@
 package ui.additionmenu.familyaddition;
 
+
 import model.entries.Family;
 import model.entries.WikiEntry;
+import ui.misc.DescendantMenu;
 import utils.fieldnames.AttributeNames;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
+
+// Panel for specifying a Family
 
 public class FamilyAdditionPanel extends JPanel {
     private final JTextField familyName;
@@ -17,7 +21,7 @@ public class FamilyAdditionPanel extends JPanel {
 
     GridBagConstraints constraints;
 
-
+    // EFFECTS: Constructs new FamilyAdditionPanel
     public FamilyAdditionPanel() {
         familyName = new JTextField(8);
         familyFormula = new JTextField(12);
@@ -38,7 +42,7 @@ public class FamilyAdditionPanel extends JPanel {
 
     }
 
-
+    // getters
     public String getDescription() {
         return description.getText();
     }
@@ -58,6 +62,8 @@ public class FamilyAdditionPanel extends JPanel {
                 .collect(Collectors.toList());
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes fields based on those from provided family
     public void configurePanelBy(Family family) {
         familyName.setText(family.getName());
         familyName.setEnabled(false);
@@ -72,6 +78,8 @@ public class FamilyAdditionPanel extends JPanel {
         repaint();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds areas for family specification
     private void setupBoxes() {
         for (JComponent component : getAttributes()) {
             add(component, constraints);
@@ -80,6 +88,8 @@ public class FamilyAdditionPanel extends JPanel {
         add(new JScrollPane(description), constraints);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds labels to Panel
     private void setupLabels() {
         for (String label : AttributeNames.FAMILY_ATTRIBUTE_NAMES) {
             add(new JLabel(label + ":"), constraints);
@@ -89,6 +99,7 @@ public class FamilyAdditionPanel extends JPanel {
         constraints.gridy = 0;
     }
 
+    // EFFECTS: Produces array with all the user boxes
     public JComponent[] getAttributes() {
         return new JComponent[]{familyName, familyFormula, descendantAdditionMenu};
     }

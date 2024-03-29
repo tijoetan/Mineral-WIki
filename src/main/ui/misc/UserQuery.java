@@ -1,4 +1,4 @@
-package ui.additionmenu;
+package ui.misc;
 
 import ui.uiexceptions.NonNumericValueGiven;
 

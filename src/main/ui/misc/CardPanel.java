@@ -1,4 +1,4 @@
-package ui.cardpanel;
+package ui.misc;
 
 import utils.fieldnames.PropertyNames;
 

@@ -4,7 +4,7 @@ import model.chemicalstructure.Formula;
 import model.entries.Family;
 import model.entries.Mineral;
 import model.modelexceptions.UnknownElementException;
-import ui.additionmenu.familyaddition.DescendantMenu;
+import ui.misc.DescendantMenu;
 
 import javax.swing.*;
 import java.awt.*;

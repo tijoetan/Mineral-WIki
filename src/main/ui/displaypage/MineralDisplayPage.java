@@ -125,7 +125,7 @@ public class MineralDisplayPage extends DisplayPage {
 
         return new String[][]{hardness, ior, density};
     }
-
+/*
     public static void main(String[] args) throws UnknownElementException {
         Mineral testMineral = new Mineral("Mineral");
         testMineral.setHardness(20.0f);
@@ -145,5 +145,6 @@ public class MineralDisplayPage extends DisplayPage {
         frame.setSize(1280, 720);
         frame.setVisible(true);
     }
+ */
 
 }

@@ -109,5 +109,3 @@ public class TableView extends JScrollPane {
     }
 
 }
-
-

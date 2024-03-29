@@ -6,6 +6,7 @@ import model.entries.WikiEntry;
 import model.modelexceptions.ItemNotFoundException;
 import model.modelexceptions.UnknownElementException;
 import model.tableentry.WikiEntryTable;
+import ui.uiexceptions.BlankNameException;
 import utils.FillWikiEntry;
 import utils.UserQuery;
 
@@ -16,13 +17,18 @@ import java.util.List;
 public class FamilyQueryHandler {
     public static Family queryAddFamily(WikiEntryTable mineralTable) {
         FamilyAdditionPanel panel = new FamilyAdditionPanel();
-        return queryFamily(panel, "Specify your Family!", mineralTable, null);
+        try {
+            return queryFamily(panel, "Specify your Family!", mineralTable, null);
+        } catch (BlankNameException e) {
+            UserQuery.showErrorMessage("Cannot Have blank name");
+            return null;
+        }
     }
 
     private static Family queryFamily(FamilyAdditionPanel panel,
                                       String title,
                                       WikiEntryTable mineralTable,
-                                      Family family) {
+                                      Family family) throws BlankNameException {
         Family newFamily;
         int userResponse = JOptionPane.showConfirmDialog(null,
                 panel,
@@ -32,6 +38,9 @@ public class FamilyQueryHandler {
                 null);
         if (userResponse == JOptionPane.OK_OPTION) {
             if (family == null) {
+                if (panel.getFamilyName().isEmpty()) {
+                    throw new BlankNameException();
+                }
                 newFamily = new Family(panel.getFamilyName());
             } else {
                 newFamily = family;
@@ -47,7 +56,11 @@ public class FamilyQueryHandler {
     public static Family queryEditFamily(Family family, WikiEntryTable mineralTable) {
         FamilyAdditionPanel additionPanel = new FamilyAdditionPanel();
         additionPanel.configurePanelBy(family);
-        return queryFamily(additionPanel, "Edit your Family!", mineralTable, family);
+        try {
+            return queryFamily(additionPanel, "Edit your Family!", mineralTable, family);
+        } catch (BlankNameException e) {
+            throw new IllegalStateException();
+        }
     }
 
     private static void populateFamilyFields(FamilyAdditionPanel panel,

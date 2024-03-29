@@ -4,6 +4,7 @@ import model.chemicalstructure.Formula;
 import model.entries.Family;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
+import model.enums.Cleavage;
 import model.enums.CrystalStructure;
 import model.modelexceptions.ItemNotFoundException;
 import model.modelexceptions.UnknownElementException;
@@ -84,7 +85,8 @@ public class TableReader {
                 mineralData.getFloat(JsonFieldNames.HARDNESS),
                 mineralData.getFloat(JsonFieldNames.DENSITY),
                 mineralData.getFloat(JsonFieldNames.INDEX_OF_REFRACTION),
-                mineralData.getString(JsonFieldNames.DESCRIPTION));
+                mineralData.getString(JsonFieldNames.DESCRIPTION),
+                Cleavage.valueOf(mineralData.getString(JsonFieldNames.CLEAVAGE)));
         return mineral;
     }
 

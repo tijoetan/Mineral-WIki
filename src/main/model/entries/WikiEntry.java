@@ -55,7 +55,7 @@ public abstract class WikiEntry implements Writable {
     public JSONObject toJson() {
         JSONObject wikiJson = new JSONObject();
         wikiJson.put(JsonFieldNames.NAME, name);
-        wikiJson.put(JsonFieldNames.FORMULA, generalFormula.getFormulaAsString());
+        wikiJson.put(JsonFieldNames.FORMULA, generalFormula.getUnparsedFormula());
         wikiJson.put(JsonFieldNames.DESCRIPTION, description);
         return wikiJson;
     }

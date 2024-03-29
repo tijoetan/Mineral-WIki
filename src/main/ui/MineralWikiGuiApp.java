@@ -8,6 +8,7 @@ import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import ui.additionmenu.familyaddition.FamilyQueryHandler;
 import ui.additionmenu.mineraladdition.MineralQueryHandler;
+import ui.cardpanel.CardPanel;
 import ui.displaypage.ItemView;
 import ui.table.TableView;
 import ui.toolbar.ToolBar;

@@ -8,4 +8,5 @@ public class PropertyNames {
     public static final String ITEM_DELETED = "itemDeleted";
     public static final String ITEM_EDITED = "itemEdited";
     public static final String DESCENDANT_DELETED = "descendantDeleted";
+    public static final String SAVE_AS_BUTTON_CLICKED = "saveAsClicked";
 }

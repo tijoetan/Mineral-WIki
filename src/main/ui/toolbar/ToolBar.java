@@ -7,7 +7,8 @@ import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
 import persistence.InvalidFileException;
 import persistence.TableReader;
-import ui.CardPanel;
+import persistence.TableWriter;
+import ui.cardpanel.CardPanel;
 import ui.additionmenu.QuerySelector;
 import ui.additionmenu.familyaddition.FamilyQueryHandler;
 import ui.additionmenu.mineraladdition.MineralQueryHandler;
@@ -23,9 +24,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class ToolBar extends JPanel {
+
+    private String savePath;
+
     private LoadSavePopupMenu menu;
     private final CardPanel windows;
 
@@ -45,7 +50,7 @@ public class ToolBar extends JPanel {
 
     public ToolBar(TableDataHandler mineralTableView, TableDataHandler familyTableView,
                    CardPanel panel) {
-
+        savePath = null;
         this.windows = panel;
         windows.addPropertyChangeListener(PropertyNames.WINDOW_CHANGE_EVENT, new WindowStateListener());
         this.mineralTableView = mineralTableView;
@@ -151,22 +156,54 @@ public class ToolBar extends JPanel {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals(PropertyNames.LOAD_BUTTON_CLICKED)) {
-                TableReader reader = new TableReader(menu.getLoadPath(),
-                        (FamilyTable) familyTableView.getTable(),
-                        (MineralTable) mineralTableView.getTable());
-                try {
-                    reader.setupTables();
-                    mineralTableView.updateValues();
-                    familyTableView.updateValues();
-
-                } catch (IOException | InvalidFileException e) {
-                    UserQuery.showErrorMessage("File Error");
-                }
-                System.out.println("Loading" + menu.getLoadPath());
+                loadTable();
+            } else if (evt.getPropertyName().equals(PropertyNames.SAVE_AS_BUTTON_CLICKED)) {
+                saveTableAs();
             } else if (evt.getPropertyName().equals(PropertyNames.SAVE_BUTTON_CLICKED)) {
-                System.out.println("Saving" + menu.getSavePath());
+                saveTable();
             }
         }
+    }
+
+    private void saveTableAs() {
+        savePath = menu.getSavePath();
+        if (!savePath.endsWith(".json")) {
+            savePath += ".json";
+        }
+        saveTable();
+    }
+
+    private void loadTable() {
+        TableReader reader = new TableReader(menu.getLoadPath(),
+                (FamilyTable) familyTableView.getTable(),
+                (MineralTable) mineralTableView.getTable());
+        try {
+            reader.setupTables();
+            mineralTableView.updateValues();
+            familyTableView.updateValues();
+
+        } catch (IOException | InvalidFileException e) {
+            UserQuery.showErrorMessage("File Error");
+        }
+        savePath = menu.getLoadPath();
+        System.out.println("Loading" + menu.getLoadPath());
+    }
+
+    private void saveTable() {
+        if (savePath == null) {
+            UserQuery.showErrorMessage("Must choose destination");
+            return;
+        }
+
+        System.out.println(savePath);
+        TableWriter writer = new TableWriter(savePath);
+        try {
+            writer.open();
+        } catch (FileNotFoundException e) {
+            UserQuery.showErrorMessage("Could not save file");
+        }
+        writer.writeToDestination(mineralTableView.getTable(), familyTableView.getTable());
+        writer.close();
     }
 
     protected class SearchButtonListener implements ActionListener {

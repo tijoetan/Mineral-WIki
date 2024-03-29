@@ -3,21 +3,20 @@ package ui.filebrowser;
 import utils.fieldnames.PropertyNames;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class LoadSavePopupMenu extends JButton implements ActionListener {
+public class LoadSavePopupMenu extends JButton {
 
     private final JPopupMenu buttonMenu;
     private final JMenuItem load;
     private final JMenuItem save;
+    private final JMenuItem saveAs;
 
 
-    private int savePath;
+    private String savePath;
     private String loadFile;
 
 
-    public int getSavePath() {
+    public String getSavePath() {
         return savePath;
     }
 
@@ -30,42 +29,45 @@ public class LoadSavePopupMenu extends JButton implements ActionListener {
         buttonMenu = new JPopupMenu();
         load = new JMenuItem("Load");
         save = new JMenuItem("Save");
-        load.addActionListener(this);
-        save.addActionListener(this);
+        saveAs = new JMenuItem("Save As");
+
+        load.addActionListener(e -> loadFile());
+        save.addActionListener(e -> saveFile());
+        saveAs.addActionListener(e -> saveFileAs());
+
         buttonMenu.add(load);
+        buttonMenu.add(saveAs);
         buttonMenu.add(save);
 
-        addActionListener(this);
+        addActionListener(e -> showMenu());
+    }
+
+    private void saveFileAs() {
+        FileBrowser browser = new FileBrowser();
+        int result = browser.showSaveDialog(this);
+        if (result == FileBrowser.APPROVE_OPTION) {
+            savePath = browser.getSelectedFile().getPath();
+            firePropertyChange(PropertyNames.SAVE_AS_BUTTON_CLICKED, true, false);
+        }
     }
 
 
-
-    private boolean loadFile() {
-        FileBroswer browser = new FileBroswer();
+    public void loadFile() {
+        FileBrowser browser = new FileBrowser();
         int result = browser.showOpenDialog(this);
-        if (result == FileBroswer.APPROVE_OPTION) {
+        if (result == FileBrowser.APPROVE_OPTION) {
             loadFile = browser.getSelectedFile().getPath();
-            return true;
-        }
-        return false;
-    }
-
-    private void saveFile() {
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(load)) {
-            boolean didLoadFile = loadFile();
-            if (didLoadFile) {
-                firePropertyChange(PropertyNames.LOAD_BUTTON_CLICKED, true, false);
-            }
-        } else if (e.getSource().equals(save)) {
-            saveFile();
-            firePropertyChange(PropertyNames.SAVE_BUTTON_CLICKED, true, false);
-        } else {
-            buttonMenu.show(this, this.getX(), this.getY() + this.getHeight());
+            firePropertyChange(PropertyNames.LOAD_BUTTON_CLICKED, true, false);
         }
     }
+
+    public void saveFile() {
+        firePropertyChange(PropertyNames.SAVE_BUTTON_CLICKED, true, false);
+    }
+
+    public void showMenu() {
+        buttonMenu.show(this, this.getX(), this.getY() + this.getHeight());
+    }
+
+
 }

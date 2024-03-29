@@ -6,6 +6,7 @@ import model.enums.Cleavage;
 import model.enums.CrystalStructure;
 import model.modelexceptions.UnknownElementException;
 import org.jetbrains.annotations.Nullable;
+import ui.uiexceptions.BlankNameException;
 import utils.FillWikiEntry;
 import utils.UserQuery;
 
@@ -20,17 +21,26 @@ public class MineralQueryHandler {
     }
 
     private static Mineral queryMineral(MineralAdditionPanel panel, String title) {
-        return queryMineral(panel, title, null);
+        try {
+            return queryMineral(panel, title, null);
+        } catch (BlankNameException e) {
+            UserQuery.showErrorMessage("Cannot Have Blank Name");
+            return null;
+        }
     }
 
     @Nullable
-    private static Mineral queryMineral(MineralAdditionPanel panel, String title, Mineral mineral) {
+    private static Mineral queryMineral(MineralAdditionPanel panel, String title, Mineral mineral)
+            throws BlankNameException {
         int userResponse = JOptionPane.showConfirmDialog(null,
                 panel,
                 title,
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
         if (userResponse == JOptionPane.OK_OPTION) {
             if (mineral == null) {
+                if (panel.getName().isEmpty()) {
+                    throw new BlankNameException();
+                }
                 mineral = new Mineral(panel.getName());
             }
             return populateMineral(panel, mineral);
@@ -43,7 +53,11 @@ public class MineralQueryHandler {
         MineralAdditionPanel panel = new MineralAdditionPanel();
         System.out.println(Arrays.toString(mineral.giveAttributeAsObjects()));
         panel.setFields(mineral);
-        return queryMineral(panel, "Make your Changes!", mineral);
+        try {
+            return queryMineral(panel, "Make your Changes!", mineral);
+        } catch (BlankNameException e) {
+            throw new IllegalStateException();
+        }
 //      System.out.println(Arrays.toString(mineral.giveAttributeAsObjects()));
 
 

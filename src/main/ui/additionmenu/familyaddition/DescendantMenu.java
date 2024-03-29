@@ -1,16 +1,16 @@
 package ui.additionmenu.familyaddition;
 
 import model.entries.WikiEntry;
+import ui.clickeditemhandler.ClickedItemHandler;
 import utils.UserQuery;
 import utils.fieldnames.PropertyNames;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class DescendantAdditionMenu extends JPanel {
+public class DescendantMenu extends JPanel {
     private final JPanel addedItemFrame;
     private final List<JComponent> addedItems;
     private final AdditionPanel additionPanel;
@@ -18,9 +18,10 @@ public class DescendantAdditionMenu extends JPanel {
     JScrollPane pane;
     private final int rowCount;
 
+
     private int defaultConstraints;
 
-    public DescendantAdditionMenu(int rowCount) {
+    public DescendantMenu(int rowCount) {
         defaultConstraints = GridBagConstraints.NONE;
         this.rowCount = rowCount;
         addedItems = new ArrayList<>();
@@ -43,7 +44,7 @@ public class DescendantAdditionMenu extends JPanel {
 
     }
 
-    public DescendantAdditionMenu(int rowCount, List<WikiEntry> entries) {
+    public DescendantMenu(int rowCount, List<WikiEntry> entries) {
         this(rowCount);
         remove(additionPanel);
         defaultConstraints = GridBagConstraints.HORIZONTAL;
@@ -94,7 +95,8 @@ public class DescendantAdditionMenu extends JPanel {
 
     private void gotoView(Object source) {
         EntryHyperLink link = (EntryHyperLink) source;
-        System.out.println(Arrays.toString(link.getEntry().giveAttributeAsObjects()));
+        ClickedItemHandler.getInstance().setClickedItem(link.getEntry());
+        firePropertyChange(PropertyNames.ITEM_CLICKED, true, false);
     }
 
     private void deleteItem(Object source) {

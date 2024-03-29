@@ -13,7 +13,7 @@ public class FamilyAdditionPanel extends JPanel {
     private final JTextField familyName;
     private final JTextField familyFormula;
     private final JTextArea description;
-    private final DescendantAdditionMenu descendantAdditionMenu;
+    private final DescendantMenu descendantAdditionMenu;
 
     GridBagConstraints constraints;
 
@@ -21,7 +21,7 @@ public class FamilyAdditionPanel extends JPanel {
     public FamilyAdditionPanel() {
         familyName = new JTextField(8);
         familyFormula = new JTextField(12);
-        descendantAdditionMenu = new DescendantAdditionMenu(2);
+        descendantAdditionMenu = new DescendantMenu(2);
         description = new JTextArea(6, 30);
         description.setLineWrap(true);
 

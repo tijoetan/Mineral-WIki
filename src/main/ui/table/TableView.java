@@ -1,12 +1,12 @@
 package ui.table;
 
 import model.entries.WikiEntry;
-import utils.UserQuery;
-import utils.fieldnames.Attributes;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.WikiEntryTable;
+import ui.clickeditemhandler.ClickedItemHandler;
+import utils.UserQuery;
 import utils.fieldnames.AttributeNames;
-import utils.fieldnames.PropertyNames;
+import utils.fieldnames.Attributes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,6 @@ import java.util.Arrays;
 
 public class TableView extends JScrollPane {
 
-    private WikiEntry clickedItem;
     private final JTable viewTable;
     private final TableDataHandler handler;
 
@@ -59,10 +58,6 @@ public class TableView extends JScrollPane {
         }
     }
 
-    public WikiEntry getClickedItem() {
-        return clickedItem;
-    }
-
     protected class ClickMouseListener extends MouseAdapter {
 
         @Override
@@ -95,9 +90,10 @@ public class TableView extends JScrollPane {
                 int row = viewTable.rowAtPoint(clickPoint);
                 String nameAtPoint = (String) viewTable.getValueAt(row, column);
                 try {
-                    clickedItem = handler.getEntry(nameAtPoint);
+                    WikiEntry clickedItem = handler.getEntry(nameAtPoint);
                     System.out.println(Arrays.toString(clickedItem.giveAttributeAsObjects()));
-                    firePropertyChange(PropertyNames.ITEM_CLICKED, true, false);
+                    ClickedItemHandler.getInstance().setClickedItem(clickedItem);
+//                    firePropertyChange(PropertyNames.ITEM_CLICKED, true, false);
                 } catch (ItemNotFoundException ex) {
                     throw new IllegalStateException();
                 }

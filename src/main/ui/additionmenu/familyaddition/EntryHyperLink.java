@@ -1,13 +1,13 @@
 package ui.additionmenu.familyaddition;
 
 import model.entries.WikiEntry;
+import ui.clickeditemhandler.ClickedItemHandler;
 import utils.fieldnames.PropertyNames;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeListener;
 
 public class EntryHyperLink extends JLabel {
     private final WikiEntry entry;
@@ -31,6 +31,7 @@ public class EntryHyperLink extends JLabel {
     }
 
     private void clickActivity() {
+        ClickedItemHandler.getInstance().setClickedItem(entry);
         firePropertyChange(PropertyNames.ITEM_CLICKED, true, false);
     }
 

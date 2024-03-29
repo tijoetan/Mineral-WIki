@@ -9,6 +9,8 @@ import model.tableentry.MineralTable;
 import ui.additionmenu.familyaddition.FamilyQueryHandler;
 import ui.additionmenu.mineraladdition.MineralQueryHandler;
 import ui.cardpanel.CardPanel;
+import ui.clickeditemhandler.ClickObserver;
+import ui.clickeditemhandler.ClickedItemHandler;
 import ui.displaypage.ItemView;
 import ui.table.TableView;
 import ui.toolbar.ToolBar;
@@ -19,16 +21,12 @@ import utils.fieldnames.WindowNames;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class MineralWikiGuiApp {
-    private String savePath;
+public class MineralWikiGuiApp implements ClickObserver {
 
-    private final JFrame mainFrame;
     private final CardPanel switchableWindowPanel;
 
     private final MineralTable mineralTable;
@@ -46,8 +44,9 @@ public class MineralWikiGuiApp {
 
         mineralTable = new MineralTable();
         familyTable = new FamilyTable();
+        ClickedItemHandler.getInstance().addObserver(this);
 
-        mainFrame = new JFrame("Mineral Database");
+        JFrame mainFrame = new JFrame("Mineral Database");
         switchableWindowPanel = new CardPanel();
 
         setupTableView();
@@ -121,25 +120,20 @@ public class MineralWikiGuiApp {
         tableView.setLayout(new BorderLayout());
 
         mineralTableView = new TableView(mineralTable, new Dimension(2 * 1280 / 3, 720));
-        mineralTableView.addPropertyChangeListener(PropertyNames.ITEM_CLICKED, new SwitchWindowOnMineralClick());
+//        mineralTableView.addPropertyChangeListener(PropertyNames.ITEM_CLICKED, new SwitchWindowOnMineralClick());
         tableView.add(mineralTableView, BorderLayout.WEST);
 
         familyTableView = new TableView(familyTable, null);
-        familyTableView.addPropertyChangeListener(PropertyNames.ITEM_CLICKED, new SwitchWindowOnMineralClick());
+//        familyTableView.addPropertyChangeListener(PropertyNames.ITEM_CLICKED, new SwitchWindowOnMineralClick());
         tableView.add(familyTableView, BorderLayout.CENTER);
 
     }
 
-    protected class SwitchWindowOnMineralClick implements PropertyChangeListener {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getSource().equals(mineralTableView)) {
-                itemView.updateDisplayPage(mineralTableView.getClickedItem());
-            } else if (evt.getSource().equals(familyTableView)) {
-                itemView.updateDisplayPage(familyTableView.getClickedItem());
-            }
-            switchableWindowPanel.showPanel(WindowNames.ITEM_PAGE);
-        }
+    @Override
+    public void update() {
+        itemView.updateDisplayPage(ClickedItemHandler.getInstance().getClickedItem());
+        System.out.println(Arrays.toString(ClickedItemHandler.getInstance().getClickedItem().giveAttributeAsObjects()));
+        switchableWindowPanel.showPanel(WindowNames.ITEM_PAGE);
     }
 
 }

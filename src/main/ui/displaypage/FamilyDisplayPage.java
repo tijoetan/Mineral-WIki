@@ -3,21 +3,16 @@ package ui.displaypage;
 import model.chemicalstructure.Formula;
 import model.entries.Family;
 import model.entries.Mineral;
-import model.entries.WikiEntry;
-import model.enums.CrystalStructure;
 import model.modelexceptions.UnknownElementException;
-import ui.additionmenu.familyaddition.DescendantAdditionMenu;
+import ui.additionmenu.familyaddition.DescendantMenu;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class FamilyDisplayPage extends DisplayPage {
-    private Family family;
+    private final Family family;
     private JPanel descendantListPanel;
-    private DescendantAdditionMenu menu;
 
     protected FamilyDisplayPage(Family family) {
         super(family);
@@ -47,7 +42,7 @@ public class FamilyDisplayPage extends DisplayPage {
 
     private void setupDescendantLists() {
         descendantListPanel = new JPanel(new BorderLayout());
-        menu = new DescendantAdditionMenu(3, family.getMineralsWithFamily());
+        DescendantMenu menu = new DescendantMenu(3, family.getMineralsWithFamily());
         descendantListPanel.add(menu, BorderLayout.CENTER);
     }
 

@@ -11,7 +11,7 @@ import java.awt.*;
 public class AddedItemBox extends JPanel {
     private JButton deleteButton;
     private JLabel itemName;
-    private String name;
+    private final String name;
 
     public AddedItemBox(String name) {
         setLayout(new BorderLayout());

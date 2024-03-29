@@ -22,7 +22,7 @@ public class DescendantAdditionMenu extends JPanel {
         nameBox = new JTextField(5);
         GridBagLayout layout = new GridBagLayout();
         setupConstraints();
-//        layout.setConstraints(this, constraints);
+        layout.setConstraints(this, constraints);
         JToolBar additionPanel = new JToolBar();
         additionPanel.setFloatable(false);
 
@@ -68,6 +68,7 @@ public class DescendantAdditionMenu extends JPanel {
 
         addedItems.add(newBox);
         newBox.addPropertyChangeListener(PropertyNames.DESCENDANT_DELETED, e -> deleteItem(e.getSource()));
+        nameBox.setText("");
         updateComponents();
 
     }

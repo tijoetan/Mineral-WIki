@@ -11,6 +11,7 @@ public class QuerySelector extends JPanel {
 
     public QuerySelector() {
         mineralChoice = new JRadioButton("Mineral");
+        mineralChoice.setSelected(true);
         familyChoice = new JRadioButton("Family");
         buttonGroup = new ButtonGroup();
         buttonGroup.add(mineralChoice);
@@ -22,7 +23,6 @@ public class QuerySelector extends JPanel {
     public Option getChosenButton() {
         return mineralChoice.isSelected() ? Option.MINERAL : Option.FAMILY;
     }
-
 
 
     public static Option chooseOption() {

@@ -1,5 +1,6 @@
 package ui.displaypage;
 
+import model.entries.Family;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
 
@@ -7,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ItemView extends JPanel {
-    MineralDisplayPage page;
+    DisplayPage page;
 
     public ItemView() {
         page = null;
@@ -22,9 +23,13 @@ public class ItemView extends JPanel {
         add(defaultLabel, BorderLayout.CENTER);
     }
 
-    public void updateDisplayPage(WikiEntry mineral) {
+    public void updateDisplayPage(WikiEntry entry) {
         removeAll();
-        page = new MineralDisplayPage((Mineral) mineral);
+        if (entry instanceof Mineral) {
+            page = new MineralDisplayPage((Mineral) entry);
+        } else if (entry instanceof Family) {
+            page = new FamilyDisplayPage((Family) entry);
+        }
         System.out.println("Updating");
         add(page, BorderLayout.CENTER);
         updateUI();
@@ -39,6 +44,6 @@ public class ItemView extends JPanel {
     }
 
     public WikiEntry getHostedItem() {
-        return page.getMineral();
+        return page.getEntry();
     }
 }

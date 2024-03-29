@@ -11,7 +11,7 @@ import java.util.List;
 // Mineral family data abstraction
 
 public class Family extends WikiEntry {
-    private final List<WikiEntry> mineralsWithFamily;
+    private List<WikiEntry> mineralsWithFamily;
 
     // EFFECTS: calls super with name and initializes mineralsWithFamily
     public Family(String name) {
@@ -27,12 +27,7 @@ public class Family extends WikiEntry {
     // MODIFIES: this
     // EFFECTS: adds mineral to mineralsWithFamily if it is not already there
     public void addMineralsWithFamily(List<WikiEntry> minerals) {
-        for (WikiEntry mineral : minerals) {
-            if (!mineralsWithFamily.contains(mineral)) {
-                mineralsWithFamily.add(mineral);
-            }
-
-        }
+        mineralsWithFamily = minerals;
     }
 
     // EFFECTS: prints out family name, formula and minerals with this family

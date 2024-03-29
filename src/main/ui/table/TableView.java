@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 public class TableView extends JScrollPane {
 
@@ -95,6 +96,7 @@ public class TableView extends JScrollPane {
                 String nameAtPoint = (String) viewTable.getValueAt(row, column);
                 try {
                     clickedItem = handler.getEntry(nameAtPoint);
+                    System.out.println(Arrays.toString(clickedItem.giveAttributeAsObjects()));
                     firePropertyChange(PropertyNames.ITEM_CLICKED, true, false);
                 } catch (ItemNotFoundException ex) {
                     throw new IllegalStateException();

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class MineralWikiGuiApp {
+    private String savePath;
 
     private final JFrame mainFrame;
     private final CardPanel switchableWindowPanel;
@@ -92,7 +93,7 @@ public class MineralWikiGuiApp {
         } else if (selectedItem instanceof Family) {
             Family updatedFamily = FamilyQueryHandler.queryEditFamily((Family) selectedItem, mineralTable);
             familyTableView.getModel().updateValues();
-
+            itemView.updateDisplayPage(updatedFamily);
         }
     }
 
@@ -123,6 +124,7 @@ public class MineralWikiGuiApp {
         tableView.add(mineralTableView, BorderLayout.WEST);
 
         familyTableView = new TableView(familyTable, null);
+        familyTableView.addPropertyChangeListener(PropertyNames.ITEM_CLICKED, new SwitchWindowOnMineralClick());
         tableView.add(familyTableView, BorderLayout.CENTER);
 
     }
@@ -130,7 +132,11 @@ public class MineralWikiGuiApp {
     protected class SwitchWindowOnMineralClick implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            itemView.updateDisplayPage((Mineral) mineralTableView.getClickedItem());
+            if (evt.getSource().equals(mineralTableView)) {
+                itemView.updateDisplayPage(mineralTableView.getClickedItem());
+            } else if (evt.getSource().equals(familyTableView)) {
+                itemView.updateDisplayPage(familyTableView.getClickedItem());
+            }
             switchableWindowPanel.showPanel(WindowNames.ITEM_PAGE);
         }
     }

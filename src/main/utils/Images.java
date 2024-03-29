@@ -15,8 +15,8 @@ import java.util.Map;
 public class Images {
     private static Images instance;
 
-    private Map<Cleavage, Image> cleavageImageMap;
-    private Map<CrystalStructure, ImageIcon> crystalStructureImageMap;
+    private final Map<Cleavage, Image> cleavageImageMap;
+    private final Map<CrystalStructure, Image> crystalStructureImageMap;
 
 
     private Images() {
@@ -32,12 +32,28 @@ public class Images {
                 cleavageImageMap.put(cleavage, new BufferedImage(10, 10, 10));
             }
         }
+
+        for (CrystalStructure structure : CrystalStructure.values()) {
+            try {
+                crystalStructureImageMap.put(structure, ImageIO.read(new File("data/icons/crystalStructures/"
+                        + structure.name().toLowerCase()
+                        + ".png")));
+            } catch (IOException e) {
+                crystalStructureImageMap.put(structure, new BufferedImage(10, 10, 10));
+            }
+        }
     }
 
     private ImageIcon getCleavageImage(Cleavage cleavage) {
         return new ImageIcon(cleavageImageMap.get(cleavage)
-                .getScaledInstance(300, 150, Image.SCALE_SMOOTH));
+                .getScaledInstance(300, 200, Image.SCALE_SMOOTH));
     }
+
+    private ImageIcon getCrystalImage(CrystalStructure structure) {
+        return new ImageIcon(crystalStructureImageMap.get(structure)
+                .getScaledInstance(200, 200, Image.SCALE_SMOOTH));
+    }
+
 
 
     public static ImageIcon getInstanceCleavageImage(Cleavage key) {
@@ -46,5 +62,13 @@ public class Images {
         }
 
         return instance.getCleavageImage(key);
+    }
+
+    public static ImageIcon getInstanceCrystalImage(CrystalStructure key) {
+        if (instance == null) {
+            instance = new Images();
+        }
+
+        return instance.getCrystalImage(key);
     }
 }

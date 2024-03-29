@@ -3,81 +3,42 @@ package ui.displaypage;
 import model.chemicalstructure.Formula;
 import model.entries.Mineral;
 import model.enums.Cleavage;
+import model.enums.CrystalStructure;
 import model.modelexceptions.UnknownElementException;
 import org.jetbrains.annotations.NotNull;
 import utils.Images;
 import utils.StringUtils;
 import utils.fieldnames.AttributeNames;
-import utils.fieldnames.Constants;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class MineralDisplayPage extends JPanel {
+public class MineralDisplayPage extends DisplayPage {
 
-    private Mineral mineral;
-
+    private final Mineral mineral;
     private JTable stats;
-    private JLabel descriptionLabel;
-
-    private JLabel formula;
-
-    private JLabel cleavage;
-    private JLabel crystalStructure;
+    private JPanel enumPanel;
 
 
     public MineralDisplayPage(Mineral mineral) {
-
+        super(mineral);
         this.mineral = mineral;
-        setLayout(new BorderLayout());
-        setupCenterPane();
-        setupSidePane();
-
+        setupSidePanel();
     }
 
     public Mineral getMineral() {
         return this.mineral;
     }
 
+    @Override
+    public void setupSidePanel() {
 
-    private void setupCenterPane() {
-        JLabel mineralNameLabel = new JLabel(StringUtils.getSentenceCase(mineral.getName()));
-        mineralNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        mineralNameLabel.setFont(new Font("Inter", Font.ITALIC | Font.BOLD, 70));
-        System.out.println(mineralNameLabel.getFont());
-        JPanel labelBox = new JPanel(new BorderLayout());
-        labelBox.add(mineralNameLabel, BorderLayout.WEST);
-        labelBox.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
-        labelBox.setPreferredSize(new Dimension(200, 75));
+        setupFormulaField();
 
-        descriptionLabel = new JLabel("<html>"
-                + StringUtils.wrapString(mineral.getDescription(), Constants.MAX_LINE_LENGTH, Constants.WRAP_FOR_GUI)
-                + "</html>");
-        descriptionLabel.setFont(new Font("Inter", Font.PLAIN, 30));
-        descriptionLabel.setVerticalAlignment(SwingConstants.TOP);
-
-        JPanel textPanel = new JPanel();
-        textPanel.setLayout(new BorderLayout());
-        textPanel.add(labelBox, BorderLayout.NORTH);
-        JScrollPane descriptionBox = new JScrollPane(descriptionLabel);
-        textPanel.add(descriptionBox, BorderLayout.CENTER);
-
-        add(textPanel, BorderLayout.CENTER);
-    }
-
-    private void setupSidePane() {
-
-        JPanel formulaPanel = new JPanel();
-        formulaPanel.setLayout(new BoxLayout(formulaPanel, BoxLayout.Y_AXIS));
-        formulaPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        setupFormulaField(formulaPanel);
-
-        JPanel enumPanel = new JPanel(new BorderLayout());
+        enumPanel = new JPanel(new BorderLayout());
 
         JPanel cleavagePanel = setupCleavagePanel();
-        JPanel crystalPanel = setupCleavagePanel();
-
+        JPanel crystalPanel = setupCrystalPanel();
 
 
         enumPanel.add(cleavagePanel, BorderLayout.WEST);
@@ -86,30 +47,29 @@ public class MineralDisplayPage extends JPanel {
 
         setupStats();
 
-        setupSidePane(formulaPanel, enumPanel);
+        placeItemsOnPanel();
     }
 
-    private void setupSidePane(JPanel formulaPanel, JPanel enumPanel) {
-        JPanel sidePane = new JPanel();
-        sidePane.setLayout(new GridBagLayout());
+    private void placeItemsOnPanel() {
+        sidePanel = new JPanel();
+        sidePanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridy = 0;
         constraints.gridx = 0;
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1;
         constraints.weighty = 1;
-        sidePane.add(formulaPanel, constraints);
+        sidePanel.add(formulaPanel, constraints);
         constraints.gridy++;
         JScrollPane pane = new JScrollPane(stats);
         pane.setPreferredSize(new Dimension(200, 180));
-        sidePane.add(pane, constraints);
+        sidePanel.add(pane, constraints);
         constraints.gridy++;
-        sidePane.add(enumPanel, constraints);
-        add(sidePane, BorderLayout.WEST);
+        sidePanel.add(enumPanel, constraints);
+        add(sidePanel, BorderLayout.WEST);
     }
 
-    private JPanel setupEnumPanel(JLabel attributeLabel,
-                                  String attributeName,
+    private JPanel setupEnumPanel(String attributeName,
                                   String attributeValue,
                                   ImageIcon displayImage) {
         JPanel enumPanel = new JPanel();
@@ -122,7 +82,7 @@ public class MineralDisplayPage extends JPanel {
         cleavageLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
 
 
-        attributeLabel = new JLabel(StringUtils.getSentenceCase(attributeValue));
+        JLabel attributeLabel = new JLabel(StringUtils.getSentenceCase(attributeValue));
         attributeLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
         attributeLabel.setFont(new Font("Inter", Font.ITALIC, 40));
         attributeLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -135,10 +95,17 @@ public class MineralDisplayPage extends JPanel {
 
     @NotNull
     private JPanel setupCleavagePanel() {
-        return setupEnumPanel(cleavage,
+        return setupEnumPanel(
                 AttributeNames.CLEAVAGE,
                 mineral.getCleavage().getLiteralString(),
                 Images.getInstanceCleavageImage(mineral.getCleavage()));
+    }
+
+    private JPanel setupCrystalPanel() {
+        return setupEnumPanel(
+                AttributeNames.CRYSTAL_STRUCTURE,
+                mineral.getCrystalStructure().getLiteralString(),
+                Images.getInstanceCrystalImage(mineral.getCrystalStructure()));
     }
 
     private void setupStats() {
@@ -146,20 +113,6 @@ public class MineralDisplayPage extends JPanel {
                 new String[]{"Property", "Value"});
         stats.setFillsViewportHeight(true);
         stats.setRowHeight(60);
-    }
-
-    private void setupFormulaField(JPanel qualitativePanel) {
-        formula = new JLabel(mineral.getGeneralFormula().getFormulaAsString());
-        formula.setFont(new Font("Inter", Font.ITALIC, 30));
-        formula.setHorizontalAlignment(SwingConstants.CENTER);
-        JLabel formulaLabel = new JLabel(AttributeNames.FORMULA + ": ");
-        formulaLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
-        formulaLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        formulaLabel.setFont(new Font("Inter", Font.PLAIN, 30));
-        formulaLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, formulaLabel.getPreferredSize().height));
-
-        qualitativePanel.add(formulaLabel);
-        qualitativePanel.add(formula);
     }
 
     public String[][] getQuantitativeTable() {
@@ -178,6 +131,7 @@ public class MineralDisplayPage extends JPanel {
         testMineral.setHardness(20.0f);
         testMineral.setDensity(10.0f);
         testMineral.setIndexOfRefraction(4.0f);
+        testMineral.setCrystalStructure(CrystalStructure.CUBIC);
         testMineral.setGeneralFormula(new Formula("(Pb, S, F, O)1290Cl2"));
         testMineral.setCleavage(Cleavage.BASAL);
         StringBuilder builder = new StringBuilder();

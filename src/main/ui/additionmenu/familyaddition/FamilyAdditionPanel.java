@@ -66,6 +66,10 @@ public class FamilyAdditionPanel extends JPanel {
         for (WikiEntry descendant : family.getMineralsWithFamily()) {
             descendantAdditionMenu.addDescendant(descendant.getName());
         }
+
+        description.setText(family.getDescription());
+
+        repaint();
     }
 
     private void setupBoxes() {

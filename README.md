@@ -36,6 +36,17 @@ like this very useful for learning about new minerals.
 - *As a user*, I would like to be prompted to load a pre-existing mineral database from a save file when I start 
 the application [^1]
 
+### Using the Gui
+- To add X to Y, click the "Add Item" box specify either a mineral or family and enter the values in
+- Note the "Formula" segment must contain a valid chemical formula
+- The "Table" and "Item" page button provide ways to view either all the data or an individual page
+- Clicking on an item in the table page loads its corresponding item page
+- In the item view, wiki entries can be edited/deleted
+- Clicking on the table headers sorts/groups it by the corresponding property. This works for all quantitative properties
+and "Crystal Structure" and "Cleavage"
+- The "File" button produces a dropdown that gives options for saving/loading
+- If a file has not been saved before, use "Save As" to designate a path or to make a new Save Path
+
 ---
 
 [^1]: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/tree/master/src/main/persistence 

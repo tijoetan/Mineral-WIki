@@ -7,7 +7,7 @@ import javax.swing.*;
 // Popup that lets user choose what to add
 
 public class QuerySelector extends JPanel {
-    private JRadioButton mineralChoice;
+    private final JRadioButton mineralChoice;
     private JRadioButton familyChoice;
     private ButtonGroup buttonGroup;
 

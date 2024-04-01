@@ -1,0 +1,33 @@
+{
+    "minerals": {
+        "Platinum": {
+            "hardness": 523,
+            "cleavage": "PRISMATIC",
+            "density": 253,
+            "name": "Platinum",
+            "generalFormula": "OsPt12(Al, O, 5)S",
+            "description": "AJFEpojiAFOEji",
+            "crystalStructure": "HEXAGONAL",
+            "ior": 25
+        },
+        "Copper": {
+            "hardness": 12,
+            "cleavage": "PRISMATIC",
+            "density": 124,
+            "name": "Copper",
+            "generalFormula": "Cu",
+            "description": "This is copper. I like copper. It is a metal",
+            "crystalStructure": "MONOCLINIC",
+            "ior": 412
+        }
+    },
+    "families": {"Metal": {
+        "mineralsWithFamilyName": [
+            "Platinum",
+            "Copper"
+        ],
+        "name": "Metal",
+        "generalFormula": "",
+        "description": "No description provided"
+    }}
+}

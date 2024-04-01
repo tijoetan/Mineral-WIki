@@ -3,9 +3,12 @@ package ui;
 import model.entries.Family;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
+import model.logging.Event;
+import model.logging.EventLog;
 import model.modelexceptions.ItemNotFoundException;
 import model.tableentry.FamilyTable;
 import model.tableentry.MineralTable;
+import sun.awt.WindowClosingListener;
 import ui.misc.UserQuery;
 import ui.additionmenu.familyaddition.FamilyQueryHandler;
 import ui.additionmenu.mineraladdition.MineralQueryHandler;
@@ -21,16 +24,21 @@ import utils.fieldnames.WindowNames;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 
-public class MineralWikiGuiApp implements ClickObserver {
+public class MineralWikiGuiApp extends WindowAdapter implements ClickObserver {
 
     private final CardPanel switchableWindowPanel;
 
     private final MineralTable mineralTable;
     private final FamilyTable familyTable;
+    private final JFrame mainFrame;
 
     private JPanel tableView;
     private final ItemView itemView;
@@ -47,7 +55,7 @@ public class MineralWikiGuiApp implements ClickObserver {
         familyTable = new FamilyTable();
         ClickedItemHandler.getInstance().addObserver(this);
 
-        JFrame mainFrame = new JFrame("Mineral Database");
+        mainFrame = new JFrame("Mineral Database");
         switchableWindowPanel = new CardPanel();
 
         setupTableView();
@@ -60,8 +68,14 @@ public class MineralWikiGuiApp implements ClickObserver {
         addWindows();
         switchableWindowPanel.showPanel(WindowNames.TABLE_PAGE);
 
+        setupMainframe();
+
+    }
+
+    private void setupMainframe() {
         mainFrame.add(toolBar, BorderLayout.NORTH);
         mainFrame.add(switchableWindowPanel, BorderLayout.CENTER);
+        mainFrame.addWindowListener(this);
         mainFrame.setSize(1280, 720);
         mainFrame.pack();
         mainFrame.setResizable(false);
@@ -147,6 +161,16 @@ public class MineralWikiGuiApp implements ClickObserver {
         itemView.updateDisplayPage(ClickedItemHandler.getInstance().getClickedItem());
         System.out.println(Arrays.toString(ClickedItemHandler.getInstance().getClickedItem().giveAttributeAsObjects()));
         switchableWindowPanel.showPanel(WindowNames.ITEM_PAGE);
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Goodbye");
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        while (events.hasNext()) {
+            System.out.println(events.next().toString());
+        }
+        System.exit(0);
     }
 
 }

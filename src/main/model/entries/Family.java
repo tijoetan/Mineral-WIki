@@ -1,5 +1,8 @@
 package model.entries;
 
+import model.chemicalstructure.Formula;
+import model.logging.Event;
+import model.logging.EventLog;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import utils.fieldnames.JsonFieldNames;
@@ -70,5 +73,21 @@ public class Family extends WikiEntry {
             mineralNamesJson.put(mineral.getName());
         }
         return mineralNamesJson;
+    }
+
+    // MODIFIES: family
+    // EFFECTS: calls appropriate setter commands on family for its attributes
+    public static void fillFamily(Family family,
+                                  Formula familyFormula,
+                                  List<WikiEntry> familyMinerals,
+                                  String description) {
+
+        family.setGeneralFormula(familyFormula);
+        family.setMineralsWithFamily(familyMinerals);
+        family.setDescription(description);
+        EventLog.getInstance().logEvent(new Event("Family: "
+                + family.getName()
+                + " has been modified"));
+
     }
 }

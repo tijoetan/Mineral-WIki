@@ -1,0 +1,33 @@
+{
+    "minerals": {
+        "Diamond": {
+            "hardness": 10,
+            "cleavage": "BASAL",
+            "density": 3.5,
+            "name": "Diamond",
+            "generalFormula": "C60ONBMo8(PO3)4HLi2Be",
+            "description": "This is a beautiful diamond. . But its very expensive. Done hmm. I want a diamond right now. I am praying to get a diamond right now!",
+            "crystalStructure": "HEXAGONAL",
+            "ior": 2.5
+        },
+        "Misha": {
+            "hardness": 900,
+            "cleavage": "PRISMATIC",
+            "density": 80,
+            "name": "Misha",
+            "generalFormula": "MoSH",
+            "description": "Misha is a pupppy",
+            "crystalStructure": "CUBIC",
+            "ior": 0
+        }
+    },
+    "families": {"Gem": {
+        "mineralsWithFamilyName": [
+            "Diamond",
+            "Misha"
+        ],
+        "name": "Gem",
+        "generalFormula": "H2O2MoSHC7000",
+        "description": "this has diamonds and Misha. Actually"
+    }}
+}

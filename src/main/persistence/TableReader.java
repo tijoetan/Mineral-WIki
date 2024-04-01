@@ -6,6 +6,8 @@ import model.entries.Mineral;
 import model.entries.WikiEntry;
 import model.enums.Cleavage;
 import model.enums.CrystalStructure;
+import model.logging.Event;
+import model.logging.EventLog;
 import model.modelexceptions.ItemNotFoundException;
 import model.modelexceptions.UnknownElementException;
 import model.tableentry.FamilyTable;
@@ -13,7 +15,6 @@ import model.tableentry.MineralTable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import utils.FillWikiEntry;
 import utils.fieldnames.JsonFieldNames;
 
 import java.io.IOException;
@@ -63,6 +64,7 @@ public class TableReader {
         JSONObject familyJson = readFile.getJSONObject(JsonFieldNames.FAMILIES);
         setUpMineralTable(mineralJson);
         setUpFamilyTable(familyJson);
+        EventLog.getInstance().logEvent(new Event("Database loaded from: " + source));
 
     }
 
@@ -80,7 +82,7 @@ public class TableReader {
     // EFFECTS: returns a new mineral with the fields based on the mineralData
     public Mineral setupMineral(JSONObject mineralData) {
         Mineral mineral = new Mineral(mineralData.getString(JsonFieldNames.NAME));
-        FillWikiEntry.fillMineral(mineral,
+        Mineral.fillMineral(mineral,
                 getFormula(mineralData.getString(JsonFieldNames.FORMULA)),
                 CrystalStructure.valueOf(mineralData.getString(JsonFieldNames.CRYSTAL_STRUCTURE)),
                 mineralData.getFloat(JsonFieldNames.HARDNESS),
@@ -105,7 +107,7 @@ public class TableReader {
     // EFFECTS: produces a new family with the fields setup by familyData
     public Family setUpFamily(JSONObject familyData) {
         Family family = new Family(familyData.getString(JsonFieldNames.NAME));
-        FillWikiEntry.fillFamily(family,
+        Family.fillFamily(family,
                 getFormula(familyData.getString(JsonFieldNames.FORMULA)),
                 getRelatedMinerals(familyData.getJSONArray(JsonFieldNames.MINERALS_OF_FAMILY)),
                 familyData.getString(JsonFieldNames.DESCRIPTION));

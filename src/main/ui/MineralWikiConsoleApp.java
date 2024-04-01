@@ -18,7 +18,6 @@ import persistence.InvalidFileException;
 import persistence.TableReader;
 import persistence.TableWriter;
 import ui.uiexceptions.NonNumericValueGiven;
-import utils.FillWikiEntry;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -316,7 +315,7 @@ public class MineralWikiConsoleApp {
         List<WikiEntry> familyMinerals = queryFamilyMinerals();
         String description = queryString("Please enter a quick description", this.scanner);
         Formula familyFormula = new Formula(queryString("What is the chemical formula", this.scanner));
-        FillWikiEntry.fillFamily(
+        Family.fillFamily(
                 startFamily,
                 familyFormula,
                 familyMinerals,
@@ -378,7 +377,7 @@ public class MineralWikiConsoleApp {
         Float indexOfRefraction = queryFloat("What is the mineral index of refraction?: ", this.scanner);
         Float density = queryFloat("What is the mineral density?: ", this.scanner);
         Float hardness = queryFloat("What is the Mohs hardness of the mineral?: ", this.scanner);
-        FillWikiEntry.fillMineral(
+        Mineral.fillMineral(
                 startMineral,
                 formula,
                 crystalStructure,

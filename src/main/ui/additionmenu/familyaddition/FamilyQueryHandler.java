@@ -7,7 +7,6 @@ import model.modelexceptions.ItemNotFoundException;
 import model.modelexceptions.UnknownElementException;
 import model.tableentry.WikiEntryTable;
 import ui.uiexceptions.BlankNameException;
-import utils.FillWikiEntry;
 import ui.misc.UserQuery;
 
 import javax.swing.*;
@@ -93,7 +92,7 @@ public class FamilyQueryHandler {
             }
         }
 
-        FillWikiEntry.fillFamily(newFamily,
+        Family.fillFamily(newFamily,
                 formula,
                 descendants,
                 description);

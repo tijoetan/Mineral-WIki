@@ -1,7 +1,10 @@
 package model.entries;
 
+import model.chemicalstructure.Formula;
 import model.enums.Cleavage;
 import model.enums.CrystalStructure;
+import model.logging.Event;
+import model.logging.EventLog;
 import org.json.JSONObject;
 import utils.fieldnames.JsonFieldNames;
 
@@ -23,6 +26,7 @@ public class Mineral extends WikiEntry {
         this.hardness = 0.0f;
         this.density = 0.0f;
         this.indexOfRefraction = 0.0f;
+
     }
 
     // getters
@@ -41,7 +45,6 @@ public class Mineral extends WikiEntry {
     public CrystalStructure getCrystalStructure() {
         return this.crystalStructure;
     }
-
 
     public Cleavage getCleavage() {
         return this.cleavage;
@@ -62,7 +65,6 @@ public class Mineral extends WikiEntry {
             this.hardness = hardness;
         }
     }
-
 
     // MODIFIES: this
     // EFFECTS: changes density if given value is > 0
@@ -101,8 +103,8 @@ public class Mineral extends WikiEntry {
                 this.indexOfRefraction,
                 this.cleavage);
     }
-
     // EFFECTS: produces a String array of all the attributes
+
     @Override
     public String[] giveAttributeAsObjects() {
         return new String[]{name,
@@ -113,8 +115,8 @@ public class Mineral extends WikiEntry {
                 indexOfRefraction.toString(),
                 cleavage.toString()};
     }
-
     // EFFECTS: Produces JSON object with the fields of the instance
+
     @Override
     public JSONObject toJson() {
         JSONObject mineralJson = super.toJson();
@@ -124,6 +126,42 @@ public class Mineral extends WikiEntry {
         mineralJson.put(JsonFieldNames.HARDNESS, hardness);
         mineralJson.put(JsonFieldNames.CLEAVAGE, cleavage.getLiteralString());
         return mineralJson;
+    }
+
+    // MODIFIES: mineral
+    // EFFECTS: calls appropriate mineral setter methods with the given parameters
+    public static void fillMineral(Mineral mineral,
+                                   Formula formula,
+                                   CrystalStructure crystalStructure,
+                                   Float hardness,
+                                   Float density,
+                                   Float indexOfRefraction,
+                                   String description) {
+
+        mineral.setGeneralFormula(formula);
+        mineral.setCrystalStructure(crystalStructure);
+        mineral.setHardness(hardness);
+        mineral.setDensity(density);
+        mineral.setIndexOfRefraction(indexOfRefraction);
+        mineral.setDescription(description);
+        EventLog.getInstance().logEvent(new Event("Mineral: "
+                + mineral.getName()
+                + " has been modified"));
+    }
+
+    // MODIFIES: mineral
+    // EFFECTS: calls appropriate mineral setter methods with the given parameters
+    public static void fillMineral(Mineral mineral,
+                                   Formula formula,
+                                   CrystalStructure crystalStructure,
+                                   Float hardness,
+                                   Float density,
+                                   Float indexOfRefraction,
+                                   String description,
+                                   Cleavage cleavage) {
+
+        fillMineral(mineral, formula, crystalStructure, hardness, density, indexOfRefraction, description);
+        mineral.setCleavage(cleavage);
     }
 
 }

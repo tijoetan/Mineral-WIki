@@ -7,6 +7,10 @@
       </map>
     </option>
   </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Desktop" />
+    <option name="OPTION_SCOPE" value="private" />
+  </component>
   <component name="ProjectResources">
     <resource url="http://checkstyle.sourceforge.net/dtds/configuration_1_3.dtd" location="$PROJECT_DIR$/checkstyle.xml" />
   </component>

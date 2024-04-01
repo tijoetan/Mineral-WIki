@@ -49,6 +49,16 @@
             "description": "This is a feldspar mineral",
             "crystalStructure": "TRICLINIC",
             "ior": 1.554
+        },
+        "Misha": {
+            "hardness": 900,
+            "cleavage": "PRISMATIC",
+            "density": 80,
+            "name": "Misha",
+            "generalFormula": "MoSH",
+            "description": "Misha is a pupppy",
+            "crystalStructure": "CUBIC",
+            "ior": 0
         }
     },
     "families": {

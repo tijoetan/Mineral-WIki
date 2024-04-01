@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 // Descendant label in FamilyDisplayPage
 
@@ -27,7 +28,6 @@ public class EntryHyperLink extends JLabel {
             }
         });
     }
-
 
     // getters
     public WikiEntry getEntry() {

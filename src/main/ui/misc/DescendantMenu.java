@@ -3,13 +3,13 @@ package ui.misc;
 import model.entries.WikiEntry;
 import ui.additionmenu.familyaddition.AddedItemBox;
 import ui.additionmenu.familyaddition.AdditionPanel;
-import ui.clickeditemhandler.ClickedItemHandler;
-import ui.misc.UserQuery;
 import ui.displaypage.EntryHyperLink;
 import utils.fieldnames.PropertyNames;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 

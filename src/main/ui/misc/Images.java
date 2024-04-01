@@ -1,5 +1,6 @@
 package ui.misc;
 
+import com.sun.javafx.iio.ImageStorage;
 import model.enums.Cleavage;
 import model.enums.CrystalStructure;
 
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +33,8 @@ public class Images {
                         + cleavage.name().toLowerCase()
                         + ".png")));
             } catch (IOException e) {
-                cleavageImageMap.put(cleavage, new BufferedImage(10, 10, 10));
+                cleavageImageMap.put(cleavage,
+                        new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB));
             }
         }
 
@@ -41,7 +44,8 @@ public class Images {
                         + structure.name().toLowerCase()
                         + ".png")));
             } catch (IOException e) {
-                crystalStructureImageMap.put(structure, new BufferedImage(10, 10, 10));
+                crystalStructureImageMap.put(structure,
+                        new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB));
             }
         }
     }

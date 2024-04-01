@@ -1,5 +1,7 @@
 package model.tableentry;
 
+import model.logging.Event;
+import model.logging.EventLog;
 import model.modelexceptions.DuplicationException;
 import model.entries.Mineral;
 import model.entries.WikiEntry;
@@ -49,6 +51,8 @@ public class MineralTable implements WikiEntryTable {
             default:
                 break;
         }
+
+        EventLog.getInstance().logEvent(new Event("Mineral table has been sorted by: " + attribute));
         return returnList;
     }
 
@@ -58,6 +62,7 @@ public class MineralTable implements WikiEntryTable {
     public WikiEntry getRequestedEntry(String name) throws ItemNotFoundException {
         Mineral requestedMineral = mineralNameTable.get(name);
         if (requestedMineral != null) {
+            EventLog.getInstance().logEvent(new Event("Mineral:  " + name + " has been accessed"));
             return requestedMineral;
         }
 
@@ -71,6 +76,9 @@ public class MineralTable implements WikiEntryTable {
     public void addEntry(WikiEntry entry) throws DuplicationException {
         if (mineralNameTable.get(entry.getName()) == null) {
             mineralNameTable.put(entry.getName(), (Mineral) entry);
+            EventLog.getInstance().logEvent(new Event("Mineral of name: "
+                    + entry.getName()
+                    + " has been added to the mineral table"));
         } else {
             throw new MineralDuplicateException();
         }
@@ -84,6 +92,9 @@ public class MineralTable implements WikiEntryTable {
 
         if (mineralNameTable.get(name) != null) {
             mineralNameTable.remove(name);
+            EventLog.getInstance().logEvent(new Event("Mineral of name: "
+                    + name
+                    + " has been removed from the mineral table"));
         } else {
             throw new ItemNotFoundException();
         }
@@ -112,6 +123,7 @@ public class MineralTable implements WikiEntryTable {
         for (Mineral mineral : mineralNameTable.values()) {
             tableJson.put(mineral.getName(), mineral.toJson());
         }
+        EventLog.getInstance().logEvent(new Event("Mineral table is being converted to JSON"));
         return tableJson;
     }
 }

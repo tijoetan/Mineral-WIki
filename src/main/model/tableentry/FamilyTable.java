@@ -1,5 +1,7 @@
 package model.tableentry;
 
+import model.logging.Event;
+import model.logging.EventLog;
 import utils.fieldnames.Attributes;
 import model.modelexceptions.DuplicationException;
 import model.modelexceptions.FamilyDuplicationException;
@@ -33,6 +35,9 @@ public class FamilyTable implements WikiEntryTable {
     public WikiEntry getRequestedEntry(String name) throws ItemNotFoundException {
         WikiEntry requestedFamily = this.familyNameTable.get(name);
         if (requestedFamily != null) {
+            EventLog.getInstance().logEvent(new Event("Family: "
+                    + name
+                    + " has been accessed"));
             return requestedFamily;
         } else {
             throw new ItemNotFoundException();
@@ -46,6 +51,9 @@ public class FamilyTable implements WikiEntryTable {
     public void addEntry(WikiEntry entry) throws DuplicationException {
         if (this.familyNameTable.get(entry.getName()) == null) {
             this.familyNameTable.put(entry.getName(), entry);
+            EventLog.getInstance().logEvent(new Event("Family: "
+                    + entry.getName()
+                    + " has been added to the family table"));
         } else {
             throw new FamilyDuplicationException();
         }
@@ -59,6 +67,9 @@ public class FamilyTable implements WikiEntryTable {
     public void removeEntry(String name) throws ItemNotFoundException {
         if (this.familyNameTable.get(name) != null) {
             this.familyNameTable.remove(name);
+            EventLog.getInstance().logEvent(new Event("Family: "
+                    + name
+                    + " has been removed from the family table"));
         } else {
             throw new ItemNotFoundException();
         }
@@ -81,6 +92,7 @@ public class FamilyTable implements WikiEntryTable {
         for (WikiEntry family : familyNameTable.values()) {
             tableJson.put(family.getName(), family.toJson());
         }
+        EventLog.getInstance().logEvent(new Event("Family Table is being converted to JSON"));
         return tableJson;
     }
 

@@ -2,6 +2,8 @@ package persistence;
 
 // Writes WikiEntryTable to JSON
 
+import model.logging.Event;
+import model.logging.EventLog;
 import model.tableentry.WikiEntryTable;
 import org.json.JSONObject;
 import utils.fieldnames.JsonFieldNames;

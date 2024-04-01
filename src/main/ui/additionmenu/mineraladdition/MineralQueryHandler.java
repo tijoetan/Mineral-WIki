@@ -6,7 +6,6 @@ import model.enums.Cleavage;
 import model.enums.CrystalStructure;
 import model.modelexceptions.UnknownElementException;
 import ui.uiexceptions.BlankNameException;
-import utils.FillWikiEntry;
 import ui.misc.UserQuery;
 
 import javax.swing.*;
@@ -86,7 +85,7 @@ public class MineralQueryHandler {
             density = 0f;
         }
 
-        FillWikiEntry.fillMineral(mineral,
+        Mineral.fillMineral(mineral,
                 formula,
                 (CrystalStructure) panel.getCrystalStructure(),
                 hardness, density, ior,

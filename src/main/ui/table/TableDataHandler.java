@@ -97,6 +97,7 @@ public class TableDataHandler extends AbstractTableModel {
         updateValues();
     }
 
+
     // EFFECTS: reorders table based on given sortOrder
     public void sortAndUpdate(Attributes sortOrder) {
         if (this.sortOrder != sortOrder) {

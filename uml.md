@@ -2,7 +2,7 @@
 ![UML image](UML%20Image.svg)
 
 ### Code for Diagram 
-```plantumlx
+```plantuml
 @startuml
 !theme vibrant
 'skinparam ranksep 50

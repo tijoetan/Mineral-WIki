@@ -75,18 +75,18 @@ class TableDataHandler
 class TableView
 
 package "TableView Listeners" <<Node>> {
-class ClickMouseListener
-class HyperLinkManager
+  class ClickMouseListener
+  class HyperLinkManager
 }
 
 
 class Toolbar
 package "Toolbar Listeners" <<Node>> {
-class SearchButtonListener
-class WindowStateListener
-class DeleteButtonListener
-class FileHandler
-class MineralAdditionButtonListener
+  class SearchButtonListener
+  class WindowStateListener
+  class DeleteButtonListener
+  class FileHandler
+  class MineralAdditionButtonListener
 }
 
 class Main

@@ -48,7 +48,64 @@ and "crystal structure" and "cleavage"
 - If a file has not been saved before, use "Save As" to designate a path or to make a new Save Path
 
 ### Phase 4: Task 2 - Sample Logging:
-
+```java
+Sun Apr 07 11:34:00 PDT 2024
+Mineral: Gold has been modified
+Sun Apr 07 11:34:00 PDT 2024
+Mineral of name: Gold has been added to the mineral table
+Sun Apr 07 11:34:00 PDT 2024
+Mineral table has been sorted by: DEFAULT
+Sun Apr 07 11:34:22 PDT 2024
+Mineral: Silver has been modified
+Sun Apr 07 11:34:22 PDT 2024
+Mineral of name: Silver has been added to the mineral table
+Sun Apr 07 11:34:22 PDT 2024
+Mineral table has been sorted by: DEFAULT
+Sun Apr 07 11:34:52 PDT 2024
+Mineral:  Gold has been accessed
+Sun Apr 07 11:34:52 PDT 2024
+Mineral:  Silver has been accessed
+Sun Apr 07 11:34:52 PDT 2024
+Family: Metal has been modified
+Sun Apr 07 11:34:52 PDT 2024
+Family: Metal has been added to the family table
+Sun Apr 07 11:34:53 PDT 2024
+Mineral table has been sorted by: IOR
+Sun Apr 07 11:34:54 PDT 2024
+Mineral table has been sorted by: DENSITY
+Sun Apr 07 11:34:55 PDT 2024
+Mineral table has been sorted by: HARDNESS
+Sun Apr 07 11:35:00 PDT 2024
+Mineral table has been sorted by: CRYSTAL
+Sun Apr 07 11:35:02 PDT 2024
+Mineral table has been sorted by: DEFAULT
+Sun Apr 07 11:35:04 PDT 2024
+Family: Metal has been accessed
+Sun Apr 07 11:35:09 PDT 2024
+Mineral:  Silver has been accessed
+Sun Apr 07 11:35:09 PDT 2024
+Family: Metal has been modified
+Sun Apr 07 11:35:16 PDT 2024
+Mineral table is being saved
+Sun Apr 07 11:35:16 PDT 2024
+Family Table is being saved
+Sun Apr 07 11:35:18 PDT 2024
+Mineral:  Gold has been accessed
+Sun Apr 07 11:35:25 PDT 2024
+Mineral: Gold has been modified
+Sun Apr 07 11:35:25 PDT 2024
+Mineral table has been sorted by: DEFAULT
+Sun Apr 07 11:35:29 PDT 2024
+Family: Metal has been accessed
+Sun Apr 07 11:35:34 PDT 2024
+Family: Metal has been removed from the family table
+Sun Apr 07 11:35:36 PDT 2024
+Mineral:  Gold has been accessed
+Sun Apr 07 11:35:39 PDT 2024
+Mineral of name: Gold has been removed from the mineral table
+Sun Apr 07 11:35:39 PDT 2024
+Mineral table has been sorted by: DEFAULT
+```
 ---
 
 [^1]: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/tree/master/src/main/persistence 

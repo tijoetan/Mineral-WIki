@@ -1,8 +1,9 @@
 ### Diagram Image
 ![UML image](UML%20Image.svg)
 
+
 ### Code for Diagram 
-```plantuml
+```puml
 @startuml
 !theme vibrant
 'skinparam ranksep 50
@@ -11,12 +12,11 @@ skinparam linetype polyline
 skinparam arrowFontColor darkblue
 skinparam arrowFontSize 15
 skinparam arrowMessageAlignment right
-skinparam groupInheritance 2
+'skinparam groupInheritance 2
 
 class Formula
 class FormulaElement
 class MoleculeGroup
-
 
 class Family
 class Mineral

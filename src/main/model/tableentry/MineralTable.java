@@ -123,7 +123,7 @@ public class MineralTable implements WikiEntryTable {
         for (Mineral mineral : mineralNameTable.values()) {
             tableJson.put(mineral.getName(), mineral.toJson());
         }
-        EventLog.getInstance().logEvent(new Event("Mineral table is being converted to JSON"));
+        EventLog.getInstance().logEvent(new Event("Mineral table is being saved"));
         return tableJson;
     }
 }

@@ -92,7 +92,7 @@ public class FamilyTable implements WikiEntryTable {
         for (WikiEntry family : familyNameTable.values()) {
             tableJson.put(family.getName(), family.toJson());
         }
-        EventLog.getInstance().logEvent(new Event("Family Table is being converted to JSON"));
+        EventLog.getInstance().logEvent(new Event("Family Table is being saved"));
         return tableJson;
     }
 
